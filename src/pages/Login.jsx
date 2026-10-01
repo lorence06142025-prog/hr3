@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
 import { api } from '../lib/api'
-import LoginIllustration from '../components/LoginIllustration'
 import { Key, Eye, EyeOff, Tag, AlertTriangle, CheckCircle, CheckCircle2, DoorOpen, Clock, Lock, Info, Building2, Mail, Check, ArrowRight, ShieldCheck, RotateCcw, Smartphone } from 'lucide-react'
 
 export default function Login({ onLogin, notice }) {
@@ -22,28 +21,6 @@ export default function Login({ onLogin, notice }) {
   })
 
   const displayNotice = sessionNotice || notice || ''
-
-  // Dark / Light Theme state
-  const [isDark, setIsDark] = useState(() => {
-    try {
-      return document.documentElement.classList.contains('dark') || localStorage.getItem('pds-theme') === 'dark'
-    } catch {
-      return false
-    }
-  })
-
-  const toggleTheme = () => {
-    const nextDark = !isDark
-    setIsDark(nextDark)
-    const root = document.documentElement
-    if (nextDark) {
-      root.classList.add('dark')
-      try { localStorage.setItem('pds-theme', 'dark') } catch (err) { void err }
-    } else {
-      root.classList.remove('dark')
-      try { localStorage.setItem('pds-theme', 'light') } catch (err) { void err }
-    }
-  }
 
   // Mode: 'login' | 'forgot' | 'reset'
   const [mode, setMode] = useState('login')
@@ -344,39 +321,11 @@ export default function Login({ onLogin, notice }) {
 
   return (
     <div className={`login-split-page ref-theme-page ${isLoggingInSuccess ? 'page-logging-in-success' : ''}`}>
-      {/* Quick Theme Switcher Button */}
-      <button
-        type="button"
-        className="login-theme-toggle"
-        onClick={toggleTheme}
-        aria-label={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-        title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-      >
-        {isDark ? (
-          <>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="12" cy="12" r="5" />
-              <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
-            </svg>
-            <span>Light</span>
-          </>
-        ) : (
-          <>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-            </svg>
-            <span>Dark</span>
-          </>
-        )}
-      </button>
-
-      {/* LEFT SIDE: Centered Showcase with logistics brand circles & full photo lightbox */}
-      <section className="login-illustration-column" aria-label="Priority Handling Services, Inc.">
-        <LoginIllustration isLoggingInSuccess={isLoggingInSuccess} />
-      </section>
-
-      {/* RIGHT SIDE: Clean Modern Executive Form */}
-      <section className="login-form-column" aria-label="Sign In to Priority Handling Services, Inc.">
+      <section className="login-form-column" aria-label="Sign in to Priority Handling Logistics, Inc.">
+        <div className="login-reference-brand">
+          <img src="/prioritylogo.png" alt="" />
+          <span>Priority Handling Logistics, Inc.</span>
+        </div>
         <div className="login-card-container">
           {/* ================================================================ */}
           {/* 1. TWO-FACTOR AUTHENTICATION VIEW                                */}
@@ -410,7 +359,7 @@ export default function Login({ onLogin, notice }) {
                 <h1 className="tfa-title">Two-Factor Authentication</h1>
                 <p className="tfa-desc">
                   Enter the 6-digit code from your authenticator app<br />
-                  to continue to Priority Handling Services, Inc.
+                  to continue to Priority Handling Logistics, Inc.
                 </p>
 
                 {/* ── Error banner ── */}
@@ -563,7 +512,7 @@ export default function Login({ onLogin, notice }) {
 
                 <div className="login-security-badge">
                   <ShieldCheck size={14} />
-                  <span>Protected by Priority Handling Services, Inc. role-based security</span>
+                  <span>Protected by Priority Handling Logistics, Inc. role-based security</span>
                 </div>
               </div>
             </form>
@@ -666,7 +615,7 @@ export default function Login({ onLogin, notice }) {
 
                 <div className="login-security-badge">
                   <ShieldCheck size={14} />
-                  <span>Protected by Priority Handling Services, Inc. role-based security</span>
+                  <span>Protected by Priority Handling Logistics, Inc. role-based security</span>
                 </div>
               </div>
             </form>
@@ -674,12 +623,12 @@ export default function Login({ onLogin, notice }) {
             /* ================================================================ */
             /* 4. STANDARD LOGIN VIEW (Matches Reference Screenshot 1)          */
             /* ================================================================ */
-            <form className="login-card ref-card" onSubmit={submit}>
+            <form className="login-card ref-card login-primary-card" onSubmit={submit}>
               <div className="ref-card-inner">
                 {/* Header */}
                 <div className="login-card-header">
-                  <h2 className="ref-form-title">Welcome back</h2>
-                  <p className="ref-form-sub">Enter your credentials to access the system.</p>
+                  <h2 className="ref-form-title">Sign in</h2>
+                  <p className="ref-form-sub">Use your work email and password.</p>
                 </div>
 
                 {/* Notice Banners */}
@@ -726,7 +675,7 @@ export default function Login({ onLogin, notice }) {
                       className="ref-input-control"
                       value={email}
                       onChange={(event) => setEmail(event.target.value)}
-                      placeholder="you@example.com"
+                      placeholder=""
                       autoComplete="email"
                       required
                       disabled={loading || isLoggingInSuccess}
@@ -755,7 +704,7 @@ export default function Login({ onLogin, notice }) {
                       style={{ paddingRight: 46 }}
                       value={password}
                       onChange={(event) => setPassword(event.target.value)}
-                      placeholder="Enter your password"
+                      placeholder=""
                       autoComplete="current-password"
                       required
                       disabled={loading || isLoggingInSuccess}
@@ -796,19 +745,9 @@ export default function Login({ onLogin, notice }) {
                   )}
                 </button>
 
-                {/* 4. Protected by role-based security footnote */}
-                <div className="login-security-badge">
-                  <ShieldCheck size={14} />
-                  <span>Protected by Priority Handling Services, Inc. role-based security</span>
-                </div>
               </div>
             </form>
           )}
-
-          {/* Copyright Notice */}
-          <div className="login-copyright-note">
-            © {new Date().getFullYear()} Priority Handling Services, Inc. All rights reserved.
-          </div>
         </div>
       </section>
 
@@ -818,7 +757,7 @@ export default function Login({ onLogin, notice }) {
           <div className="login-success-zoom-stage">
             <img
               src="/prioritylogo.png"
-              alt="Priority Handling Services company logo"
+              alt="Priority Handling Logistics company logo"
               className="login-success-hero-img"
               style={{ width: 72, height: 72, objectFit: 'contain' }}
             />
@@ -831,7 +770,7 @@ export default function Login({ onLogin, notice }) {
                 <CheckCircle2 size={34} color="#34d399" />
               </div>
               <div className="login-success-title">AUTHENTICATION ACCEPTED</div>
-              <div className="login-success-company-name">PRIORITY HANDLING SERVICES, INC.</div>
+              <div className="login-success-company-name">PRIORITY HANDLING LOGISTICS, INC.</div>
               <div className="login-success-sub-text">
                 <DoorOpen size={16} className="text-emerald-500" />
                 <span>Authentication accepted, logging in...</span>

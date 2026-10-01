@@ -1359,6 +1359,176 @@
   color: #6b7280;
 }
 
+/* Centered logistics sign-in reference layout */
+.login-split-page.ref-theme-page,
+:root.dark .login-split-page.ref-theme-page,
+.dark .login-split-page.ref-theme-page {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  background: #f7f9fc;
+  color: #10214a;
+}
+
+.login-form-column,
+.dark .login-form-column {
+  flex: 1 1 100%;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 100dvh;
+  align-items: center;
+  justify-content: center;
+  padding: 28px 20px;
+  overflow-y: auto;
+  background: #f7f9fc;
+}
+
+.login-reference-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 28px;
+  color: #071b4c;
+  text-align: center;
+}
+
+.login-reference-brand img {
+  display: block;
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+}
+
+.login-reference-brand span {
+  font-size: 17px;
+  line-height: 1.25;
+  font-weight: 750;
+}
+
+.login-card-container {
+  width: 100%;
+  max-width: 450px;
+  margin: 0;
+}
+
+.login-card.ref-card,
+.dark .login-card.ref-card {
+  max-width: 450px;
+  padding: 22px 24px 26px;
+  border: 1px solid #e1e6ee;
+  border-radius: 15px;
+  background: #ffffff;
+  box-shadow: 0 8px 14px rgba(17, 24, 39, 0.10), 0 2px 4px rgba(17, 24, 39, 0.04);
+}
+
+.login-card-header {
+  margin-bottom: 27px;
+}
+
+.ref-form-title,
+.dark .ref-form-title {
+  margin-bottom: 5px;
+  color: #10214a;
+  font-size: 16px;
+  line-height: 1.35;
+  font-weight: 700;
+}
+
+.ref-form-sub,
+.dark .ref-form-sub {
+  color: #53627c;
+  font-size: 13.5px;
+  line-height: 1.4;
+}
+
+.ref-field-group {
+  gap: 6px;
+  margin-bottom: 18px;
+}
+
+.ref-label,
+.dark .ref-label {
+  color: #10214a;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.login-primary-card .ref-input-icon {
+  display: none;
+}
+
+.ref-input-control,
+.dark .ref-input-control {
+  height: 38px;
+  padding: 0 12px !important;
+  border: 1px solid #dfe5ee !important;
+  border-radius: 9px !important;
+  background: #ffffff !important;
+  color: #10214a !important;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08) !important;
+  font-size: 13px;
+}
+
+.ref-input-control:focus,
+.dark .ref-input-control:focus {
+  border-color: #5148ff !important;
+  box-shadow: 0 0 0 3px rgba(44, 50, 255, 0.10) !important;
+}
+
+.login-primary-card .ref-peek-btn {
+  display: none;
+}
+
+.ref-action-btn,
+.dark .ref-action-btn {
+  height: 38px;
+  margin-top: -2px;
+  border-radius: 8px;
+  background: #1800ff;
+  box-shadow: 0 2px 4px rgba(24, 0, 255, 0.18);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.ref-action-btn:hover:not(:disabled),
+.dark .ref-action-btn:hover:not(:disabled) {
+  background: #1000e8;
+  box-shadow: 0 4px 8px rgba(24, 0, 255, 0.2);
+}
+
+.login-primary-card .ref-action-btn-circle {
+  display: none;
+}
+
+.login-primary-card .login-security-badge,
+.login-copyright-note {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .login-form-column,
+  .dark .login-form-column {
+    padding: 24px 16px;
+  }
+
+  .login-reference-brand {
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+
+  .login-reference-brand span {
+    font-size: 16px;
+  }
+
+  .login-card.ref-card,
+  .dark .login-card.ref-card {
+    padding: 22px 20px 24px;
+    border-radius: 14px;
+  }
+}
+
 /* Recovery code button with smooth icon rotate on hover */
 .tfa-recovery-btn {
   width: 100%;
