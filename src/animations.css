@@ -1,0 +1,912 @@
+/* ==========================================================================
+   PERDEVSYS - PREMIUM MOTION SYSTEM
+   Smooth, professional, enterprise SaaS micro-animations
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. MOTION DESIGN TOKENS
+   -------------------------------------------------------------------------- */
+:root {
+  --dur-fast:   120ms;
+  --dur-normal: 220ms;
+  --dur-medium: 300ms;
+  --dur-slow:   420ms;
+
+  --ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-smooth:   cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-in-out:   cubic-bezier(0.45, 0, 0.55, 1);
+  --ease-spring:   cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* --------------------------------------------------------------------------
+   2. ACCESSIBILITY - RESPECT prefers-reduced-motion
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   3. DARK / LIGHT MODE THEME TRANSITION
+   -------------------------------------------------------------------------- */
+body,
+.sidebar,
+.topbar,
+.metric-card,
+.card,
+.module-metrics article,
+.module-flow,
+.module-process,
+.module-insights,
+.module-data article,
+.module-content details,
+.module-step,
+.module-widget,
+.workflow-timeline,
+.active-workspace,
+.ai-assistant,
+.ai-kpis article,
+.ai-chart-row article,
+.ai-records,
+.insight-panel,
+.er-panel,
+.er-kpis article,
+.outbox-drawer-box,
+.notif-panel-box,
+.login-card,
+.login-page,
+.role-kpi-card,
+.saas-kpi-card,
+.module-ring-card,
+.module-dashboard,
+.saas-card,
+.nav-item,
+.sidebar-signout,
+.profile-mini {
+  transition:
+    background-color var(--dur-medium) var(--ease-smooth),
+    border-color     var(--dur-medium) var(--ease-smooth),
+    color            var(--dur-medium) var(--ease-smooth),
+    box-shadow       var(--dur-medium) var(--ease-smooth);
+}
+
+/* --------------------------------------------------------------------------
+   4. PAGE / ROUTE TRANSITIONS (ULTRA-SMOOTH, HARDWARE-ACCELERATED)
+   -------------------------------------------------------------------------- */
+@keyframes modulePageEnter {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes moduleContentStagger {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 8px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.page-transition-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+  width: 100%;
+  min-height: calc(100vh - 72px);
+  box-sizing: border-box;
+  overflow-x: hidden;
+  position: relative;
+  will-change: opacity, transform;
+  backface-visibility: hidden;
+  animation: modulePageEnter 340ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (max-width: 680px) {
+  .page-transition-wrapper {
+    min-height: calc(100vh - 58px);
+    animation-duration: 260ms;
+  }
+}
+
+/* Staggered entrance for module elements with fluid deceleration */
+.page-transition-wrapper .module-heading,
+.page-transition-wrapper .saas-dashboard-header,
+.page-transition-wrapper .er-heading,
+.page-transition-wrapper .role-home-head {
+  will-change: opacity, transform;
+  animation: moduleContentStagger 300ms cubic-bezier(0.22, 1, 0.36, 1) 0ms both;
+}
+
+.page-transition-wrapper .module-dashboard,
+.page-transition-wrapper .saas-kpi-grid,
+.page-transition-wrapper .er-kpis,
+.page-transition-wrapper .role-home-grid {
+  will-change: opacity, transform;
+  animation: moduleContentStagger 340ms cubic-bezier(0.22, 1, 0.36, 1) 40ms both;
+}
+
+.page-transition-wrapper .module-grid,
+.page-transition-wrapper .saas-analytics-grid,
+.page-transition-wrapper .er-panel,
+.page-transition-wrapper .role-home-action-banner {
+  will-change: opacity, transform;
+  animation: moduleContentStagger 380ms cubic-bezier(0.22, 1, 0.36, 1) 80ms both;
+}
+
+/* --------------------------------------------------------------------------
+   5. SIDEBAR NAVIGATION
+   -------------------------------------------------------------------------- */
+.nav-item {
+  transition:
+    background-color var(--dur-fast) var(--ease-smooth),
+    color            var(--dur-fast) var(--ease-smooth),
+    transform        var(--dur-fast) var(--ease-smooth);
+}
+
+.nav-item svg {
+  transition:
+    color     var(--dur-fast) var(--ease-smooth),
+    transform var(--dur-fast) var(--ease-smooth);
+}
+
+.nav-item:hover svg { transform: translateX(1px); }
+.nav-active svg     { transform: translateX(1px); }
+
+.sidebar-signout {
+  transition:
+    background-color var(--dur-fast) var(--ease-smooth),
+    color            var(--dur-fast) var(--ease-smooth),
+    border-color     var(--dur-fast) var(--ease-smooth);
+}
+
+/* --------------------------------------------------------------------------
+   6. BUTTON MICRO-INTERACTIONS
+   -------------------------------------------------------------------------- */
+button,
+[role="button"] {
+  transition:
+    transform        var(--dur-fast) var(--ease-standard),
+    background-color var(--dur-fast) var(--ease-smooth),
+    border-color     var(--dur-fast) var(--ease-smooth),
+    box-shadow       var(--dur-fast) var(--ease-standard),
+    color            var(--dur-fast) var(--ease-smooth),
+    opacity          var(--dur-fast) var(--ease-smooth);
+  will-change: transform, box-shadow;
+}
+
+/* Primary buttons - lift on hover */
+.module-primary:hover:not(:disabled),
+.module-heading > button:hover:not(:disabled),
+.process-form .primary:hover:not(:disabled),
+.saas-btn-primary:hover:not(:disabled),
+.save-button:hover:not(:disabled),
+.ai-generate:hover:not(:disabled),
+.insight-cta:hover:not(:disabled),
+.mrc-btn:hover:not(:disabled),
+.login-card > button:not(.password-toggle):not(.forgot-link):hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.14);
+}
+
+.module-primary:active:not(:disabled),
+.saas-btn-primary:active:not(:disabled),
+.save-button:active:not(:disabled),
+.ai-generate:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.10);
+}
+
+/* Secondary buttons */
+.module-secondary:hover:not(:disabled),
+.saas-btn-secondary:hover:not(:disabled),
+.cancel-button:hover:not(:disabled),
+.module-actions button:first-child:hover:not(:disabled),
+.form-actions button:not(.primary):hover:not(:disabled),
+.notif-panel-foot button:hover:not(:disabled),
+.outbox-refresh-btn:hover:not(:disabled),
+.er-row-actions button:hover:not(:disabled),
+.er-pagination button:hover:not(:disabled),
+.quick-action:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.module-secondary:active:not(:disabled),
+.saas-btn-secondary:active:not(:disabled),
+.cancel-button:active:not(:disabled),
+.quick-action:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* Icon / header buttons */
+.header-icon-btn:hover, .header-pill-btn:hover, .mobile-menu-btn:hover { transform: translateY(-1px); }
+.header-icon-btn:active, .header-pill-btn:active, .mobile-menu-btn:active { transform: translateY(0); }
+
+/* Theme switch */
+.theme-switch-btn {
+  transition:
+    transform        var(--dur-fast) var(--ease-spring),
+    background-color var(--dur-fast) var(--ease-smooth);
+}
+.theme-switch-btn:hover  { transform: rotate(10deg) scale(1.08); }
+.theme-switch-btn:active { transform: rotate(0deg) scale(1.0); }
+
+/* Text buttons */
+.notif-btn-text,
+.notif-close-icon,
+.notif-tab,
+.header-text-button {
+  transition:
+    background-color var(--dur-fast) var(--ease-smooth),
+    color            var(--dur-fast) var(--ease-smooth);
+}
+
+/* --------------------------------------------------------------------------
+   7. CARD HOVER ANIMATIONS
+   -------------------------------------------------------------------------- */
+.saas-kpi-card,
+.module-ring-card,
+.role-kpi-card,
+.module-widget,
+.module-metrics article,
+.er-kpis article {
+  transition:
+    transform        var(--dur-normal) var(--ease-standard),
+    box-shadow       var(--dur-normal) var(--ease-standard),
+    border-color     var(--dur-normal) var(--ease-smooth),
+    background-color var(--dur-medium) var(--ease-smooth);
+  cursor: pointer;
+}
+
+.saas-kpi-card:hover, .module-ring-card:hover, .role-kpi-card:hover, .module-widget:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(17, 24, 39, 0.10);
+}
+
+.module-metrics article:hover, .er-kpis article:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(17, 24, 39, 0.08);
+}
+
+.saas-card, .metric-card, .card {
+  transition:
+    box-shadow       var(--dur-normal) var(--ease-standard),
+    border-color     var(--dur-normal) var(--ease-smooth),
+    background-color var(--dur-medium) var(--ease-smooth);
+}
+
+.saas-card:hover, .metric-card:hover { box-shadow: 0 8px 24px rgba(17, 24, 39, 0.07); }
+
+.activity-item, .quick-action-row {
+  transition:
+    background-color var(--dur-fast) var(--ease-smooth),
+    transform        var(--dur-fast) var(--ease-standard);
+}
+
+.quick-action-row:hover { transform: translateX(2px); }
+.module-ring-card:hover { border-color: rgba(17, 24, 39, 0.25); }
+
+/* --------------------------------------------------------------------------
+   8. MODULE STEP TRANSITIONS (Workflow stages)
+   -------------------------------------------------------------------------- */
+.module-step {
+  transition:
+    transform        var(--dur-normal) var(--ease-standard),
+    box-shadow       var(--dur-normal) var(--ease-standard),
+    background-color var(--dur-normal) var(--ease-smooth),
+    border-color     var(--dur-normal) var(--ease-smooth);
+}
+
+.module-step:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(17, 24, 39, 0.08);
+}
+
+.step-marker {
+  transition:
+    background-color var(--dur-normal) var(--ease-smooth),
+    color            var(--dur-normal) var(--ease-smooth),
+    border-color     var(--dur-normal) var(--ease-smooth),
+    transform        var(--dur-normal) var(--ease-spring);
+}
+
+.module-step.complete .step-marker,
+.module-step.active .step-marker { transform: scale(1.05); }
+
+@keyframes stageContentEnter {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.module-content,
+.module-process-head,
+.workflow-form-wrap,
+.process-form {
+  animation: stageContentEnter var(--dur-medium) var(--ease-standard) both;
+}
+
+/* --------------------------------------------------------------------------
+   9. WORKFLOW COMPLETION SUCCESS
+   -------------------------------------------------------------------------- */
+@keyframes completionPop {
+  0%   { transform: scale(0.85); opacity: 0; }
+  60%  { transform: scale(1.04); opacity: 1; }
+  100% { transform: scale(1);    opacity: 1; }
+}
+
+.workflow-complete-badge,
+.module-step.complete:last-child .step-marker,
+.report-status-badge.generated {
+  animation: completionPop var(--dur-slow) var(--ease-spring) both;
+}
+
+/* --------------------------------------------------------------------------
+   10. MODALS & DIALOGS
+   -------------------------------------------------------------------------- */
+@keyframes modalBackdropIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(10px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.settings-backdrop  { animation: modalBackdropIn var(--dur-normal) var(--ease-smooth) both; }
+.settings-dialog    { animation: modalIn var(--dur-normal) var(--ease-standard) both; }
+.schedule-backdrop  { animation: modalBackdropIn var(--dur-normal) var(--ease-smooth) both; }
+.schedule-dialog    { animation: modalIn var(--dur-normal) var(--ease-standard) both; }
+.calibration-modal-backdrop { animation: modalBackdropIn var(--dur-normal) var(--ease-smooth) both; }
+.calibration-modal  { animation: modalIn var(--dur-normal) var(--ease-standard) both; }
+
+@keyframes drawerSlideIn {
+  from { opacity: 0; transform: translateX(24px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.outbox-drawer-box { animation: drawerSlideIn var(--dur-normal) var(--ease-standard) both; }
+.outbox-backdrop   { animation: modalBackdropIn var(--dur-normal) var(--ease-smooth) both; }
+
+/* --------------------------------------------------------------------------
+   11. NOTIFICATION PANEL & TOASTS
+   -------------------------------------------------------------------------- */
+.notif-card-item {
+  transition:
+    background-color var(--dur-fast) var(--ease-smooth),
+    opacity          var(--dur-fast) var(--ease-smooth);
+}
+
+.notif-unread-blue-dot {
+  transition: opacity var(--dur-fast) var(--ease-smooth), transform var(--dur-fast) var(--ease-smooth);
+}
+
+@keyframes noticeSlideIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.module-notice {
+  animation: noticeSlideIn var(--dur-normal) var(--ease-standard) both;
+  transition: background-color var(--dur-fast) var(--ease-smooth), opacity var(--dur-normal) var(--ease-smooth);
+}
+
+/* --------------------------------------------------------------------------
+   12. TABS
+   -------------------------------------------------------------------------- */
+.er-tab {
+  transition:
+    background-color var(--dur-normal) var(--ease-standard),
+    color            var(--dur-normal) var(--ease-smooth),
+    box-shadow       var(--dur-normal) var(--ease-standard);
+}
+
+.notif-tab {
+  transition:
+    background-color var(--dur-fast) var(--ease-smooth),
+    color            var(--dur-fast) var(--ease-smooth),
+    box-shadow       var(--dur-fast) var(--ease-smooth);
+}
+
+/* --------------------------------------------------------------------------
+   13. INPUT FOCUS ANIMATIONS
+   -------------------------------------------------------------------------- */
+.login-card input,
+.form-field input, .form-field select, .form-field textarea,
+.module-content textarea,
+.er-dialog input, .er-dialog select,
+.schedule-dialog input, .schedule-dialog select, .schedule-dialog textarea,
+.workflow-form input, .workflow-form select, .workflow-form textarea,
+.workflow-form-wrap input, .workflow-form-wrap select, .workflow-form-wrap textarea,
+.process-form input, .process-form select, .process-form textarea,
+.builder-grid input, .builder-grid select,
+.builder label textarea,
+.competency-table-name input, .competency-table-level select, .competency-table-weight input,
+.kpi-search input, .kpi-table-target input,
+.collapsible-block textarea,
+.assessment-item textarea {
+  transition:
+    border-color var(--dur-fast) var(--ease-smooth),
+    box-shadow   var(--dur-fast) var(--ease-smooth),
+    background   var(--dur-fast) var(--ease-smooth);
+}
+
+.topbar .search,
+.topbar-search,
+.employee-search,
+.certificate-search-label,
+.learning-search {
+  transition:
+    border-color var(--dur-fast) var(--ease-smooth),
+    box-shadow   var(--dur-fast) var(--ease-smooth),
+    background   var(--dur-fast) var(--ease-smooth);
+}
+
+/* --------------------------------------------------------------------------
+   14. PROGRESS BARS
+   -------------------------------------------------------------------------- */
+.progress i, .module-progress i, .readiness i, .gap i, .bar-row em,
+.inline-progress i, .skill-line em, .weight-bar em, .progress-track i,
+.progress-bar em, .segmented i, .metrics-confidence i em {
+  transition: width var(--dur-slow) var(--ease-smooth);
+}
+
+.ring-bar { transition: stroke-dashoffset var(--dur-slow) var(--ease-smooth); }
+
+/* --------------------------------------------------------------------------
+   15. TABLE ROW INTERACTIONS
+   -------------------------------------------------------------------------- */
+.er-table tbody tr { transition: background-color var(--dur-fast) var(--ease-smooth); }
+.ai-records tbody tr { transition: background-color var(--dur-fast) var(--ease-smooth); }
+
+.module-flow > button {
+  transition:
+    background-color var(--dur-normal) var(--ease-smooth),
+    box-shadow       var(--dur-normal) var(--ease-smooth),
+    color            var(--dur-fast) var(--ease-smooth);
+}
+
+/* --------------------------------------------------------------------------
+   16. AI INSIGHTS / REPORT PANEL
+   -------------------------------------------------------------------------- */
+@keyframes reportFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.insight-results, .ai-report, .metrics-preview {
+  animation: reportFadeIn var(--dur-medium) var(--ease-standard) both;
+}
+
+/* --------------------------------------------------------------------------
+   17. SKELETON LOADING
+   -------------------------------------------------------------------------- */
+.skeleton-bar {
+  background: linear-gradient(90deg, #f0eff4 0%, #fafafd 50%, #f0eff4 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+
+.dark .skeleton-bar {
+  background: linear-gradient(90deg, #29292e 0%, #36363c 50%, #29292e 100%);
+  background-size: 200% 100%;
+}
+
+@keyframes skeletonFade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.page-content-loaded { animation: skeletonFade var(--dur-medium) var(--ease-smooth) both; }
+
+/* --------------------------------------------------------------------------
+   18. ICON MICRO-ANIMATIONS
+   -------------------------------------------------------------------------- */
+.notif-bell svg { transition: transform var(--dur-fast) var(--ease-spring); }
+.notif-bell:hover svg { transform: rotate(-8deg) scale(1.08); }
+
+.brand-logo-icon { transition: transform var(--dur-fast) var(--ease-spring); }
+.brand:hover .brand-logo-icon { transform: rotate(-3deg) scale(1.05); }
+
+.rating-row button {
+  transition: transform var(--dur-fast) var(--ease-spring), color var(--dur-fast) var(--ease-smooth);
+}
+
+.btn-spark, .ai-pill-spark {
+  display: inline-block;
+  transition: transform var(--dur-fast) var(--ease-spring);
+}
+
+.saas-btn-primary:hover .btn-spark,
+.ai-header-pill:hover .ai-pill-spark { transform: rotate(15deg) scale(1.2); }
+
+@keyframes liveDotPulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(70,179,124,0.4); }
+  50%      { opacity: 0.85; box-shadow: 0 0 0 4px rgba(70,179,124,0); }
+}
+
+.live-dot-green, .role-dot, .topbar-online-dot { animation: liveDotPulse 2.5s ease-in-out infinite; }
+
+/* --------------------------------------------------------------------------
+   19. LOGIN PAGE
+   -------------------------------------------------------------------------- */
+@keyframes loginCardEnter {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.login-card { animation: loginCardEnter var(--dur-slow) var(--ease-standard) both; }
+
+@keyframes errorShake {
+  0%, 100% { transform: translateX(0); }
+  15%      { transform: translateX(-4px); }
+  45%      { transform: translateX(4px); }
+  65%      { transform: translateX(-3px); }
+  85%      { transform: translateX(3px); }
+}
+
+.login-error { animation: errorShake 0.4s var(--ease-smooth) both; }
+
+/* --------------------------------------------------------------------------
+   20. WORKFLOW TIMELINE
+   -------------------------------------------------------------------------- */
+.timeline-event { transition: background-color var(--dur-fast) var(--ease-smooth); }
+
+.timeline-dot {
+  transition:
+    background-color var(--dur-normal) var(--ease-standard),
+    transform        var(--dur-normal) var(--ease-spring);
+}
+
+.timeline-event.complete .timeline-dot,
+.timeline-event.advance .timeline-dot,
+.timeline-event.ai .timeline-dot { transform: scale(1.1); }
+
+/* --------------------------------------------------------------------------
+   21. SOCIAL RECOGNITION / AWARD CARDS
+   -------------------------------------------------------------------------- */
+.award-cards article, .readiness-cards article, .competency-columns article {
+  transition:
+    transform        var(--dur-normal) var(--ease-standard),
+    box-shadow       var(--dur-normal) var(--ease-standard),
+    border-color     var(--dur-fast) var(--ease-smooth),
+    background-color var(--dur-medium) var(--ease-smooth);
+}
+
+.award-cards article:hover, .readiness-cards article:hover, .competency-columns article:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(17, 24, 39, 0.09);
+}
+
+/* --------------------------------------------------------------------------
+   22. KPI PICK CARDS & CHOICE GROUPS
+   -------------------------------------------------------------------------- */
+.kpi-pick-card {
+  transition:
+    transform        var(--dur-normal) var(--ease-standard),
+    box-shadow       var(--dur-normal) var(--ease-standard),
+    border-color     var(--dur-fast) var(--ease-smooth),
+    background-color var(--dur-fast) var(--ease-smooth),
+    opacity          var(--dur-fast) var(--ease-smooth);
+}
+
+.choice-group label, .chips-group .chip, .assign-list label, .talent-builder label, .comment-chip {
+  transition:
+    background-color var(--dur-fast) var(--ease-smooth),
+    border-color     var(--dur-fast) var(--ease-smooth),
+    color            var(--dur-fast) var(--ease-smooth),
+    transform        var(--dur-fast) var(--ease-standard);
+}
+
+.choice-group label:hover, .chips-group .chip:hover, .assign-list label:hover, .talent-builder label:hover {
+  transform: translateY(-1px);
+}
+
+/* --------------------------------------------------------------------------
+   23. QUICK DECISION ROW
+   -------------------------------------------------------------------------- */
+.quick-decision-row button {
+  transition:
+    transform        var(--dur-fast) var(--ease-standard),
+    background-color var(--dur-fast) var(--ease-smooth),
+    box-shadow       var(--dur-fast) var(--ease-standard);
+}
+
+.quick-decision-row button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.09);
+}
+
+.quick-decision-row button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* --------------------------------------------------------------------------
+   24. COLLAPSIBLE / MISC
+   -------------------------------------------------------------------------- */
+details summary { transition: color var(--dur-fast) var(--ease-smooth); }
+details summary:hover { color: #111827; }
+
+.insight-record {
+  transition: background-color var(--dur-fast) var(--ease-smooth), transform var(--dur-fast) var(--ease-standard);
+}
+.insight-record:hover { transform: translateX(2px); }
+
+.prog-stage {
+  transition:
+    background-color var(--dur-normal) var(--ease-standard),
+    border-color     var(--dur-normal) var(--ease-standard),
+    color            var(--dur-normal) var(--ease-smooth),
+    transform        var(--dur-normal) var(--ease-spring);
+}
+.prog-stage.active   { transform: scale(1.08); }
+.prog-stage.complete { transform: scale(1.04); }
+
+/* --------------------------------------------------------------------------
+   25. STAGGERED KPI CARD ENTER ANIMATIONS
+   -------------------------------------------------------------------------- */
+@keyframes kpiCardEnter {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.saas-kpi-card:nth-child(1) { animation: kpiCardEnter var(--dur-normal) var(--ease-standard) 0ms   both; }
+.saas-kpi-card:nth-child(2) { animation: kpiCardEnter var(--dur-normal) var(--ease-standard) 40ms  both; }
+.saas-kpi-card:nth-child(3) { animation: kpiCardEnter var(--dur-normal) var(--ease-standard) 80ms  both; }
+.saas-kpi-card:nth-child(4) { animation: kpiCardEnter var(--dur-normal) var(--ease-standard) 120ms both; }
+.saas-kpi-card:nth-child(5) { animation: kpiCardEnter var(--dur-normal) var(--ease-standard) 160ms both; }
+
+.role-kpi-card:nth-child(1) { animation: kpiCardEnter var(--dur-normal) var(--ease-standard) 0ms   both; }
+.role-kpi-card:nth-child(2) { animation: kpiCardEnter var(--dur-normal) var(--ease-standard) 40ms  both; }
+.role-kpi-card:nth-child(3) { animation: kpiCardEnter var(--dur-normal) var(--ease-standard) 80ms  both; }
+.role-kpi-card:nth-child(4) { animation: kpiCardEnter var(--dur-normal) var(--ease-standard) 120ms both; }
+
+.module-ring-card:nth-child(1) { animation: kpiCardEnter var(--dur-normal) var(--ease-standard) 0ms   both; }
+.module-ring-card:nth-child(2) { animation: kpiCardEnter var(--dur-normal) var(--ease-standard) 40ms  both; }
+.module-ring-card:nth-child(3) { animation: kpiCardEnter var(--dur-normal) var(--ease-standard) 80ms  both; }
+.module-ring-card:nth-child(4) { animation: kpiCardEnter var(--dur-normal) var(--ease-standard) 120ms both; }
+.module-ring-card:nth-child(5) { animation: kpiCardEnter var(--dur-normal) var(--ease-standard) 160ms both; }
+.module-ring-card:nth-child(6) { animation: kpiCardEnter var(--dur-normal) var(--ease-standard) 200ms both; }
+
+.saas-card.chart-card         { animation: kpiCardEnter var(--dur-normal) var(--ease-standard) 50ms  both; }
+.saas-card.activities-card    { animation: kpiCardEnter var(--dur-normal) var(--ease-standard) 100ms both; }
+.saas-card.quick-actions-card { animation: kpiCardEnter var(--dur-normal) var(--ease-standard) 150ms both; }
+
+/* --------------------------------------------------------------------------
+   26. EMPLOYEE RECORD MODAL ENTER
+   -------------------------------------------------------------------------- */
+@keyframes erDialogIn {
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.er-dialog { animation: erDialogIn var(--dur-normal) var(--ease-standard) both; }
+
+/* --------------------------------------------------------------------------
+   27. MISC CARDS & BUILDERS
+   -------------------------------------------------------------------------- */
+.outbox-card {
+  transition: border-color var(--dur-fast) var(--ease-smooth), background-color var(--dur-fast) var(--ease-smooth);
+}
+.outbox-card:hover { border-color: #d1d5db; }
+
+.builder > .builder-row {
+  transition: border-color var(--dur-fast) var(--ease-smooth), background-color var(--dur-fast) var(--ease-smooth);
+}
+
+.builder-add {
+  transition:
+    background-color var(--dur-fast) var(--ease-smooth),
+    border-color     var(--dur-fast) var(--ease-smooth),
+    transform        var(--dur-fast) var(--ease-standard);
+}
+.builder-add:hover { transform: translateY(-1px); }
+
+.training-card, .cert-card, .learning-card {
+  transition:
+    transform        var(--dur-normal) var(--ease-standard),
+    box-shadow       var(--dur-normal) var(--ease-standard),
+    border-color     var(--dur-fast) var(--ease-smooth),
+    background-color var(--dur-medium) var(--ease-smooth);
+}
+
+.training-card:hover, .cert-card:hover, .learning-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(17, 24, 39, 0.09);
+}
+
+/* --------------------------------------------------------------------------
+   28. ACTIVE WORKFLOW STEP GLOW
+   -------------------------------------------------------------------------- */
+@keyframes activeStepGlow {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.14); }
+  50%      { box-shadow: 0 0 0 5px rgba(17, 24, 39, 0.08); }
+}
+
+.module-step.active { animation: activeStepGlow 2.5s ease-in-out infinite; }
+
+/* --------------------------------------------------------------------------
+   29. WORKFLOW SUCCESS COMPLETION BANNERS
+   -------------------------------------------------------------------------- */
+@keyframes successBannerIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.workflow-complete-state, .module-notice-success {
+  animation: successBannerIn var(--dur-medium) var(--ease-spring) both;
+}
+
+/* --------------------------------------------------------------------------
+   30. AVATAR & PROFILE MICRO-INTERACTIONS
+   -------------------------------------------------------------------------- */
+.avatar { transition: transform var(--dur-fast) var(--ease-spring); }
+.topbar-avatar-wrapper:hover .avatar { transform: scale(1.05); }
+
+.profile-mini {
+  transition:
+    background-color var(--dur-fast) var(--ease-smooth),
+    border-color     var(--dur-fast) var(--ease-smooth);
+}
+
+/* --------------------------------------------------------------------------
+   31. TABLE ROW FADE-IN ON LOAD
+   -------------------------------------------------------------------------- */
+@keyframes rowFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.er-table tbody tr { animation: rowFadeIn var(--dur-fast) var(--ease-smooth) both; }
+
+/* --------------------------------------------------------------------------
+   32. LIVE TOAST NOTIFICATIONS (Real-time polling indicator)
+   -------------------------------------------------------------------------- */
+@keyframes toastSlideIn {
+  from { opacity: 0; transform: translate3d(0, 16px, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes toastFadeOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+@keyframes livePulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.45; transform: scale(0.7); }
+}
+
+.live-toast-stack {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.live-toast {
+  pointer-events: all;
+  background: #ffffff;
+  border: 1px solid #e5e1f8;
+  border-radius: 14px;
+  padding: 14px 16px;
+  width: 300px;
+  box-shadow: 0 8px 32px rgba(17, 24, 39, 0.14);
+  animation: toastSlideIn 300ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.dark .live-toast {
+  background: #1e1c28;
+  border-color: #3d3858;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.live-toast-header {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 6px;
+}
+
+.live-toast-pulse {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22c55e;
+  flex-shrink: 0;
+  animation: livePulse 1.8s ease-in-out infinite;
+}
+
+.live-toast-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #22c55e;
+  flex: 1;
+}
+
+.live-toast-close {
+  border: 0;
+  background: transparent;
+  color: #9994a8;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 2px;
+  transition: color var(--dur-fast) var(--ease-smooth);
+}
+
+.live-toast-close:hover { color: #111827; }
+
+.live-toast-title {
+  margin: 0 0 3px;
+  font-size: 12px;
+  font-weight: 650;
+  color: #2d2b3d;
+  line-height: 1.35;
+}
+
+.dark .live-toast-title { color: #eee8ff; }
+
+.live-toast-body {
+  margin: 0;
+  font-size: 10.5px;
+  color: #7d7a8c;
+  line-height: 1.45;
+}
+
+.dark .live-toast-body { color: #a09cb8; }
+
+/* Live indicator badge on dashboards */
+.live-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  font-weight: 650;
+  color: #22c55e;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 20px;
+  padding: 3px 9px;
+}
+
+.dark .live-indicator {
+  background: #14291e;
+  border-color: #166534;
+  color: #4ade80;
+}
+
+.live-indicator-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: livePulse 1.8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .live-toast { animation: none; }
+  .live-toast-pulse, .live-indicator-dot { animation: none; }
+}

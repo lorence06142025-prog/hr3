@@ -1,0 +1,11 @@
+/* Primary workflow actions deliberately match Generate AI Insights. */
+.process-form .primary,
+.module-primary {
+  border: 0 !important;
+  border-radius: 5px !important;
+  background: #29282d !important;
+  color: #fff !important;
+  padding: 8px 10px !important;
+  font-size: 10px !important;
+  font-weight: 400 !important;
+}
