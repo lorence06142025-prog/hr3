@@ -165,7 +165,7 @@ function PerformanceBusiness({ data, workflows, completedWorkflows, breakdown })
           </button>
         </div>
         <span style={{ fontSize: 12, color: '#64748b' }}>
-          Avg Hotel Performance: <b style={{ color: '#111827' }}>{PCT(avg)}</b>
+          Avg Logistics Performance: <b style={{ color: '#111827' }}>{PCT(avg)}</b>
         </span>
       </div>
 
@@ -279,7 +279,7 @@ function CompetencyBusiness({ data, workflows, completedWorkflows, breakdown }) 
       )}
 
       {/* Role-Based Benchmark Matrix & Skill Spider Web Section */}
-      <Section title="Role Benchmark Matrix & Skill Spider Web" note="Compare employee proficiency against standardized hospitality role benchmarks">
+      <Section title="Role Benchmark Matrix & Skill Spider Web" note="Compare employee proficiency against standardized logistics role benchmarks">
         <div style={{
           display: 'flex',
           gap: 12,
@@ -374,7 +374,7 @@ function CompetencyBusiness({ data, workflows, completedWorkflows, breakdown }) 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 10 }}>
               {employeeGaps.map(gap => {
                 const recCourses = getRecommendedCoursesForGap(gap.competency, gap.actual)
-                const primaryCourse = recCourses[0] || { title: 'Hospitality Foundations', duration: '4' }
+                const primaryCourse = recCourses[0] || { title: 'Logistics Foundations', duration: '4' }
 
                 return (
                   <div
@@ -529,7 +529,7 @@ function SuccessionBusiness({ data, workflows, completedWorkflows, breakdown }) 
       </div>
 
       {successionView === 'bench' && (
-        <Section title="Critical Leadership Bench Strength" note="Pipeline readiness for core hospitality leadership positions">
+        <Section title="Critical Leadership Bench Strength" note="Pipeline readiness for core logistics leadership positions">
           <InteractiveBenchStrength employees={employees} />
         </Section>
       )}

@@ -1,8 +1,6 @@
-const BASE_URL = import.meta.env.VITE_API_URL || (
-  typeof window !== 'undefined' && window.location.hostname.includes('hostforge')
-    ? 'https://performance-development-api-horecaos.hostforgeplatforms.com'
-    : ''
-)
+// Vercel routes same-origin /api requests to the server service. Set VITE_API_URL
+// only when deliberately using an API hosted on a separate origin.
+const BASE_URL = (import.meta.env.VITE_API_URL || '').replace(/\/+$/, '')
 
 let refreshPromise = null
 

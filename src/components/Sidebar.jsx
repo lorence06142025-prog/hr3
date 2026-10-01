@@ -79,7 +79,7 @@ const sectionsByRole = {
     {
       title: 'Administration',
       links: [
-        { to: '/orgchart', label: 'Hotel Org Chart', icon: 'sitemap' },
+        { to: '/orgchart', label: 'Logistics Org Chart', icon: 'sitemap' },
         { to: '/audit', label: 'Audit & System Health', icon: 'settings' }
       ]
     }
@@ -135,7 +135,7 @@ const sectionsByRole = {
     {
       title: 'Administration',
       links: [
-        { to: '/orgchart', label: 'Hotel Org Chart', icon: 'sitemap' }
+        { to: '/orgchart', label: 'Logistics Org Chart', icon: 'sitemap' }
       ]
     }
   ]

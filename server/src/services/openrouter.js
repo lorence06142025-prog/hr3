@@ -178,7 +178,7 @@ function buildPrompt(context) {
     const module = context.moduleWorkflow.module
     const name = m.employee_name || 'This employee'
     return {
-      system: 'You are a personal HR development coach for a hospitality employee. You analyze the employee\'s OWN recorded metrics and produce a concise, personal, actionable AI insight. Never reference organization-wide averages or other employees.',
+      system: 'You are a personal HR development coach for a logistics employee. You analyze the employee\'s OWN recorded metrics and produce a concise, personal, actionable AI insight. Never reference organization-wide averages or other employees.',
       user: `Generate a concise PERSONAL AI insight for ${name}, scoped only to their own records. Use only the data provided below; do not invent values and do not mention org-wide data.
 
 Use this structure with Markdown headings:
@@ -204,7 +204,7 @@ ${serializeContext(m)}`,
     const stage = context.moduleWorkflow.stage
     const sections = MODULE_SECTIONS[moduleLabel] || ['Overview', 'Analysis', 'Strengths', 'Areas Requiring Attention', 'Recommendations']
     return {
-      system: 'You are an expert HR workforce analytics assistant for a hospitality organization. You analyze live workforce database values and produce evidence-based, structured HR management reports.',
+      system: 'You are an expert HR workforce analytics assistant for a logistics organization. You analyze live workforce database values and produce evidence-based, structured HR management reports.',
       user: `Generate an HR analytics report for the "${moduleLabel}" module at stage "${stage}". Use only the data provided below; do not invent values.
 
 Use this exact structure with Markdown headings:
@@ -225,7 +225,7 @@ ${serializeContext(context)}`,
   }
   if (context.employee) {
     return {
-      system: 'You are an expert HR workforce analytics assistant for a hospitality organization. You produce concise, evidence-based employee analytics reports.',
+      system: 'You are an expert HR workforce analytics assistant for a logistics organization. You produce concise, evidence-based employee analytics reports.',
       user: `Generate a concise employee HR analytics report for ${context.employee.full_name}. Use only the provided data; do not invent values.
 
 Use this structure with Markdown headings:
@@ -243,7 +243,7 @@ ${serializeContext(context.employee)}`,
     }
   }
   return {
-    system: 'You are an expert HR workforce analytics assistant for a hospitality organization. You analyze live workforce database values and produce concise, evidence-based executive workforce analytics reports for HR Directors and Senior Managers.',
+    system: 'You are an expert HR workforce analytics assistant for a logistics organization. You analyze live workforce database values and produce concise, evidence-based executive workforce analytics reports for HR Directors and Senior Managers.',
     user: `Generate a concise Executive Workforce Analytics Report for the organization. Use only data provided below; do not invent values.
 
 Use this exact structure with Markdown headings:
@@ -336,7 +336,7 @@ function getFallbackInsights(context, isEmployeeScope) {
  * @returns {Promise<object>} Structured AI development plan
  */
 export async function generateDevelopmentPlan({ employee, gaps = [], resources = [] }) {
-  const empName = employee?.full_name || 'Hospitality Employee'
+  const empName = employee?.full_name || 'Logistics Employee'
   const dept = employee?.department || 'Operations'
   const role = employee?.job_title || 'Staff'
 
@@ -350,13 +350,13 @@ export async function generateDevelopmentPlan({ employee, gaps = [], resources =
         requiredScore: g.required_score,
         gapPoints: g.gap,
         priority: g.gap >= 10 ? 'High' : 'Medium',
-        impact: `Directly impacts ${dept} quality standards and guest satisfaction expectations for ${role}.`,
+        impact: `Directly impacts ${dept} quality standards and customer service expectations for ${role}.`,
         actionSteps: [
           `Complete targeted module: ${match ? `"${match.title}"` : `${g.competency} Foundational Training`}.`,
           `Practical on-the-floor application and supervisor observation in ${dept}.`,
           `Post-training reassessment to achieve benchmark (${g.required_score}% target).`
         ],
-        recommendedCourse: match ? match.title : 'Internal Hospitality SOP Refresher',
+        recommendedCourse: match ? match.title : 'Internal Logistics SOP Refresher',
       }
     })
 
@@ -380,7 +380,7 @@ export async function generateDevelopmentPlan({ employee, gaps = [], resources =
     const promptGaps = gaps.map(g => `- ${g.competency}: Current Score ${g.score}%, Target ${g.required_score}% (Deficit: -${g.gap}%)`).join('\n')
     const promptCourses = resources.slice(0, 10).map(r => `- ${r.title} (Competencies: ${(r.competencies || []).join(', ')})`).join('\n')
 
-    const systemPrompt = `You are an executive Hospitality HR Development Specialist for a premium hotel & restaurant group.
+    const systemPrompt = `You are an executive Logistics HR Development Specialist for a freight and logistics organization.
 You analyze skill gaps and generate actionable, tailored employee development plans strictly aligned with the employee's job title and department.
 Return ONLY valid JSON with no extra commentary or markdown fencing.`
 
@@ -521,7 +521,7 @@ export async function generateAiSuccessionRecommendation({
   const learningSummary = completedLearning.map(l => `- ${l.title} (${l.category || 'General'})`).join('\n')
   const trainingSummary = trainingHistory.map(t => `- ${t.title} (${t.attendance || 'Attended'})`).join('\n')
 
-  const systemPrompt = `You are an executive Hospitality HR Succession Planning Specialist for a luxury hotel and resort group.
+  const systemPrompt = `You are an executive Logistics HR Succession Planning Specialist for a modern freight and logistics group.
 Your duty is to analyze employee capability evidence and recommend a NEXT POSITION or CRITICAL ROLE from actual authorized target roles.
 
 CRITICAL RULES:

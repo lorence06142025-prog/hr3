@@ -75,7 +75,7 @@ const NINE_BOX_MATRIX = [
     col: 1,
     title: 'Core Pillar Player',
     shortLabel: 'Med Pot / Med Perf',
-    desc: 'Reliable contributor delivering consistent quality in daily hotel operations.',
+    desc: 'Reliable contributor delivering consistent quality in daily logistics operations.'
     perfRange: 'Medium',
     potRange: 'Medium',
     color: '#111827',
@@ -88,7 +88,7 @@ const NINE_BOX_MATRIX = [
     col: 2,
     title: 'High Performer',
     shortLabel: 'Med Pot / High Perf',
-    desc: 'Outstanding individual contributor with mastery in hospitality SOPs.',
+    desc: 'Outstanding individual contributor with mastery in logistics SOPs.'
     perfRange: 'High',
     potRange: 'Medium',
     color: '#3b82f6',
@@ -129,7 +129,7 @@ const NINE_BOX_MATRIX = [
     col: 2,
     title: 'Trusted Professional',
     shortLabel: 'Low Pot / High Perf',
-    desc: 'Master of current craft and veteran hospitality anchor with deep institutional knowledge.',
+    desc: 'Master of current craft and veteran logistics anchor with deep institutional knowledge.'
     perfRange: 'High',
     potRange: 'Low',
     color: '#111827',
@@ -372,7 +372,7 @@ export default function InteractiveTalentGrid({ employees = [], onSelectEmployee
                 </div>
                 <div className="talent-staff-info">
                   <b>{emp.full_name}</b>
-                  <small>{emp.department} • {emp.job_title || 'Hospitality Staff'}</small>
+                  <small>{emp.department} • {emp.job_title || 'Operations Staff'}</small>
                 </div>
                 <div className="talent-staff-scores">
                   <span className="talent-metric-chip" title="Performance Score">

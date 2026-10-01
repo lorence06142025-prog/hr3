@@ -186,7 +186,7 @@ const [workflow, setWorkflow] = useState(null)
   const [returnNote, setReturnNote] = useState('')
   const [cancelOpen, setCancelOpen] = useState(false)
   const [cancelReason, setCancelReason] = useState('')
-  const [schedule, setSchedule] = useState({ date: '', time: '09:00', venue: 'Hotel Learning Hub' })
+  const [schedule, setSchedule] = useState({ date: '', time: '09:00', venue: 'Logistics Learning Hub' })
   // Per-step form data
   const [formData, setFormData] = useState({})
   // New workflow composer state (clean slate for each new cycle)

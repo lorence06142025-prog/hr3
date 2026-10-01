@@ -6,7 +6,7 @@ import CourseContentViewer from '../components/CourseContentViewer'
 import { CheckCircle, Target, Play, FileText, BookOpen, X, Sparkles, Compass, AlertTriangle, ArrowRight, Award, Zap, ChevronRight } from 'lucide-react'
 import '../learningLibrary.css'
 
-const CATEGORIES = ['Leadership', 'Customer Service', 'Food Safety', 'Kitchen Operations', 'Compliance', 'Communication', 'Sales', 'Technical Skills']
+const CATEGORIES = ['Leadership', 'Customer Service', 'Fleet Safety', 'Dispatch Operations', 'Warehouse Operations', 'Compliance', 'Communication', 'Technical Skills']
 const PROV_TYPES = ['internal', 'external']
 
 // Self-reported study statuses.
@@ -512,7 +512,7 @@ export default function LearningManagement() {
                       )}
                     </div>
                     <h3>{resource.title}</h3>
-                    <p className="course-provider"><b>{resource.provider || 'Hospitality Academy'}</b>{resource.duration_hours ? ` · ${resource.duration_hours}h` : ''}</p>
+                    <p className="course-provider"><b>{resource.provider || 'Priority Logistics Academy'}</b>{resource.duration_hours ? ` · ${resource.duration_hours}h` : ''}</p>
                     <p className="course-desc">{resource.description}</p>
                     {resource.objectives && (
                       <div className="course-objectives">

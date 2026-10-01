@@ -626,7 +626,7 @@ export default function AIAnalytics() {
                   </span>
                 ))
               ) : (
-                <span className="exec-dept-tag">Hospitality Operations</span>
+                <span className="exec-dept-tag">Logistics Operations</span>
               )}
             </div>
           </div>
@@ -704,7 +704,7 @@ export default function AIAnalytics() {
             <div className="kpi-icon-box emerald-box">
               <Icon name="trend" size={18} />
             </div>
-            <span className="kpi-chip emerald-chip">Hospitality</span>
+            <span className="kpi-chip emerald-chip">Operations</span>
           </div>
           <div className="kpi-body">
             <small>Avg. Performance Score</small>
@@ -741,7 +741,7 @@ export default function AIAnalytics() {
             <b className="kpi-number"><AnimatedNumber value={`${averageLearning}%`} /></b>
             <div className="kpi-subtext">
               <span className="live-dot-green" />
-              <span>Across hospitality paths</span>
+              <span>Across logistics roles</span>
             </div>
           </div>
           <div className="kpi-sparkline-wrap">
@@ -806,7 +806,7 @@ export default function AIAnalytics() {
               <span><AnimatedNumber value={`${averagePerformance}%`} /></span>
               <small>Average Score</small>
             </div>
-            <div className="stat-pill-tag">Hospitality Standard</div>
+            <div className="stat-pill-tag">Operations Standard</div>
           </div>
 
           {/* Glowing Area Chart Visualization */}
@@ -1235,7 +1235,7 @@ export default function AIAnalytics() {
           <div className="table-panel-head">
             <div>
               <h3>Workforce Performance &amp; Progress</h3>
-              <p>Individual hospitality employee metrics</p>
+              <p>Individual logistics employee metrics</p>
             </div>
             <div className="table-search-box">
               <Icon name="search" size={14} />
@@ -1294,7 +1294,7 @@ export default function AIAnalytics() {
                         )}
                         <div className="emp-names">
                           <b>{employee.full_name}</b>
-                          <small>{employee.job_title || 'Hospitality Staff'}</small>
+                          <small>{employee.job_title || 'Operations Staff'}</small>
                         </div>
                       </div>
                     </td>
@@ -1334,7 +1334,7 @@ export default function AIAnalytics() {
               <Sparkles className="w-4 h-4 text-gray-300 inline mr-2" />
               <div>
                 <h3>{selected ? `${selected.full_name} Analytics` : insights ? 'Workforce Intelligence Brief' : report ? 'AI Executive Report' : 'AI Analytics'}</h3>
-                <p>{selected ? 'Individual hospitality brief' : insights ? 'Live database insights' : report ? 'Saved executive report' : 'Organization-wide intelligence'}</p>
+                <p>{selected ? 'Individual logistics brief' : insights ? 'Live database insights' : report ? 'Saved executive report' : 'Organization-wide intelligence'}</p>
               </div>
             </div>
             <div className="flex items-center gap-1.5">

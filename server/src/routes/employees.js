@@ -110,10 +110,10 @@ router.get('/org-tree', async (_req, res, next) => {
 
       // Sample department-tailored competency indicators
       const competencies = [
-        { name: 'Core Hospitality & Service', score: comp },
+        { name: 'Core Logistics & Service', score: comp },
         { name: 'Standard Operating Procedures', score: Math.min(100, Math.round(comp * 0.95 + 4)) },
-        { name: 'Guest Experience & Conflict Care', score: Math.min(100, Math.round(perf * 0.98 + 2)) },
-        { name: 'Safety, Hygiene & Food Sanitation', score: Math.min(100, Math.round(learn * 0.9 + 10)) },
+        { name: 'Customer Experience & Issue Resolution', score: Math.min(100, Math.round(perf * 0.98 + 2)) },
+        { name: 'Safety, Compliance & Operational Readiness', score: Math.min(100, Math.round(learn * 0.9 + 10)) },
         { name: 'Leadership & Succession Potential', score: Math.min(100, Math.round(readinessScore)) },
       ]
 

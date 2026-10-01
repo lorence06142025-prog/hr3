@@ -370,7 +370,7 @@ export default function Login({ onLogin, notice }) {
         )}
       </button>
 
-      {/* LEFT SIDE: Centered Showcase with Hotel Circles & Full Photo Lightbox */}
+      {/* LEFT SIDE: Centered Showcase with logistics brand circles & full photo lightbox */}
       <section className="login-illustration-column" aria-label="Priority Handling Services, Inc.">
         <LoginIllustration isLoggingInSuccess={isLoggingInSuccess} />
       </section>
@@ -812,7 +812,7 @@ export default function Login({ onLogin, notice }) {
         </div>
       </section>
 
-      {/* ── CINEMATIC PARTITION REVEAL OVERLAY (HOTEL & RESTAURANT PHOTO + TRANSLUCENT ACCEPTED BOX) ── */}
+      {/* ── CINEMATIC PARTITION REVEAL OVERLAY (LOGISTICS PHOTO + TRANSLUCENT ACCEPTED BOX) ── */}
       {isLoggingInSuccess && (
         <div className="login-success-portal-curtain" aria-live="assertive">
           <div className="login-success-zoom-stage">

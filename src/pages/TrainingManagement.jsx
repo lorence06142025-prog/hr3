@@ -7,7 +7,7 @@ import EmployeeAttendanceQRModal from '../components/EmployeeAttendanceQRModal'
 import { CheckCircle, AlertTriangle, X, Trash2, Star, QrCode, Camera, ShieldCheck, UserCheck } from 'lucide-react'
 import '../trainingCalendar.css'
 
-const CATEGORIES = ['Customer Service', 'Food Safety', 'Leadership', 'Compliance', 'Kitchen Operations', 'Technical Skills']
+const CATEGORIES = ['Customer Service', 'Fleet Safety', 'Leadership', 'Compliance', 'Dispatch Operations', 'Warehouse Operations', 'Technical Skills']
 
 export default function TrainingManagement() {
   const [activeTab, setActiveTab] = useState('active') // 'active', 'archived', 'overview'
@@ -1021,10 +1021,10 @@ export default function TrainingManagement() {
                       onChange={e => setNewSession({ ...newSession, department: e.target.value })}
                     >
                       <option value="All Departments">All Departments</option>
-                      <option value="Front Office">Front Office</option>
-                      <option value="Housekeeping">Housekeeping</option>
-                      <option value="Food & Beverage">Food & Beverage</option>
-                      <option value="Kitchen">Kitchen</option>
+                      <option value="Customer Service">Customer Service</option>
+                      <option value="Warehouse & Inventory">Warehouse & Inventory</option>
+                      <option value="Dispatch & Routing">Dispatch & Routing</option>
+                      <option value="Fleet & Transportation">Fleet & Transportation</option>
                       <option value="Engineering">Engineering</option>
                     </select>
                   </label>
@@ -1377,10 +1377,10 @@ export default function TrainingManagement() {
                     onChange={e => setEmpDeptFilter(e.target.value)}
                   >
                     <option value="">All Departments</option>
-                    <option value="Front Office">Front Office</option>
-                    <option value="Housekeeping">Housekeeping</option>
-                    <option value="Food & Beverage">Food & Beverage</option>
-                    <option value="Kitchen">Kitchen</option>
+                    <option value="Customer Service">Customer Service</option>
+                    <option value="Warehouse & Inventory">Warehouse & Inventory</option>
+                    <option value="Dispatch & Routing">Dispatch & Routing</option>
+                    <option value="Fleet & Transportation">Fleet & Transportation</option>
                   </select>
                 </div>
 

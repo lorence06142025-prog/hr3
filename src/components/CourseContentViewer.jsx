@@ -150,7 +150,7 @@ export default function CourseContentViewer({ resource, onClose }) {
               {isAiProvided && (
                 <div className="ccv-ai-banner">
                   <Sparkles size={14} style={{ flexShrink: 0 }} />
-                  <span>Hospitality AI has automatically generated this structured Curriculum & Lesson Guide based on hospitality standards.</span>
+                  <span>Operations AI has automatically generated this structured curriculum and lesson guide based on logistics standards.</span>
                 </div>
               )}
 
@@ -238,7 +238,7 @@ export default function CourseContentViewer({ resource, onClose }) {
                 {isAiProvided && (
                   <div className="ccv-ai-banner">
                     <Sparkles size={14} style={{ flexShrink: 0 }} />
-                    <span>Curriculum & Lesson Guide provided by Hospitality AI. Ready to study and export to PDF.</span>
+                    <span>Curriculum & lesson guide provided by Operations AI. Ready to study and export to PDF.</span>
                   </div>
                 )}
 

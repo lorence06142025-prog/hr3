@@ -420,7 +420,7 @@ export default function OrgChart() {
           </div>
           <div>
             <div className="org-kpi-value">{summary?.totalEmployees || nodes.length || 0}</div>
-            <div className="org-kpi-label">Active Hotel Staff</div>
+            <div className="org-kpi-label">Active Logistics Staff</div>
           </div>
         </div>
 
@@ -695,7 +695,7 @@ export default function OrgChart() {
         {loading ? (
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: 300, gap: 12 }}>
             <div className="skeleton-bar" style={{ width: 140, height: 14, borderRadius: 8 }} />
-            <div style={{ fontSize: 13, color: '#64748b' }}>Loading Hotel Organizational Hierarchy…</div>
+            <div style={{ fontSize: 13, color: '#64748b' }}>Loading logistics organizational hierarchy…</div>
           </div>
         ) : filteredTree.length === 0 ? (
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: 300, gap: 8, color: '#64748b' }}>

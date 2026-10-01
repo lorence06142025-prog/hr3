@@ -61,7 +61,7 @@ export default function EmployeeManagement() {
   const generateRandomPassword = (e) => {
     e.preventDefault()
     const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789!@#$%^&*'
-    let generated = 'Hotel'
+    let generated = 'Priority'
     for (let i = 0; i < 6; i++) {
       generated += chars.charAt(Math.floor(Math.random() * chars.length))
     }
@@ -381,7 +381,7 @@ export default function EmployeeManagement() {
                     <label>
                       System Role (RBAC)
                       <select value={form.role} onChange={e => setForm({ ...form, role: e.target.value })}>
-                        <option value="employee">Employee (Hospitality Staff)</option>
+                        <option value="employee">Employee (Operations Staff)</option>
                         <option value="supervisor">Supervisor / Department Head</option>
                         <option value="operations_manager">Operations Manager</option>
                         <option value="management">Senior Management</option>
@@ -395,7 +395,7 @@ export default function EmployeeManagement() {
                         type="email"
                         value={form.email}
                         onChange={e => setForm({ ...form, email: e.target.value })}
-                        placeholder="e.g. employee@hotel.com"
+                        placeholder="e.g. employee@prioritylogistics.com"
                       />
                     </label>
 
@@ -543,7 +543,7 @@ export default function EmployeeManagement() {
                       </span>
                     </div>
                     <p className="er-dialog-sub">
-                      {emp.job_title || 'Hospitality Staff'} • {emp.department_name || emp.department || 'General Operations'} • {emp.employee_number || ''}
+                      {emp.job_title || 'Operations Staff'} • {emp.department_name || emp.department || 'General Operations'} • {emp.employee_number || ''}
                     </p>
                   </div>
                 </div>
@@ -695,7 +695,7 @@ export default function EmployeeManagement() {
                     </div>
                     <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1 mb-2">
                       {perfGap >= 0
-                        ? `Operational delivery meets expected hotel guest service and departmental KPIs.`
+                        ? `Operational delivery meets expected service and departmental KPIs for logistics operations.`
                         : `Performance reviews indicate actionable areas for improvement before next evaluation cycle.`}
                     </p>
                     <div className="er-progress-track">

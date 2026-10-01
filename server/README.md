@@ -47,6 +47,14 @@ Configure one email provider before starting the API in production: Brevo (`BREV
 
 The API validates required production settings at startup and refuses development JWT/database fallbacks. Its CORS policy only allows the configured `CLIENT_ORIGIN`; update that value when the frontend domain changes. The `/smtp-check` diagnostic is development-only.
 
+### Vercel multi-service deployment
+
+The root [`vercel.json`](../vercel.json) defines two services: `app` (the Vite frontend at `/`) and `server` (the Express API at `/api/*`). The API is public only through the `/api/*` rewrite; the frontend catch-all comes after that rewrite. Browser API requests stay same-origin, so leave `VITE_API_URL` unset/empty in the Vercel app service. Do not create a service binding for this browser-to-API path: Vercel bindings are runtime-only environment variables for server-side callers, while this frontend is a static Vite build. No backend-to-frontend service call exists in this repository.
+
+In the Vercel project, set API secrets on the `server` service: `NODE_ENV=production`, `DATABASE_URL`, a unique `JWT_SECRET`, `CLIENT_ORIGIN`, `PUBLIC_APP_URL`, and one configured email provider. For the one-domain setup, `CLIENT_ORIGIN` and `PUBLIC_APP_URL` should both be the deployed app origin (for example `https://your-project.vercel.app`). Add `OPENROUTER_API_KEY` and HR2 variables only when those integrations are enabled. The `app` service needs no secrets; `VITE_PUBLIC_APP_URL` can remain empty to use the browser origin.
+
+The API entrypoint is `server/src/server.js`. Vercel's Express runtime accepts its port-listener pattern. Apply pending Supabase migrations separately with `npm run migrate` from `server` after linking the intended project; do not run reset commands against production.
+
 ## AI insights with OpenRouter
 
 Add `OPENROUTER_API_KEY` and optionally `OPENROUTER_MODEL` to `pds/server/.env`, then restart the API. The key is used only by the backend; it is never sent to the browser. `POST /api/analytics/insights` sends aggregate, non-identifying workforce metrics to OpenRouter and returns concise insight cards.

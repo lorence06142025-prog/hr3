@@ -15,15 +15,13 @@ const REPORT_TYPES = [
 const DEPARTMENTS = [
   'All Departments',
   'Executive Management',
-  'Operations',
-  'Security',
-  'Engineering & Facilities',
-  'Sales & Marketing',
-  'Finance & Accounting',
-  'Housekeeping',
-  'HR',
-  'Food & Beverage',
-  'Front Office / Guest Services',
+  'Fleet & Transportation',
+  'Dispatch & Routing',
+  'Warehouse & Inventory',
+  'Customer Service',
+  'Safety & Compliance',
+  'Finance & Administration',
+  'Human Resources',
   'IT & Systems'
 ]
 

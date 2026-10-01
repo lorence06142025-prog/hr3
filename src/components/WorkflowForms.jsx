@@ -305,7 +305,7 @@ function KpiLibraryBuilder({ value = [], onChange }) {
             e.target.value = ''
           }}>
             <option value="">Choose a KPI…</option>
-            {['All', 'Food & Beverage', 'Kitchen', 'Housekeeping', 'Front Office'].map(dept => {
+            {['All', 'Fleet & Transportation', 'Dispatch & Routing', 'Warehouse & Inventory', 'Customer Service', 'Safety & Compliance', 'Finance & Administration', 'Human Resources', 'Executive Office'].map(dept => {
               const deptKpis = KPI_LIBRARY.filter(k => (k.department || 'All') === dept)
               if (!deptKpis.length) return null
               return (
@@ -356,7 +356,7 @@ function KpiLibraryBuilder({ value = [], onChange }) {
                     <input value={row.target || '90%'} onChange={e => set(index, { target: e.target.value })} placeholder="e.g. 90%" />
                   </label>
                 </div>
-                <div className="competency-table-weight">
+                <div className="kpi-table-weight">
                   <label><small>Weight (%)</small>
                     <input type="number" value={row.weight} onChange={e => set(index, { weight: e.target.value === '' ? '' : Number(e.target.value) })} min={0} max={100} />
                   </label>
@@ -372,202 +372,94 @@ function KpiLibraryBuilder({ value = [], onChange }) {
   )
 }
 
-// ------------------------- Builder: Hotel & Restaurant Evaluation -----------------------------
+// ------------------------- Builder: Freight & Logistics Evaluation ----------------------------
+
+const buildDepartmentCriteria = (prefix, specificCriteria) => [
+  ...specificCriteria.slice(0, 2).map(([name, description], index) => ({ id: `${prefix}_${index + 1}`, name, description, weight: 10 })),
+  { id: `${prefix}_3`, name: 'Attendance & Punctuality', description: 'Reliable attendance, punctual shift starts, and complete handovers throughout the review period.', weight: 10 },
+  ...specificCriteria.slice(2).map(([name, description], index) => ({ id: `${prefix}_${index + 4}`, name, description, weight: 10 })),
+  { id: `${prefix}_7`, name: 'Safety & Policy Compliance', description: 'Follows applicable safety procedures, operating policies, and escalation requirements.', weight: 5 },
+  { id: `${prefix}_8`, name: 'Documentation Accuracy', description: 'Maintains complete, accurate, and timely operating records.', weight: 5 },
+  { id: `${prefix}_9`, name: 'Communication & Handover', description: 'Shares clear, timely information with coworkers, supervisors, customers, and partner teams.', weight: 5 },
+  { id: `${prefix}_10`, name: 'Teamwork & Cross-Functional Support', description: 'Coordinates effectively across roles and supports shared service and safety goals.', weight: 5 },
+  { id: `${prefix}_11`, name: 'Customer & Internal Service', description: 'Provides professional, accurate, and responsive service to customers and internal partners.', weight: 5 },
+  { id: `${prefix}_12`, name: 'Initiative & Problem Solving', description: 'Identifies issues early, takes appropriate action, and escalates risks when needed.', weight: 5 },
+  { id: `${prefix}_13`, name: 'Continuous Improvement', description: 'Uses feedback and operating data to improve quality, productivity, and reliability.', weight: 5 },
+  { id: `${prefix}_14`, name: 'Knowledge Sharing & Role Readiness', description: 'Applies role knowledge consistently and supports training or knowledge transfer.', weight: 5 },
+]
 
 export const DEPARTMENT_EVALUATION_CRITERIA = {
-  'Food & Beverage': [
-    { id: 'fb_1', name: 'Order Accuracy & Table Service', description: 'Accuracy in taking food/beverage orders, correct dish delivery, and sequence of table service.', weight: 10 },
-    { id: 'fb_2', name: 'Menu & Beverage Knowledge', description: 'Deep understanding of menu ingredients, allergen awareness, daily specials, and beverage pairings.', weight: 10 },
-    { id: 'fb_3', name: 'Punctuality & Shift Readiness', description: 'Reliability in reporting on time, uniform grooming standards, and station readiness before service.', weight: 10 },
-    { id: 'fb_4', name: 'Food Safety, Sanitation & Hygiene', description: 'Strict compliance with food safety protocols, table sanitization, clean glassware, and hygiene rules.', weight: 10 },
-    { id: 'fb_5', name: 'Customer Service & Guest Hospitality', description: 'Warm greeting, attentive table maintenance, courteous communication, and guest satisfaction.', weight: 10 },
-    { id: 'fb_6', name: 'Kitchen & Service Communication', description: 'Clear communication with culinary kitchen line, POS system proficiency, and fast order transmission.', weight: 10 },
-    { id: 'fb_7', name: 'Teamwork & Cross-Section Support', description: 'Supporting fellow servers, busing tables during rushes, and cooperating across F&B sections.', weight: 10 },
-    { id: 'fb_8', name: 'Availability & Peak Hour Flexibility', description: 'Willingness to support during high-volume dinner rushes, banquet events, and shift extensions.', weight: 5 },
-    { id: 'fb_9', name: 'Station Prep & Independence', description: 'Self-sufficient side station restocking, cutlery polishing, and working with minimal intervention.', weight: 5 },
-    { id: 'fb_10', name: 'Initiative & Proactive Service', description: 'Anticipating guest water refills, clearing finished plates promptly, and identifying service gaps.', weight: 5 },
-    { id: 'fb_11', name: 'Service Recovery & Complaint Handling', description: 'Calm resolution of customer food complaints, billing queries, and graceful dispute management.', weight: 5 },
-    { id: 'fb_12', name: 'Composure Under Dining Rush', description: 'Maintaining emotional composure, steady pacing, and courteous demeanor during heavy covers.', weight: 5 },
-    { id: 'fb_13', name: 'Shift Leadership & Mentorship', description: 'Guiding apprentice waitstaff, station handover quality, and promoting team harmony.', weight: 2.5 },
-    { id: 'fb_14', name: 'Suggestive Selling & Upselling', description: 'Effective promotion of appetizers, premium wine pairings, desserts, and tasting specials.', weight: 2.5 },
-  ],
-
-  'Kitchen': [
-    { id: 'kit_1', name: 'Food Quality & Recipe Consistency', description: 'Precision in taste, portioning, cooking temperatures, and presentation according to standard recipes.', weight: 10 },
-    { id: 'kit_2', name: 'Culinary Knowledge & Knife Skills', description: 'Mastery of knife techniques, cooking methods, butchery, sauces, and culinary workstation tools.', weight: 10 },
-    { id: 'kit_3', name: 'Punctuality & Shift Attendance', description: 'Dependability on reporting on time for kitchen prep shifts, line stations, and banquet setups.', weight: 10 },
-    { id: 'kit_4', name: 'Food Safety, Hygiene & HACCP', description: 'Strict compliance with temperature logs, cross-contamination prevention, dating/labeling, and sanitizing.', weight: 10 },
-    { id: 'kit_5', name: 'Ticket Timing & Speed of Execution', description: 'Consistent ticket turnaround times, synchronized plating with waitstaff, and line speed.', weight: 10 },
-    { id: 'kit_6', name: 'Line Calling & Station Communication', description: 'Clear auditory communication with the Head Chef, Sous Chef, expediter, and fellow line cooks.', weight: 10 },
-    { id: 'kit_7', name: 'Kitchen Teamwork & Line Support', description: 'Assisting adjacent stations during heavy dockets, backing up dishwashing, and team collaboration.', weight: 10 },
-    { id: 'kit_8', name: 'Availability & Banquet Flexibility', description: 'Willingness to take on early prep shifts, late cleanups, and banquet event catering production.', weight: 5 },
-    { id: 'kit_9', name: 'Mise en Place & Station Independence', description: 'Organized, independent station setup with all ingredients prepped and stocked prior to rush.', weight: 5 },
-    { id: 'kit_10', name: 'Portion Control & Waste Reduction', description: 'Minimizing ingredient trim waste, proper storage of leftovers, and respecting food cost targets.', weight: 5 },
-    { id: 'kit_11', name: 'Special Dietary & Allergen Handling', description: 'Careful execution of gluten-free, vegan, and severe allergy dockets without cross-contact.', weight: 5 },
-    { id: 'kit_12', name: 'Peak Rush Composure & Stamina', description: 'Maintaining focus, precision, and a calm professional attitude in a hot, high-pressure kitchen.', weight: 5 },
-    { id: 'kit_13', name: 'Station Leadership & Mentorship', description: 'Mentoring commis chefs/apprentices, maintaining station equipment, and cleanliness leadership.', weight: 2.5 },
-    { id: 'kit_14', name: 'Creative Contribution & Efficiency', description: 'Suggesting prep improvements, daily special ideas, and creative kitchen process optimizations.', weight: 2.5 },
-  ],
-
-  'Housekeeping': [
-    { id: 'hk_1', name: 'Room Cleaning & Sanitization Standards', description: 'Thoroughness in dusting, vacuuming, bed making, bathroom disinfection, and immaculate cleanliness.', weight: 10 },
-    { id: 'hk_2', name: 'Cleaning SOPs & Chemical Knowledge', description: 'Correct usage of housekeeping chemicals, PPE, cleaning machinery, and color-coded cloths.', weight: 10 },
-    { id: 'hk_3', name: 'Shift Punctuality & Attendance', description: 'Timely morning briefing attendance, prompt start on floor assignments, and shift dependability.', weight: 10 },
-    { id: 'hk_4', name: 'Room Turnaround Time & Productivity', description: 'Meeting daily room inspection quotas (stayover and checkout turnarounds) within allotted time.', weight: 10 },
-    { id: 'hk_5', name: 'Guest Courtesy & Privacy Protocol', description: 'Polite guest greetings, respecting "Do Not Disturb" signs, and upholding guest privacy and security.', weight: 10 },
-    { id: 'hk_6', name: 'Radio & Discrepancy Communication', description: 'Prompt status updates to Front Office via radio/PMS when rooms are clean, inspected, or out of order.', weight: 10 },
-    { id: 'hk_7', name: 'Teamwork & Linen Room Collaboration', description: 'Cooperating with laundry attendants, housemen, and floor partners during high-occupancy days.', weight: 10 },
-    { id: 'hk_8', name: 'Peak Occupancy & Weekend Flexibility', description: 'Availability to work during hotel peak seasons, weekend turnovers, and holiday shifts.', weight: 5 },
-    { id: 'hk_9', name: 'Trolley Organization & Autonomy', description: 'Keeping housekeeping carts neatly stocked, organized, and working independently with minimal oversight.', weight: 5 },
-    { id: 'hk_10', name: 'Defect Reporting & Preventive Care', description: 'Proactively identifying and reporting maintenance issues (leaks, blown bulbs, carpet stains).', weight: 5 },
-    { id: 'hk_11', name: 'Lost & Found Compliance', description: 'Immediate, accurate logging and handover of guest forgotten items according to hotel security SOPs.', weight: 5 },
-    { id: 'hk_12', name: 'Composure During Mass Turnovers', description: 'Maintaining rigorous quality standards and calm focus during heavy back-to-back check-in rushes.', weight: 5 },
-    { id: 'hk_13', name: 'Floor Inspection Leadership', description: 'Assisting supervisors with spot checks, training new room attendants, and VIP room setups.', weight: 2.5 },
-    { id: 'hk_14', name: 'Amenities Conservation & Asset Care', description: 'Preventing linen damage, controlled usage of guest amenities, and reducing laundry chemical waste.', weight: 2.5 },
-  ],
-
-  'Front Office': [
-    { id: 'fo_1', name: 'Check-in & Check-out Speed & Precision', description: 'Flawless execution of check-in/out procedures, key card issuance, and guest identity verification.', weight: 10 },
-    { id: 'fo_2', name: 'PMS System & Hotel SOP Knowledge', description: 'Proficiency in Property Management Systems (Opera/Cloud PMS), room rates, and hotel policies.', weight: 10 },
-    { id: 'fo_3', name: 'Shift Punctuality & Handover Reliability', description: 'Reliability in reporting for shift briefings, cash float counting, and detailed shift handover notes.', weight: 10 },
-    { id: 'fo_4', name: 'Billing, Payment & Cash Handling Accuracy', description: 'Zero discrepancies in guest folios, credit card processing, currency exchange, and ledger audits.', weight: 10 },
-    { id: 'fo_5', name: 'Warm Hospitality & Guest Welcoming', description: 'First impression excellence, genuine hospitality demeanor, eye contact, and professional grooming.', weight: 10 },
-    { id: 'fo_6', name: 'Telephone & Concierge Etiquette', description: 'Professional phone manner within 3 rings, accurate local recommendations, and message delivery.', weight: 10 },
-    { id: 'fo_7', name: 'Cross-Departmental Coordination', description: 'Seamless coordination with Housekeeping (room readiness), Bell desk, and Maintenance teams.', weight: 10 },
-    { id: 'fo_8', name: 'Night Shift & Peak Hour Availability', description: 'Flexibility to cover night audit shifts, early departures, and large group arrival surges.', weight: 5 },
-    { id: 'fo_9', name: 'Lobby Presence & Front Desk Autonomy', description: 'Independent lobby management, proactive queue management, and self-sufficient problem handling.', weight: 5 },
-    { id: 'fo_10', name: 'VIP & Loyalty Guest Recognition', description: 'Accurate recognition of frequent guests, loyalty program perks, and personalized welcome amenities.', weight: 5 },
-    { id: 'fo_11', name: 'Service Recovery & De-escalation', description: 'Effective handling of guest complaints, room change requests, and resolving billing disputes calmly.', weight: 5 },
-    { id: 'fo_12', name: 'Composure Under High-Volume Check-ins', description: 'Remaining calm, poised, and courteous when managing long queues during major flight/tour arrivals.', weight: 5 },
-    { id: 'fo_13', name: 'Shift Leadership & Duty Handover', description: 'Leading desk operations during supervisor absence, mentoring trainees, and audit integrity.', weight: 2.5 },
-    { id: 'fo_14', name: 'Room Upselling & Revenue Enhancement', description: 'Active promotion of suite upgrades, late checkouts, breakfast packages, and spa bookings.', weight: 2.5 },
-  ],
-
-  'Engineering': [
-    { id: 'eng_1', name: 'Preventive Maintenance Quality', description: 'Execution of scheduled preventive maintenance tasks across HVAC, plumbing, boilers, and plant rooms.', weight: 10 },
-    { id: 'eng_2', name: 'Technical & Systems Knowledge', description: 'Comprehensive understanding of electrical circuits, HVAC chillers, pumps, BMS, and guestroom fixtures.', weight: 10 },
-    { id: 'eng_3', name: 'Emergency Response & Punctuality', description: 'Fast response times to emergency engineering calls, shift timeliness, and on-call readiness.', weight: 10 },
-    { id: 'eng_4', name: 'OSHA, Safety & Fire Code Compliance', description: 'Strict adherence to lockout/tagout (LOTO), fire alarm testing, safety PPE, and chemical handling.', weight: 10 },
-    { id: 'eng_5', name: 'Guestroom Work Order Resolution Speed', description: 'Prompt and discreet resolution of in-room guest maintenance requests (AC, TV, plumbing, safe).', weight: 10 },
-    { id: 'eng_6', name: 'Technical Log & Inter-dept Communication', description: 'Accurate work order logging in engineering software and clear updates to Front Desk/Housekeeping.', weight: 10 },
-    { id: 'eng_7', name: 'Teamwork & Multi-Craft Collaboration', description: 'Collaborating across electrical, carpentry, painting, and mechanical maintenance projects.', weight: 10 },
-    { id: 'eng_8', name: 'Emergency & Weekend Availability', description: 'Willingness to report for urgent night breakdowns, storm preparedness, and holiday coverage.', weight: 5 },
-    { id: 'eng_9', name: 'Independent Troubleshooting', description: 'Ability to diagnose complex technical faults and execute repairs with minimal guidance.', weight: 5 },
-    { id: 'eng_10', name: 'Energy Management & Sustainability', description: 'Monitoring energy consumption, identifying utility leaks, and supporting green hotel initiatives.', weight: 5 },
-    { id: 'eng_11', name: 'Root Cause Repair & Recurrence Prevention', description: 'Solving underlying mechanical/electrical issues rather than applying temporary surface fixes.', weight: 5 },
-    { id: 'eng_12', name: 'Composure During Critical Outages', description: 'Calm and methodical execution during power outages, elevator stoppages, or water line failures.', weight: 5 },
-    { id: 'eng_13', name: 'Workshop Leadership & Tool Ownership', description: 'Maintaining organized workshop tools, machinery maintenance, and mentoring junior technicians.', weight: 2.5 },
-    { id: 'eng_14', name: 'Spare Parts Inventory & Cost Efficiency', description: 'Accurate tracking of replacement parts, vendor coordination, and minimizing repair expenses.', weight: 2.5 },
-  ],
-
-  'Human Resources': [
-    { id: 'hr_1', name: 'HR Operations & Filing Accuracy', description: 'Precision in 201 filing, contract preparation, government compliance, and HR records management.', weight: 10 },
-    { id: 'hr_2', name: 'Labor Law & Hotel Policy Knowledge', description: 'Solid understanding of labor codes, company code of discipline, benefits, and standard procedures.', weight: 10 },
-    { id: 'hr_3', name: 'Punctuality & HR Desk Reliability', description: 'Dependability in attending HR meetings, keeping office hours, and prompt attendance tracking.', weight: 10 },
-    { id: 'hr_4', name: 'Confidentiality & Data Privacy Compliance', description: 'Strict protection of employee personal data, medical records, compensation, and disciplinary files.', weight: 10 },
-    { id: 'hr_5', name: 'Employee Relations & Service Mindset', description: 'Approachable, empathetic, and professional support for employee inquiries, benefits, and welfare.', weight: 10 },
-    { id: 'hr_6', name: 'Clear Communication & Advisory Skills', description: 'Effective written memos, employee briefings, and clear communication with department managers.', weight: 10 },
-    { id: 'hr_7', name: 'Collaboration with Department Heads', description: 'Proactive partnership with hotel line managers on staffing needs, performance reviews, and training.', weight: 10 },
-    { id: 'hr_8', name: 'Event & Recruitment Drive Availability', description: 'Flexibility to support job fairs, mass hiring, town halls, and employee recognition events.', weight: 5 },
-    { id: 'hr_9', name: 'Case Management & Task Autonomy', description: 'Managing onboarding, exit clearances, and employee claims independently without constant direction.', weight: 5 },
-    { id: 'hr_10', name: 'Employee Engagement & Wellness Initiative', description: 'Proactive organization of team-building activities, health programs, and employee engagement programs.', weight: 5 },
-    { id: 'hr_11', name: 'Grievance Handling & Conflict Mediation', description: 'Fair, unbiased facilitation of employee conflicts and smooth resolution of workplace grievances.', weight: 5 },
-    { id: 'hr_12', name: 'Composure During Sensitive Situations', description: 'Maintaining professional composure, objectivity, and discretion during disciplinary investigations.', weight: 5 },
-    { id: 'hr_13', name: 'HR Project Leadership & Mentorship', description: 'Leading HR initiatives (e.g. system digitization, policy updates) and mentoring junior HR staff.', weight: 2.5 },
-    { id: 'hr_14', name: 'Talent Retention & Sourcing Efficiency', description: 'Optimizing recruitment turnaround times, reducing recruitment costs, and improving staff retention.', weight: 2.5 },
-  ],
-
-  'Security': [
-    { id: 'sec_1', name: 'Patrol Thoroughness & Vigilance', description: 'Rigorous inspection of hotel perimeters, emergency exits, guest corridors, and back-of-house areas.', weight: 10 },
-    { id: 'sec_2', name: 'Security SOPs & Emergency Protocol Knowledge', description: 'Mastery of emergency response protocols (fire, medical, bomb threat, evacuation, trespasser).', weight: 10 },
-    { id: 'sec_3', name: 'Punctuality & Guard Post Reliability', description: 'Punctual attendance at post handovers, alert post posture, and dependable shift attendance.', weight: 10 },
-    { id: 'sec_4', name: 'CCTV Monitoring & Incident Log Accuracy', description: 'Meticulous logging of security incidents, visitor logs, key issuance, and active CCTV surveillance.', weight: 10 },
-    { id: 'sec_5', name: 'Courteous & Firm Guest/Visitor Interaction', description: 'Balancing approachable hospitality with firm security enforcement at hotel entry points.', weight: 10 },
-    { id: 'sec_6', name: 'Radio Etiquette & Incident Reporting', description: 'Crisp, professional two-way radio protocol and detailed, factual incident documentation.', weight: 10 },
-    { id: 'sec_7', name: 'Teamwork with Duty Managers & Night Staff', description: 'Seamless cooperation with Night Managers, Front Desk, and Engineering during night shifts.', weight: 10 },
-    { id: 'sec_8', name: 'VIP Event & Night Shift Availability', description: 'Willingness to cover high-security VIP banquets, night duty, and emergency standby.', weight: 5 },
-    { id: 'sec_9', name: 'Guard Post Autonomy & Situational Awareness', description: 'Self-sufficient management of access control points, bag checks, and vehicle screening.', weight: 5 },
-    { id: 'sec_10', name: 'Proactive Hazard Identification', description: 'Early detection of fire hazards, blocked stairwells, suspicious items, and safety risks.', weight: 5 },
-    { id: 'sec_11', name: 'De-escalation & Conflict Management', description: 'Defusing intoxicated guests or aggressive individuals peacefully without escalating disruption.', weight: 5 },
-    { id: 'sec_12', name: 'Composure Under Crisis & Emergencies', description: 'Poise, rapid decision-making, and disciplined execution during medical or safety emergencies.', weight: 5 },
-    { id: 'sec_13', name: 'Security Post Leadership & Inspection', description: 'Conducting guard briefings, drill inspections, and mentoring newly deployed security personnel.', weight: 2.5 },
-    { id: 'sec_14', name: 'Loss Prevention & Asset Protection', description: 'Preventing pilferage of hotel property, vendor delivery audits, and contractor compliance.', weight: 2.5 },
-  ],
-
-  'Sales & Marketing': [
-    { id: 'sm_1', name: 'Revenue & Sales Target Achievement', description: 'Performance against monthly room nights, banquet revenue, and corporate sales volume targets.', weight: 10 },
-    { id: 'sm_2', name: 'Product, Rate & Banquet Knowledge', description: 'Expertise in room categories, meeting package pricing, F&B banquet menus, and seasonal rate structures.', weight: 10 },
-    { id: 'sm_3', name: 'Client Meeting & Proposal Punctuality', description: 'Reliability in meeting clients, prompt delivery of contracts/proposals, and follow-up timeliness.', weight: 10 },
-    { id: 'sm_4', name: 'Contracting & Revenue Policy Compliance', description: 'Strict compliance with hotel credit policies, deposit requirements, cancellation terms, and contracts.', weight: 10 },
-    { id: 'sm_5', name: 'Client Relationship Management & Hospitality', description: 'Building high-trust, long-term relationships with corporate bookers, event planners, and travel agents.', weight: 10 },
-    { id: 'sm_6', name: 'Inter-departmental Banquet Coordination', description: 'Clear Event Order (BEO) handovers to F&B, Kitchen, and Front Desk to ensure flawless event execution.', weight: 10 },
-    { id: 'sm_7', name: 'Sales Team Collaboration & Cross-Selling', description: 'Working constructively with peers on large bids, joint site inspections, and cross-segment leads.', weight: 10 },
-    { id: 'sm_8', name: 'Event Coverage & Client Entertaining Availability', description: 'Flexibility to attend evening networking events, weekend site inspections, and client dinners.', weight: 5 },
-    { id: 'sm_9', name: 'Lead Pipeline Management & Autonomy', description: 'Self-driven prospecting, CRM pipeline updating, lead qualification, and account management.', weight: 5 },
-    { id: 'sm_10', name: 'Market Intelligence & Competitor Tracking', description: 'Proactively gathering competitor pricing insights, market trends, and new business opportunities.', weight: 5 },
-    { id: 'sm_11', name: 'Negotiation & Contract Closing', description: 'Overcoming client objections, commercial win-win negotiations, and closing event contracts.', weight: 5 },
-    { id: 'sm_12', name: 'Composure Under Tight Pitch Deadlines', description: 'Maintaining high proposal quality and positive attitude when preparing urgent, high-value bids.', weight: 5 },
-    { id: 'sm_13', name: 'Account Strategy Leadership & Mentorship', description: 'Developing key account growth strategies, mentoring sales coordinators, and pitch leadership.', weight: 2.5 },
-    { id: 'sm_14', name: 'Package Upselling & High-Margin Booking', description: 'Upselling premium banquet beverage packages, audio-visual enhancements, and multi-day bookings.', weight: 2.5 },
-  ],
-
-  'Finance': [
-    { id: 'fin_1', name: 'Accounting Precision & Reconciliation', description: 'Zero error tolerance in ledger entries, bank reconciliations, tax filings, and balance sheet accounts.', weight: 10 },
-    { id: 'fin_2', name: 'USALI & Hospitality Accounting Knowledge', description: 'Mastery of Uniform System of Accounts for the Lodging Industry (USALI), revenue audits, and tax laws.', weight: 10 },
-    { id: 'fin_3', name: 'Deadline Reliability & Punctuality', description: 'Consistent on-time delivery of daily income audits, payroll runs, vendor payments, and month-end closes.', weight: 10 },
-    { id: 'fin_4', name: 'Internal Controls & Audit Compliance', description: 'Rigorous enforcement of purchasing authorization, petty cash audits, and anti-fraud protocols.', weight: 10 },
-    { id: 'fin_5', name: 'Internal Customer Service & Support', description: 'Prompt and courteous support to department managers regarding budget queries, invoices, and payroll.', weight: 10 },
-    { id: 'fin_6', name: 'Financial Reporting & Communication', description: 'Clear presentation of financial variances, departmental P&L statements, and cash flow reports.', weight: 10 },
-    { id: 'fin_7', name: 'Audit Team Collaboration', description: 'Constructive teamwork within the finance office and smooth cooperation with external auditors.', weight: 10 },
-    { id: 'fin_8', name: 'Month-End & Year-End Close Availability', description: 'Flexibility to commit additional hours during fiscal closes, physical inventory counts, and audits.', weight: 5 },
-    { id: 'fin_9', name: 'Reconciliation Autonomy & Workflow', description: 'Independent resolution of ledger clearing accounts, credit card settlements, and supplier statements.', weight: 5 },
-    { id: 'fin_10', name: 'Cost Leakage Identification & Initiative', description: 'Proactive detection of billing leakages, supplier overcharges, and operational cost savings.', weight: 5 },
-    { id: 'fin_11', name: 'Variance Analysis & Dispute Resolution', description: 'Investigating department cost variances and resolving complex billing disputes with corporate accounts.', weight: 5 },
-    { id: 'fin_12', name: 'Composure During Strict Fiscal Deadlines', description: 'Maintaining accuracy, precision, and focus under tight month-end reporting schedules.', weight: 5 },
-    { id: 'fin_13', name: 'Financial Systems & Audit Leadership', description: 'Assisting in financial system upgrades, policy implementation, and training junior accountants.', weight: 2.5 },
-    { id: 'fin_14', name: 'Budget Optimization & Cost Enforcement', description: 'Guiding department heads in optimizing OPEX budgets, renegotiating supplier terms, and efficiency.', weight: 2.5 },
-  ]
+  'Executive Office': buildDepartmentCriteria('exec', [
+    ['Service-Level & Network Performance', 'Monitors on-time service, capacity, and customer commitments across the operating network.'],
+    ['Operating Plan & Margin Delivery', 'Delivers approved operating plans, cost controls, and financial targets.'],
+    ['Strategic Initiative Delivery', 'Moves cross-functional logistics initiatives forward against agreed milestones.'],
+    ['Risk & Continuity Decisions', 'Makes timely, evidence-based decisions on operational, customer, and continuity risks.'],
+    ['Forecast & Performance Review Quality', 'Uses accurate forecasts and performance reviews to set priorities and corrective actions.'],
+  ]),
+  'Human Resources': buildDepartmentCriteria('hr', [
+    ['Hiring & Qualification Turnaround', 'Fills roles on time while verifying job-specific qualifications and required records.'],
+    ['Onboarding & Readiness Completion', 'Completes onboarding, policy acknowledgement, and role-readiness steps before assignment.'],
+    ['Employee Case Resolution', 'Resolves employee questions and workplace cases consistently and within service targets.'],
+    ['Workforce Record Accuracy', 'Maintains accurate employee, qualification, and training records.'],
+    ['Staffing Plan Support', 'Provides timely staffing and retention analysis to the operating departments.'],
+  ]),
+  'Fleet & Transportation': buildDepartmentCriteria('fleet', [
+    ['Safe Driving & Incident Prevention', 'Operates safely, follows defensive-driving practices, and prevents avoidable incidents.'],
+    ['On-Time Delivery & Route Adherence', 'Completes assigned routes within delivery windows and reports route deviations promptly.'],
+    ['Pre-Trip & Post-Trip Inspection Completion', 'Completes vehicle inspections and records defects before and after trips.'],
+    ['Cargo Securement & Damage Prevention', 'Loads, checks, and transports freight to prevent shifting, loss, or damage.'],
+    ['Vehicle Care & Fuel Efficiency', 'Maintains vehicle condition and applies fuel-efficient driving practices.'],
+  ]),
+  'Dispatch & Routing': buildDepartmentCriteria('dispatch', [
+    ['Route Plan & Delivery Window Accuracy', 'Builds executable routes that meet delivery windows and operating constraints.'],
+    ['Load Scheduling & Capacity Utilization', 'Schedules loads accurately and uses vehicle capacity effectively.'],
+    ['TMS, GPS & Shipment Status Accuracy', 'Keeps TMS/GPS milestones, driver assignments, and shipment statuses current.'],
+    ['Exception Detection & Recovery', 'Identifies delays or service exceptions early and coordinates recovery actions.'],
+    ['Dispatch-to-Driver Communication', 'Provides clear, timely instructions and captures acknowledgements and changes.'],
+  ]),
+  'Warehouse & Inventory': buildDepartmentCriteria('warehouse', [
+    ['Inventory Accuracy & Reconciliation', 'Maintains location and quantity accuracy and resolves inventory variances.'],
+    ['Pick, Pack & Shipment Staging Accuracy', 'Picks the correct freight, protects it appropriately, and stages it to the correct route.'],
+    ['Safe Equipment & Forklift Operation', 'Operates material-handling equipment safely and follows pedestrian and load controls.'],
+    ['Receiving, Scanning & Put-Away Quality', 'Verifies inbound freight and completes accurate scan and put-away transactions.'],
+    ['Throughput & Cutoff Performance', 'Meets shift throughput and outbound cutoff targets without compromising accuracy or safety.'],
+  ]),
+  'Customer Service': buildDepartmentCriteria('service', [
+    ['Shipment Inquiry Resolution', 'Resolves tracking, delivery, and service inquiries with accurate verified information.'],
+    ['Proactive Status Communication', 'Provides timely updates when shipment status changes or service is at risk.'],
+    ['Claims & Proof-of-Delivery Accuracy', 'Maintains complete delivery evidence and accurate claim or return records.'],
+    ['Customer Satisfaction & Service Recovery', 'Resolves service failures professionally and follows through on agreed actions.'],
+    ['Case Ownership & Resolution Time', 'Owns customer cases through closure and meets response and resolution targets.'],
+  ]),
+  'Safety & Compliance': buildDepartmentCriteria('safety', [
+    ['Regulatory & Operating Compliance', 'Maintains compliance with applicable transport, workplace, and recordkeeping requirements.'],
+    ['Incident Investigation & Corrective Action', 'Documents incidents, identifies contributing causes, and tracks corrective actions to closure.'],
+    ['Hazard Identification & Risk Reduction', 'Identifies hazards early and implements practical risk controls.'],
+    ['Safety Training & Driver Coaching', 'Delivers relevant coaching and verifies completion of required safety learning.'],
+    ['Audit Readiness & Document Control', 'Maintains current evidence and operating records for audits and reviews.'],
+  ]),
+  'Finance & Administration': buildDepartmentCriteria('finance', [
+    ['Freight Billing & Rating Accuracy', 'Applies contracted rates and validates shipment charges before invoicing.'],
+    ['Invoice & Vendor Processing Timeliness', 'Processes customer and vendor transactions accurately within service targets.'],
+    ['Account Reconciliation & Close Quality', 'Reconciles accounts and completes close activities with traceable support.'],
+    ['Internal Controls & Authorization', 'Follows approval limits and controls that protect company and customer funds.'],
+    ['Cost & Variance Reporting', 'Identifies cost variances and produces accurate, useful operating reports.'],
+  ]),
 }
 
 export function getDepartmentCriteria(departmentName) {
-  if (!departmentName) return DEPARTMENT_EVALUATION_CRITERIA['Food & Beverage']
-  const dept = String(departmentName).toLowerCase()
-  if (dept.includes('kitchen') || dept.includes('culinary') || dept.includes('cook') || dept.includes('chef')) {
-    return DEPARTMENT_EVALUATION_CRITERIA['Kitchen']
-  }
-  if (dept.includes('food') || dept.includes('beverage') || dept.includes('f&b') || dept.includes('restaurant') || dept.includes('bar') || dept.includes('dining')) {
-    return DEPARTMENT_EVALUATION_CRITERIA['Food & Beverage']
-  }
-  if (dept.includes('housekeeping') || dept.includes('laundry') || dept.includes('clean')) {
-    return DEPARTMENT_EVALUATION_CRITERIA['Housekeeping']
-  }
-  if (dept.includes('front') || dept.includes('reception') || dept.includes('concierge') || dept.includes('lobby')) {
-    return DEPARTMENT_EVALUATION_CRITERIA['Front Office']
-  }
-  if (dept.includes('engineer') || dept.includes('maintenance') || dept.includes('facility')) {
-    return DEPARTMENT_EVALUATION_CRITERIA['Engineering']
-  }
-  if (dept.includes('human') || dept.includes('hr') || dept.includes('personnel')) {
-    return DEPARTMENT_EVALUATION_CRITERIA['Human Resources']
-  }
-  if (dept.includes('security') || dept.includes('safety') || dept.includes('guard')) {
-    return DEPARTMENT_EVALUATION_CRITERIA['Security']
-  }
-  if (dept.includes('sales') || dept.includes('market')) {
-    return DEPARTMENT_EVALUATION_CRITERIA['Sales & Marketing']
-  }
-  if (dept.includes('finance') || dept.includes('account') || dept.includes('audit')) {
-    return DEPARTMENT_EVALUATION_CRITERIA['Finance']
-  }
-  return DEPARTMENT_EVALUATION_CRITERIA['Food & Beverage']
+  if (!departmentName) return DEPARTMENT_EVALUATION_CRITERIA['Fleet & Transportation']
+  const department = String(departmentName).trim().toLowerCase()
+  const match = Object.keys(DEPARTMENT_EVALUATION_CRITERIA).find(name => name.toLowerCase() === department)
+  return DEPARTMENT_EVALUATION_CRITERIA[match] || DEPARTMENT_EVALUATION_CRITERIA['Fleet & Transportation']
 }
 
-export const HOSPITALITY_EVALUATION_CRITERIA = DEPARTMENT_EVALUATION_CRITERIA['Food & Beverage']
+export const FREIGHT_EVALUATION_CRITERIA = DEPARTMENT_EVALUATION_CRITERIA['Fleet & Transportation']
 
 const RATING_SCALE_LEGEND = [
   { rating: 1, label: 'Poor', desc: 'Unsatisfactory / Needs critical improvement' },
   { rating: 2, label: 'Fair', desc: 'Inconsistent / Below standard' },
-  { rating: 3, label: 'Satisfactory', desc: 'Meets core hospitality standards' },
+  { rating: 3, label: 'Satisfactory', desc: 'Meets core role and operating standards' },
   { rating: 4, label: 'Good', desc: 'Exceeds standards / Highly reliable' },
   { rating: 5, label: 'Excellent', desc: 'Outstanding role model' },
 ]
@@ -675,10 +567,10 @@ function AssessmentBuilder({ value = {}, onChange, role, people = [], events = [
     ) || {}
 
     const resolvedName = targetName || matchedPerson.full_name || matchedPerson.name || 'Staff Member'
-    const resolvedPosition = matchedPerson.job_title || matchedPerson.position || subject?.position || subject?.job_title || subject?.role || createDetails?.position || 'Hospitality Associate'
+    const resolvedPosition = matchedPerson.job_title || matchedPerson.position || subject?.position || subject?.job_title || subject?.role || createDetails?.position || 'Logistics Associate'
     const resolvedDept = (createDetails?.department && createDetails.department !== 'All' ? createDetails.department : '') ||
       (workflow?.metadata?.department && workflow.metadata.department !== 'All' ? workflow.metadata.department : '') ||
-      matchedPerson.department || subject?.department || 'Food & Beverage'
+      matchedPerson.department || subject?.department || 'Fleet & Transportation'
 
     // 2. Resolve Review Period (e.g. Q1, Q2, Q3, Q4, Annual)
     let rawPeriod = createDetails?.reviewPeriod || createDetails?.period || ''
@@ -832,12 +724,12 @@ function AssessmentBuilder({ value = {}, onChange, role, people = [], events = [
   const badge = getPerformanceBadge(totalPercentage)
 
   return (
-    <div className="builder hospitality-eval-form">
+    <div className="builder logistics-eval-form">
       {/* 1. Header Information (matching attached template) */}
       <div className="hospitality-eval-header-card">
         <div className="eval-doc-title">
-          <h2>Hotel & Restaurant Employee Evaluation Form</h2>
-          <p>{employeeInfo.department} Department · Performance Appraisal & Hospitality Competency Assessment</p>
+          <h2>Freight & Logistics Employee Evaluation</h2>
+          <p>{employeeInfo.department} · Performance Appraisal & Logistics Competency Assessment</p>
         </div>
 
         <div className="eval-info-grid">
@@ -1024,7 +916,7 @@ function AssessmentBuilder({ value = {}, onChange, role, people = [], events = [
         <div className="qualitative-field">
           <label>
             <b>Strengths:</b>
-            <small>Detail the employee's strengths and hospitality achievements. Include specific examples.</small>
+            <small>Describe the employee's strengths with specific operating, safety, or customer-service examples.</small>
           </label>
           <textarea 
             rows={3} 
@@ -1082,7 +974,7 @@ function AssessmentBuilder({ value = {}, onChange, role, people = [], events = [
         <div className="summary-divider" />
 
         <div className="summary-col badge-col">
-          <span className="summary-label">Hospitality Performance Level</span>
+          <span className="summary-label">Performance Level</span>
           <span className="summary-grade-badge" style={{ backgroundColor: badge.bg, color: badge.color, border: `1px solid ${badge.color}30` }}>
             {badge.label}
           </span>
@@ -1102,7 +994,7 @@ function CalibrationBuilder({ value = {}, onChange, events = [], subject, workfl
   const targetId = subject?.id || workflow?.subject_employee_id
   const targetName = subject?.full_name || workflow?.subject_name
   const matchedPerson = (people || []).find(p => (targetId && p.id === targetId) || (targetName && p.full_name?.toLowerCase() === targetName.toLowerCase()))
-  const resolvedDept = matchedPerson?.department || workflow?.metadata?.department || 'Food & Beverage'
+  const resolvedDept = matchedPerson?.department || workflow?.metadata?.department || 'Fleet & Transportation'
   const deptCriteria = getDepartmentCriteria(resolvedDept)
 
   // Use department criteria
@@ -1202,7 +1094,7 @@ function CalibrationBuilder({ value = {}, onChange, events = [], subject, workfl
       {/* Side-by-Side Criteria Table */}
       <div className="calibration-section">
         <div className="section-head" style={{ marginBottom: 12 }}>
-          <h4>Hotel & Restaurant Criteria Comparison</h4>
+          <h4>Freight & Logistics Criteria Comparison</h4>
           <small>Side-by-side breakdown of 1–5 ratings and percentage scores.</small>
         </div>
 
@@ -1246,11 +1138,12 @@ function CalibrationBuilder({ value = {}, onChange, events = [], subject, workfl
       </div>
 
       {/* Qualitative Feedback Review */}
+      <div className="calibration-section">
       {(empData.strengths || deptData.strengths || empData.improvements || deptData.improvements) && (
         <div className="calibration-qualitative-review" style={{ marginTop: 20 }}>
           <h4 style={{ fontSize: 13, fontWeight: 700, margin: '0 0 12px' }}>Qualitative Feedback Review</h4>
-          
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 12 }}>
             <div className="calib-feedback-box" style={{ background: '#f8fafc', padding: 14, borderRadius: 10, border: '1px solid #e2e8f0' }}>
               <b style={{ color: '#111827', fontSize: 12 }}>Employee Self-Identified Strengths</b>
               <p style={{ fontSize: 12, margin: '6px 0 0', color: '#475569' }}>
@@ -1265,15 +1158,11 @@ function CalibrationBuilder({ value = {}, onChange, events = [], subject, workfl
               </p>
             </div>
           </div>
+
         </div>
       )}
 
-      {/* HR Calibration Decision Controls */}
-      <div className="calibration-decision-card" style={{ marginTop: 24 }}>
-        <h4>HR Calibration Decision</h4>
-        <p style={{ fontSize: 12, color: '#64748b', margin: '4px 0 16px' }}>Select the final resolution for this employee's performance evaluation percentage score:</p>
-
-        <div className="decision-options-grid">
+        <div className="calibration-decision-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 10, marginTop: 14 }}>
           {[
             { id: 'Accept Department Head Score', label: 'Accept Supervisor Evaluation', score: `${overallDeptAvg}%`, sub: 'Official supervisor rating' },
             { id: 'Use Average of Scores', label: 'Apply Balanced Average (50/50)', score: `${Math.round(((overallEmpAvg + overallDeptAvg)/2) * 10) / 10}%`, sub: 'Blend self and supervisor scores' },
@@ -1622,9 +1511,9 @@ function SkillGapPlanBuilder({ value, onChange, role, people = [], subject }) {
             <div className="gap-cards-grid" style={{ marginTop: '8px' }}>
               {[
                 'Customer Service Excellence',
-                'Hospitality SOP Compliance',
-                'Safety, Sanitation & HACCP',
-                'Team Collaboration & Interdepartmental Comm.',
+                'Logistics SOP Compliance',
+                'Safety, Compliance & Operational Readiness',
+                'Team Collaboration & Cross-Functional Communication',
                 'Technical Operational Proficiency',
                 'Leadership & Problem Solving'
               ].map(comp => (
@@ -1693,7 +1582,7 @@ function SkillGapPlanBuilder({ value, onChange, role, people = [], subject }) {
               const progressPct = course.assignment_progress !== undefined && course.assignment_progress !== null ? Number(course.assignment_progress) : null
 
               return (
-                <div className={`recommended-course-card ${isVerified ? 'is-verified' : ''}`} key={course.title}>
+                <div className={'recommended-course-card' + (isVerified ? ' is-verified' : '') + (isAssigned ? ' is-assigned' : '')}>
                   <div className="course-card-head">
                     <span className="course-category-tag">{course.category}</span>
                     <span className="course-duration" style={{ display: 'inline-flex', alignItems: 'center', gap: 3 }}><Clock size={12} /> {course.duration_hours || course.duration || '-'} hrs</span>
@@ -1899,7 +1788,7 @@ function CompetencyTemplateBuilder({ value = [], onChange }) {
         competency: 'New Competency',
         level: 'Proficient',
         weight: 15,
-        category: 'Hospitality Service',
+        category: 'Customer Service',
         targetScore: 88,
         actual: 75,
       }
@@ -1916,12 +1805,12 @@ function CompetencyTemplateBuilder({ value = [], onChange }) {
         <label className="competency-picker-label">
           <span>Select a Role-Based Benchmark Template</span>
           <select value={value.length > 0 ? value[0].position : ''} onChange={e => apply(e.target.value)}>
-            <option value="">Choose a hospitality role benchmark…</option>
+            <option value="">Choose a logistics role benchmark…</option>
             {positions.map(pos => (
               <option key={pos} value={pos}>{pos} ({COMPETENCY_TEMPLATES[pos].length} benchmark competencies)</option>
             ))}
           </select>
-          <small>Select a predefined hospitality role dictionary standard to auto-load standard competency benchmarks, proficiency target levels, and weights.</small>
+          <small>Select a logistics position benchmark to load role competencies, target levels, and weights.</small>
         </label>
       </div>
 
@@ -2053,7 +1942,7 @@ function CompetencyRequirementBuilder({ value = [], onChange }) {
       {value.map((row, index) => (
         <div className="builder-row" key={index}>
           <div className="builder-grid">
-            <label>Position<input value={row.position} onChange={e => set(index, { position: e.target.value })} placeholder="e.g. Front Office Supervisor" /></label>
+            <label>Position<input value={row.position} onChange={e => set(index, { position: e.target.value })} placeholder="e.g. Dispatch Supervisor" /></label>
             <label>Competency<input value={row.competency} onChange={e => set(index, { competency: e.target.value })} placeholder="e.g. Customer Service" /></label>
             <label>Required level<select value={row.level} onChange={e => set(index, { level: e.target.value })}><option value="">Level…</option><option>Foundation</option><option>Developing</option><option>Proficient</option><option>Expert</option></select></label>
             <label>Weight %<input type="number" value={row.weight} onChange={e => set(index, { weight: e.target.value })} min={0} max={100} /></label>
@@ -2134,119 +2023,24 @@ function ResourcesBuilder({ value = [], onChange, subject, people = [], workflow
 
   const linkedIds = new Set(value.map(r => r.id))
 
-  // Department-specific allowed course titles and competency targets
-  const FRONT_OFFICE_COURSES = ['Customer Service Excellence', 'Front Desk Excellence', 'Conflict Resolution', 'Hospitality De-escalation & Service Recovery', 'Emergency Procedures']
-  const KITCHEN_COURSES = ['Kitchen Hygiene', 'Food Safety', 'HACCP & Kitchen Sanitation', 'Recipe Consistency & Flavor', 'Line Expediting & Speed']
-  const HOUSEKEEPING_COURSES = ['Room Standards & Inspection', 'Chemical & Bio-Safety Compliance', 'Turnaround Time Optimization', 'Linen & Laundry', 'Public Area Cleanliness']
-  const FB_COURSES = ['Floor Operations & Speed', 'Customer Service Excellence', 'Conflict Resolution', 'POS & Cash Reconciliation', 'Hygiene & Health Standards', 'Bar Speed & Multitasking']
-
-  // Strict department filter: only show modules relevant to the employee's department and role
+  // Match library modules to the employee's logistics function and competencies.
   const departmentFilteredResources = useMemo(() => {
-    const dept = (employeeDept || '').toLowerCase()
-    const job = (employeeJob || '').toLowerCase()
-
-    const isFrontOffice = dept.includes('front') || dept.includes('office') || job.includes('guest') || job.includes('concierge') || job.includes('reception')
-    const isKitchen = dept.includes('kitchen') || dept.includes('culinary') || job.includes('cook') || job.includes('chef')
-    const isHousekeeping = dept.includes('housekeep') || job.includes('room') || job.includes('linen')
-    const isFB = dept.includes('beverage') || dept.includes('f&b') || dept.includes('restaurant') || job.includes('waiter') || job.includes('bar')
-
-    return lmResources.filter(r => {
-      const title = (r.title || '').trim()
-      const titleLower = title.toLowerCase()
-      const descLower = (r.description || '').toLowerCase()
-      const catLower = (r.category || '').toLowerCase()
-      const comps = (Array.isArray(r.competencies) ? r.competencies : []).map(c => c.toLowerCase())
-      const allText = `${titleLower} ${descLower} ${catLower} ${comps.join(' ')}`
-
-      if (isFrontOffice) {
-        // Must NOT match Kitchen or Housekeeping or Engineering topics
-        if (
-          titleLower.includes('kitchen') ||
-          titleLower.includes('hygiene') ||
-          titleLower.includes('haccp') ||
-          titleLower.includes('culinary') ||
-          titleLower.includes('food safety') ||
-          titleLower.includes('engineering') ||
-          titleLower.includes('maintenance') ||
-          titleLower.includes('housekeep') ||
-          titleLower.includes('room standard') ||
-          titleLower.includes('linen') ||
-          catLower.includes('food safety') ||
-          catLower.includes('kitchen') ||
-          catLower.includes('engineering') ||
-          catLower.includes('housekeeping')
-        ) {
-          return false
-        }
-        // Must match Front Office / Guest Service / Communication / Leadership / Customer Service
-        return (
-          FRONT_OFFICE_COURSES.some(fc => title.toLowerCase().includes(fc.toLowerCase())) ||
-          catLower.includes('customer service') ||
-          catLower.includes('communication') ||
-          catLower.includes('guest') ||
-          catLower.includes('front office') ||
-          comps.some(c => c.includes('customer') || c.includes('service') || c.includes('communication') || c.includes('front') || c.includes('guest') || c.includes('conflict') || c.includes('reservation'))
-        )
-      }
-
-      if (isKitchen) {
-        if (
-          titleLower.includes('front desk') ||
-          titleLower.includes('room standard') ||
-          titleLower.includes('engineering') ||
-          titleLower.includes('housekeep')
-        ) {
-          return false
-        }
-        return (
-          KITCHEN_COURSES.some(kc => title.toLowerCase().includes(kc.toLowerCase())) ||
-          catLower.includes('food safety') ||
-          catLower.includes('kitchen') ||
-          comps.some(c => c.includes('kitchen') || c.includes('haccp') || c.includes('food') || c.includes('recipe') || c.includes('culinary'))
-        )
-      }
-
-      if (isHousekeeping) {
-        if (
-          titleLower.includes('kitchen') ||
-          titleLower.includes('culinary') ||
-          titleLower.includes('food safety') ||
-          titleLower.includes('engineering') ||
-          titleLower.includes('front desk')
-        ) {
-          return false
-        }
-        return (
-          HOUSEKEEPING_COURSES.some(hc => title.toLowerCase().includes(hc.toLowerCase())) ||
-          catLower.includes('housekeeping') ||
-          comps.some(c => c.includes('housekeeping') || c.includes('room') || c.includes('linen') || c.includes('cleanliness'))
-        )
-      }
-
-      if (isFB) {
-        if (
-          titleLower.includes('engineering') ||
-          titleLower.includes('housekeep') ||
-          titleLower.includes('room standard')
-        ) {
-          return false
-        }
-        return (
-          FB_COURSES.some(fbc => title.toLowerCase().includes(fbc.toLowerCase())) ||
-          catLower.includes('beverage') ||
-          catLower.includes('service') ||
-          catLower.includes('customer')
-        )
-      }
-
-      // Default: do not show Kitchen, Housekeeping, or Engineering courses to general users
-      return !(
-        titleLower.includes('kitchen') ||
-        titleLower.includes('haccp') ||
-        titleLower.includes('engineering') ||
-        titleLower.includes('housekeep')
-      )
-    })
+    const context = `${employeeDept} ${employeeJob}`.toLowerCase()
+    const domains = [
+      { match: /fleet|driver|vehicle|transport/, terms: /fleet|driver|vehicle|cargo|driving|inspection|transport/ },
+      { match: /dispatch|route|load planner/, terms: /dispatch|route|load|tms|gps/ },
+      { match: /warehouse|forklift|inventory|picker|packing/, terms: /warehouse|forklift|inventory|picking|packing|wms/ },
+      { match: /customer service|claims|tracking/, terms: /customer|shipment|claim|proof-of-delivery|service recovery/ },
+      { match: /safety|compliance|trainer|investigator/, terms: /safety|compliance|incident|regulatory|risk|emergency/ },
+      { match: /finance|billing|account/, terms: /finance|billing|invoice|account|reconciliation/ },
+      { match: /human resources|recruit|hr /, terms: /human resources|onboarding|recruitment|employee relations|labor/ },
+      { match: /executive|general manager|operating officer|director/, terms: /leadership|management|strategic|operations/ },
+    ]
+    const domain = domains.find(item => item.match.test(context))
+    if (!domain) return lmResources
+    return lmResources.filter(resource => domain.terms.test(
+      `${resource.title || ''} ${resource.description || ''} ${resource.category || ''} ${(resource.competencies || []).join(' ')}`.toLowerCase()
+    ))
   }, [lmResources, employeeDept, employeeJob])
 
   const categories = [...new Set(departmentFilteredResources.map(r => r.category).filter(Boolean))]
@@ -3156,7 +2950,7 @@ function SuccessionReviewBuilder({ value = {}, onChange, people = [], subject, w
             AI Capability &amp; Role Recommendation
           </div>
           <p style={{ margin: '0 auto 16px', maxWidth: 460, fontSize: 12, color: '#64748b', lineHeight: 1.5 }}>
-            Analyze <strong>{currentEmployee?.full_name}</strong>'s performance scores, core competency levels, and learning progress against hotel critical positions using AI.
+            Analyze <strong>{currentEmployee?.full_name}</strong>'s performance scores, core competency levels, and learning progress against critical logistics positions using AI.
           </p>
           <button
             type="button"
@@ -3615,7 +3409,7 @@ function CompetencyComparisonBuilder({ value = {}, onChange, workflow, subjectNa
           <label style={{ fontSize: 12, fontWeight: 700, color: 'inherit' }}>
             Final Calibrated Competency Score: <span style={{ color: '#0284c7', fontSize: 14 }}>{currentScore}%</span>
           </label>
-          <small style={{ fontSize: 11, color: '#64748b' }}>Selected via {selectedApproach === 'ai' ? 'AI Recommendation' : selectedApproach === 'autolift' ? 'Auto-Lift' : 'Manual HR Adjustment'}</small>
+          <small style={{ fontSize: 11, color: '#64748b' }}>Selected via {selectedApproach === 'ai' ? 'AI Recommendation' : selectedApproach === 'autolift' ? 'Auto-Lift' : 'Manual HR Input'}</small>
         </div>
 
         <input

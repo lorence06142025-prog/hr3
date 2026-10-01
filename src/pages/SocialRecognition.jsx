@@ -34,20 +34,18 @@ import '../recognitionWall.css'
 
 const CORE_VALUE_TAGS = [
   { id: 'ALL', label: 'All Values', icon: Layers, tag: 'ALL' },
-  { id: 'hospitality', label: 'Excellence in Hospitality', icon: Award, tag: '#ExcellenceInHospitality' },
-  { id: 'guest', label: 'Guest Delight', icon: Star, tag: '#GuestDelight' },
+  { id: 'logistics', label: 'Excellence in Logistics', icon: Award, tag: '#ExcellenceInLogistics' },
+  { id: 'service', label: 'Customer Service Excellence', icon: Star, tag: '#CustomerServiceExcellence' },
   { id: 'teamwork', label: 'Teamwork & Integrity', icon: Users, tag: '#Teamwork' },
-  { id: 'culinary', label: 'Culinary Mastery', icon: Flame, tag: '#CulinaryMastery' },
-  { id: 'safety', label: 'Safety & Hygiene', icon: ShieldCheck, tag: '#SafetyFirst' },
+  { id: 'safety', label: 'Safety & Compliance', icon: ShieldCheck, tag: '#SafetyFirst' },
   { id: 'leadership', label: 'Leadership in Action', icon: Crown, tag: '#Leadership' },
 ]
 
 const AWARD_BADGES = [
-  { name: 'Guest Delight Champion', value: 'Guest Delight', tag: '#GuestDelight', icon: Star },
-  { name: 'Excellence in Hospitality', value: 'Excellence in Hospitality', tag: '#ExcellenceInHospitality', icon: Award },
-  { name: 'Culinary Mastery Award', value: 'Culinary Mastery', tag: '#CulinaryMastery', icon: Flame },
+  { name: 'Customer Service Champion', value: 'Customer Service Excellence', tag: '#CustomerServiceExcellence', icon: Star },
+  { name: 'Excellence in Logistics', value: 'Excellence in Logistics', tag: '#ExcellenceInLogistics', icon: Award },
+  { name: 'Safety Excellence Award', value: 'Safety & Compliance', tag: '#SafetyFirst', icon: ShieldCheck },
   { name: 'Team Player Award', value: 'Teamwork & Integrity', tag: '#Teamwork', icon: Users },
-  { name: 'Safety & Cleanliness Hero', value: 'Safety & Hygiene First', tag: '#SafetyFirst', icon: ShieldCheck },
   { name: 'Leadership in Action', value: 'Leadership in Action', tag: '#Leadership', icon: Crown },
 ]
 
@@ -373,7 +371,7 @@ export default function SocialRecognition() {
       <div className="recognition-header-bar">
         <div className="recognition-title-area">
           <h1>Social Recognition & Merit Wall</h1>
-          <p>Peer commendations, supervisor validations, and official HR awards celebrated across the hotel.</p>
+          <p>Peer commendations, supervisor validations, and official HR awards celebrated across the logistics network.</p>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <button

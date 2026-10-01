@@ -17,10 +17,10 @@ const chatSchema = z.object({
 
 // Department -> Allowed Competencies Map for strict RBAC domain integrity
 const DEPARTMENT_COMPETENCY_ALLOWLIST = {
-  'Front Office': ['Customer Service', 'Communication', 'Conflict Resolution', 'Reservation Management', 'Upselling', 'Teamwork', 'Compliance', 'Leadership'],
-  'Housekeeping': ['Housekeeping Standards', 'Compliance', 'Teamwork', 'Customer Service', 'Communication', 'Leadership', 'Operational Standards'],
-  'Kitchen': ['Kitchen Operations', 'Food Safety', 'Compliance', 'Teamwork', 'Leadership', 'Technical Skills'],
-  'Food & Beverage': ['Customer Service', 'Food Safety', 'Upselling', 'Communication', 'Teamwork', 'Conflict Resolution', 'Compliance', 'Leadership'],
+  'Customer Service': ['Customer Service', 'Communication', 'Conflict Resolution', 'Issue Resolution', 'Shipment Visibility', 'Upselling', 'Teamwork', 'Compliance', 'Leadership'],
+  'Warehouse & Inventory': ['Warehouse Safety', 'Inventory Accuracy', 'Picking & Packing', 'Forklift Operation & Safety', 'WMS Proficiency', 'Compliance', 'Teamwork', 'Leadership', 'Operational Standards'],
+  'Fleet & Transportation': ['Defensive Driving', 'Vehicle Inspection & Preventive Checks', 'Route Compliance', 'Cargo Securement', 'Fuel-Efficient Operations', 'Compliance', 'Teamwork', 'Leadership', 'Technical Skills'],
+  'Dispatch & Routing': ['Dispatch Communication', 'Route Planning & Optimization', 'Load Scheduling', 'TMS & GPS Proficiency', 'Exception Management', 'Communication', 'Compliance', 'Leadership', 'Teamwork'],
   'Human Resources': ['Compliance', 'Communication', 'Conflict Resolution', 'Leadership', 'Teamwork', 'Operational Management'],
   'Operations': ['Operational Management', 'Financial Acumen', 'Leadership', 'Communication', 'Compliance', 'Customer Service', 'Teamwork'],
   'Executive Office': ['Operational Management', 'Financial Acumen', 'Leadership', 'Communication', 'Compliance', 'Customer Service', 'Teamwork'],
@@ -64,10 +64,10 @@ router.post('/', async (req, res, next) => {
     }
 
     const DEPARTMENT_KEYWORDS = [
-      { name: 'Front Office', keywords: ['front office'] },
-      { name: 'Housekeeping', keywords: ['housekeeping'] },
-      { name: 'Kitchen', keywords: ['kitchen department', 'kitchen team', 'culinary department', 'kitchen staff'] },
-      { name: 'Food & Beverage', keywords: ['food & beverage', 'food and beverage', 'f&b department', 'restaurant department'] },
+      { name: 'Customer Service', keywords: ['customer service', 'customer service team', 'service desk'] },
+      { name: 'Warehouse & Inventory', keywords: ['warehouse', 'inventory', 'warehouse team'] },
+      { name: 'Fleet & Transportation', keywords: ['fleet', 'transportation', 'fleet operations'] },
+      { name: 'Dispatch & Routing', keywords: ['dispatch', 'routing', 'dispatch team'] },
       { name: 'Human Resources', keywords: ['human resources department', 'hr department'] },
       { name: 'Operations', keywords: ['operations department'] },
       { name: 'Executive Office', keywords: ['executive office department', 'executive office'] },
@@ -170,17 +170,17 @@ router.post('/', async (req, res, next) => {
         })
       }
 
-      // Check if user is asking for hotel-wide or organization-wide rosters (excluding queries for their own department/team)
+      // Check if user is asking for organization-wide rosters or network-wide views (excluding queries for their own department/team)
       const isOrgWideQuery = !isExplicitSelfDepartmentQuery && (
         textLower.includes('all department') ||
         textLower.includes('all departments') ||
         textLower.includes('every department') ||
-        textLower.includes('all hotel employees') ||
-        textLower.includes('all employees in the hotel') ||
+        textLower.includes('all logistics employees') ||
+        textLower.includes('all employees in the company') ||
         textLower.includes('all employees in the organization') ||
-        textLower.includes('entire hotel') ||
+        textLower.includes('entire network') ||
         textLower.includes('organization average') ||
-        textLower.includes('hotel roster') ||
+        textLower.includes('company roster') ||
         textLower.includes('whole company')
       )
 
