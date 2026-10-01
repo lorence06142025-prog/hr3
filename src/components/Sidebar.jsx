@@ -282,14 +282,8 @@ export default function Sidebar({ user, onLogout, collapsed = false, onToggleCol
       {/* Brand Header (FleetOps Style) */}
       <div className="sidebar-brand-wrapper">
         <div className="brand">
-          <div className="brand-logo-icon">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <rect x="2" y="3" width="20" height="14" rx="2" />
-              <line x1="8" y1="21" x2="16" y2="21" />
-              <line x1="12" y1="17" x2="12" y2="21" />
-            </svg>
-          </div>
-          {!collapsed && <span className="brand-name">System Console</span>}
+          <img className="brand-logo-icon" src="/prioritylogo.png" alt="" />
+          {!collapsed && <span className="brand-name">Priority Handling Services, Inc.</span>}
           <button
             className="sidebar-collapse-indicator"
             onClick={onToggleCollapse}

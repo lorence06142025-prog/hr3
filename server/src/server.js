@@ -77,18 +77,18 @@ app.use(notFound)
 
 app.use(errorHandler)
 app.listen(config.port, '0.0.0.0', async () => {
-  logger.info(`PDS API listening on 0.0.0.0:${config.port}`)
+  logger.info(`PHS API listening on 0.0.0.0:${config.port}`)
   // Eagerly warm up SMTP transporter and send startup ping if configured
   if (process.env.SMTP_USER && process.env.SMTP_PASS) {
     try {
       const result = await sendEmail({
         to: process.env.SMTP_USER,
-        subject: '✅ Horeca Server Started Successfully',
-        text: 'Your Horeca Hospitality HR backend has started and the email system is operational.',
+        subject: 'Priority Handling Services, Inc. server started successfully',
+        text: 'The Priority Handling Services, Inc. backend has started and the email system is operational.',
       })
-      logger.info(`[HORECA EMAIL] Startup ping: ${result.sent ? 'SENT ✅' : 'FAILED ❌'} — ${result.messageId || result.error || ''}`)
+      logger.info(`[PHS EMAIL] Startup ping: ${result.sent ? 'SENT ✅' : 'FAILED ❌'} — ${result.messageId || result.error || ''}`)
     } catch (err) {
-      logger.warn(`[HORECA EMAIL] Startup ping failed: ${err.message}`)
+      logger.warn(`[PHS EMAIL] Startup ping failed: ${err.message}`)
     }
   }
 })

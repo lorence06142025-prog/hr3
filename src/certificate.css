@@ -1,4 +1,4 @@
-/* Certificate Management module — consistent with PerDevSys design language */
+/* Certificate Management module — Priority Handling Services, Inc. design language */
 .certificate-workspace{padding:28px 38px;max-width:1500px;color:#282631}
 .certificate-workspace.embedded{padding:0;max-width:none}
 .certificate-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;margin:6px 0 18px}

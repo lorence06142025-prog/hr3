@@ -1,3 +1,78 @@
+-- 1. Departments (normalized)
+CREATE TABLE IF NOT EXISTS departments (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name TEXT NOT NULL UNIQUE,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+-- Backfill departments from existing free-text employee.department values.
+INSERT INTO departments (name)
+SELECT DISTINCT trim(department) FROM employees
+WHERE department IS NOT NULL AND trim(department) <> ''
+ON CONFLICT (name) DO NOTHING;
+
+-- Add department_id FK on employees.
+ALTER TABLE employees ADD COLUMN IF NOT EXISTS department_id UUID REFERENCES departments(id);
+
+-- Backfill department_id from the department string.
+UPDATE employees e
+SET department_id = d.id
+FROM departments d
+WHERE e.department_id IS NULL
+  AND e.department IS NOT NULL
+  AND trim(e.department) = d.name;
+
+-- 3. Self-service registration invitations
+
+CREATE TABLE IF NOT EXISTS invitations (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  email TEXT NOT NULL UNIQUE,
+  role user_role NOT NULL DEFAULT 'employee',
+  full_name TEXT NOT NULL,
+  department_id UUID REFERENCES departments(id),
+  employee_id UUID REFERENCES employees(id),
+  token TEXT NOT NULL UNIQUE,
+  expires_at TIMESTAMPTZ NOT NULL,
+  used_at TIMESTAMPTZ,
+  created_by UUID NOT NULL REFERENCES users(id),
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+
+-- Sessions table for refresh token tracking & revocation
+CREATE TABLE IF NOT EXISTS sessions (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  refresh_token TEXT NOT NULL UNIQUE,
+  user_agent TEXT,
+  ip_address TEXT,
+  is_revoked BOOLEAN NOT NULL DEFAULT false,
+  expires_at TIMESTAMPTZ NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+CREATE INDEX IF NOT EXISTS sessions_user_idx ON sessions(user_id, is_revoked, expires_at DESC);
+
+-- Password reset tokens table
+CREATE TABLE IF NOT EXISTS password_resets (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  token TEXT NOT NULL UNIQUE,
+  used_at TIMESTAMPTZ,
+  expires_at TIMESTAMPTZ NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+-- 024_add_two_factor_auth.sql
+-- Two-Factor Authentication (TOTP / Google Authenticator) support for users.
+
+ALTER TABLE users 
+ADD COLUMN IF NOT EXISTS two_factor_enabled BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN IF NOT EXISTS two_factor_secret TEXT NULL,
+ADD COLUMN IF NOT EXISTS two_factor_temp_secret TEXT NULL,
+ADD COLUMN IF NOT EXISTS two_factor_backup_codes JSONB NOT NULL DEFAULT '[]'::jsonb;
+
+CREATE INDEX IF NOT EXISTS users_2fa_enabled_idx ON users(two_factor_enabled) WHERE two_factor_enabled = true;
+
 -- 015_hotel_org.sql
 -- Redesign the demo organization to reflect a realistic Hotel & Restaurant
 -- structure within the scope of the Performance & Development subsystem.

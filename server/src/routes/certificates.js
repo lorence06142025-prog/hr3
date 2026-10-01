@@ -27,7 +27,7 @@ router.get('/verify/:code', async (req, res, next) => {
 
     if (rawCode.toUpperCase().includes('SAMPLE')) {
       const sampleCert = {
-        certificateNumber: 'PDS-2026-SAMPLE01',
+        certificateNumber: 'PHS-2026-SAMPLE01',
         certificateType: 'Certificate of Excellence',
         title: 'Certificate of Excellence',
         subtitle: 'Sample Verification Preview',
@@ -35,8 +35,8 @@ router.get('/verify/:code', async (req, res, next) => {
         issuedDate: new Date().toISOString().slice(0, 10),
         expiryDate: null,
         status: 'valid',
-        issuer: 'PerDevSys Hospitality',
-        achievement: 'This is an authentic sample certificate verification preview demonstrating PerDevSys online QR validation.',
+        issuer: 'Priority Handling Services, Inc.',
+        achievement: 'This is an authentic sample certificate verification preview demonstrating Priority Handling Services, Inc. online QR validation.',
         signatory: 'Ava Reyes',
         signatoryPosition: 'HR Business Partner',
         logoUrl: null,
@@ -121,9 +121,9 @@ router.get('/verify/:code/pdf', async (req, res, next) => {
     if (rawCode.toUpperCase().includes('SAMPLE')) {
       cert = {
         id: 'sample-id',
-        certificate_number: 'PDS-2026-SAMPLE01',
+        certificate_number: 'PHS-2026-SAMPLE01',
         verification_code: 'SAMPLE-VERIFICATION-CODE',
-        achievement_text: 'This is an authentic sample certificate verification preview demonstrating PerDevSys online QR validation.',
+        achievement_text: 'This is an authentic sample certificate verification preview demonstrating Priority Handling Services, Inc. online QR validation.',
         awarded_at: new Date().toISOString().slice(0, 10),
         expires_at: null,
         status: 'issued',
@@ -131,7 +131,7 @@ router.get('/verify/:code/pdf', async (req, res, next) => {
         template_name: 'Certificate of Excellence',
         certificate_title: 'Certificate of Excellence',
         subtitle: 'Sample Verification Preview',
-        organization_name: 'PerDevSys Hospitality',
+        organization_name: 'Priority Handling Services, Inc.',
         signatory_name: 'Ava Reyes',
         signatory_position: 'HR Business Partner',
         logo_url: null,
@@ -256,7 +256,7 @@ router.post('/issue', authorize('hr'), async (req, res, next) => {
       if (people.rowCount !== input.employeeIds.length) throw Object.assign(new Error('One or more selected employees are unavailable.'), { status: 400 })
       const created = []
       for (const employee of people.rows) {
-        const certificateNumber = `PDS-${new Date().getFullYear()}-${crypto.randomUUID().slice(0, 8).toUpperCase()}`
+        const certificateNumber = `PHS-${new Date().getFullYear()}-${crypto.randomUUID().slice(0, 8).toUpperCase()}`
         const verificationCode = `V-${crypto.randomUUID().slice(0, 8).toUpperCase()}`
         const expiresAt = template.validity_days ? new Date(Date.parse(input.awardedAt || new Date().toISOString().slice(0, 10)) + template.validity_days * 86400000).toISOString().slice(0, 10) : null
         const inserted = await client.query(
@@ -285,7 +285,7 @@ router.post('/issue', authorize('hr'), async (req, res, next) => {
             ],
             actionUrl: verifyUrl,
             actionText: 'View & Verify Online Certificate',
-          }).catch(err => console.warn('[PDS EMAIL] Certificate email dispatch error:', err.message))
+          }).catch(err => console.warn('[PHS EMAIL] Certificate email dispatch error:', err.message))
         }
       }
       return created

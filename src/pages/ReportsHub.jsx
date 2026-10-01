@@ -88,7 +88,7 @@ export default function ReportsHub() {
     const csvLines = [
       `"Formal Report: ${reportData.metadata?.title || activeTab}"`,
       `"Generated: ${reportData.metadata?.generatedAt || new Date().toISOString()}"`,
-      `"Document ID: ${reportData.metadata?.documentId || 'PDS-RPT'}"`,
+      `"Document ID: ${reportData.metadata?.documentId || 'PHS-RPT'}"`,
       '',
       headers.map(h => `"${h.replace(/"/g, '""')}"`).join(',')
     ]
@@ -121,7 +121,7 @@ export default function ReportsHub() {
     const title = reportData.metadata?.title || currentReportMeta?.name || activeTab
     const subtitle = reportData.metadata?.subtitle || currentReportMeta?.desc || ''
     const generatedAt = reportData.metadata?.generatedAt || new Date().toLocaleString()
-    const documentId = reportData.metadata?.documentId || `PDS-RPT-${Math.floor(100000 + Math.random() * 900000)}`
+    const documentId = reportData.metadata?.documentId || `PHS-RPT-${Math.floor(100000 + Math.random() * 900000)}`
     const generatedBy = reportData.metadata?.generatedBy || 'Executive HR Administrator'
     const departmentName = department || 'All Departments'
     const periodName = period || 'Current Period'
@@ -316,8 +316,8 @@ export default function ReportsHub() {
       <body>
         <div class="header-banner">
           <div>
-            <div class="org-brand">PERDEVSYS EXECUTIVE GOVERNANCE</div>
-            <div class="org-sub">Performance & Development Management System — Official Audit Output</div>
+            <div class="org-brand">PRIORITY HANDLING SERVICES, INC.</div>
+            <div class="org-sub">Official Workforce Governance &amp; Performance Audit</div>
           </div>
           <div class="doc-badge">
             <div><span class="badge-pill">OFFICIAL / CONFIDENTIAL</span></div>
@@ -387,7 +387,7 @@ export default function ReportsHub() {
         </div>
 
         <div class="doc-footer">
-          PerDevSys Enterprise Governance Portal • Document Verification Hash: PDS-SHA256-${Math.random().toString(36).substring(2, 10).toUpperCase()} • Page 1 of 1
+          Priority Handling Services, Inc. • Document Verification Hash: PHS-SHA256-${Math.random().toString(36).substring(2, 10).toUpperCase()} • Page 1 of 1
         </div>
 
         <script>
@@ -637,12 +637,12 @@ export default function ReportsHub() {
         <div className="print-header" style={{ marginBottom: 20 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div>
-              <h2 style={{ margin: 0, fontSize: 18, fontWeight: 800, color: '#0f172a' }}>PERDEVSYS EXECUTIVE WORKFORCE INTELLIGENCE</h2>
+              <h2 style={{ margin: 0, fontSize: 18, fontWeight: 800, color: '#0f172a' }}>PRIORITY HANDLING SERVICES, INC.</h2>
               <p style={{ margin: '2px 0 0', fontSize: 11, color: '#64748b' }}>OFFICIAL HUMAN CAPITAL GOVERNANCE & PERFORMANCE REPORT</p>
             </div>
             <div style={{ textAlign: 'right', fontSize: 11, color: '#475569' }}>
               <div><strong>CLASSIFICATION:</strong> OFFICIAL / CONFIDENTIAL</div>
-              <div><strong>DOC ID:</strong> {reportData?.metadata?.documentId || 'PDS-RPT-001'}</div>
+              <div><strong>DOC ID:</strong> {reportData?.metadata?.documentId || 'PHS-RPT-001'}</div>
             </div>
           </div>
         </div>
@@ -841,7 +841,7 @@ export default function ReportsHub() {
             {/* Formal Report Signoff Footer */}
             <div className="reports-footer">
               <div>
-                Report Document Hash: <code>PDS-FML-{Math.random().toString(36).substring(2, 10).toUpperCase()}</code>
+                Report Document Hash: <code>PHS-FML-{Math.random().toString(36).substring(2, 10).toUpperCase()}</code>
               </div>
             </div>
           </div>

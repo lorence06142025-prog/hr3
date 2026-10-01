@@ -763,7 +763,7 @@ button, input { font: inherit; } button { cursor: pointer; }
 
 /* ---------------------------------------------------------------------------
    ENTERPRISE UI/UX POLISH — Presentation & Visual Refinement
-   Elevating PerDevSys to premier enterprise/business design quality.
+  Elevating Priority Handling Services, Inc. to premier enterprise/business design quality.
 --------------------------------------------------------------------------- */
 
 /* 1. Module Metrics Cards Polish */
@@ -985,7 +985,7 @@ button, input { font: inherit; } button { cursor: pointer; }
 }
 
 /* ===========================================================================
-   PREMIUM MODERN HR SAAS DESIGN SYSTEM (PerDevSys 2026 Redesign)
+  PREMIUM MODERN HR SAAS DESIGN SYSTEM (Priority Handling Services, Inc. 2026 Redesign)
    =========================================================================== */
 
 /* ===========================================================================
@@ -1221,11 +1221,13 @@ body {
 }
 
 .brand-name {
-  font-size: 14.5px;
+  max-width: 152px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: -0.01em;
   color: #111827;
-  white-space: nowrap;
+  line-height: 1.1;
+  white-space: normal;
 }
 .dark .brand-name {
   color: #f8fafc;

@@ -417,14 +417,14 @@ router.post('/', async (req, res, next) => {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${config.openRouterApiKey}`,
             'HTTP-Referer': config.clientOrigin,
-            'X-Title': 'PerDevSys AI Assistant',
+            'X-Title': 'Priority Handling Services, Inc. AI Assistant',
           },
           body: JSON.stringify({
             model: config.openRouterModel,
             messages: [
               {
                 role: 'system',
-                content: `You are the executive and operational AI Assistant for PerDevSys (Performance & Capability Development System).
+                content: `You are the executive and operational AI Assistant for Priority Handling Services, Inc.
 STRICT GROUNDING & QUALITY RULES:
 1. You MUST ONLY answer using the authorized database records provided in the context below.
 2. NEVER fabricate employee names, performance scores, courses, competency gaps, training sessions, or numbers.

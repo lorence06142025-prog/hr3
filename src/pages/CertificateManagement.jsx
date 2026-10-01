@@ -8,7 +8,7 @@ import ESignaturePad from '../components/ESignaturePad'
 import { CheckCircle, AlertTriangle, Pencil, Trash2, X, Award } from 'lucide-react'
 import PageBanner from '../components/PageBanner'
 
-const defaults = { name: 'Employee of the Month', certificateTitle: 'Certificate of Excellence', subtitle: 'Employee of the Month', organizationName: 'PerDevSys Hospitality', bodyText: 'This certificate is proudly awarded to {{employee_name}} in recognition of outstanding contribution and excellence.', signatoryName: 'Ava Reyes', signatoryPosition: 'HR Business Partner', validityDays: '' }
+const defaults = { name: 'Employee of the Month', certificateTitle: 'Certificate of Excellence', subtitle: 'Employee of the Month', organizationName: 'Priority Handling Services, Inc.', bodyText: 'This certificate is proudly awarded to {{employee_name}} in recognition of outstanding contribution and excellence.', signatoryName: 'Ava Reyes', signatoryPosition: 'HR Business Partner', validityDays: '' }
 const date = value => value ? new Date(value).toLocaleDateString() : '—'
 
 // Compress user-uploaded logos and signatures on canvas to avoid multi-megabyte payloads
@@ -59,8 +59,8 @@ function Preview({ template, certificate, compact = false }) {
   return (
     <article className={`certificate-preview ${compact ? 'compact' : ''}`}>
       {template?.logo_url && <img className="certificate-logo" src={template.logo_url} alt="Organization logo"/>}
-      <div className="certificate-seal">PDS</div>
-      <small>{template?.organization_name || certificate?.organization_name || 'PerDevSys Hospitality'}</small>
+      <img className="certificate-seal-logo" src="/prioritylogo.png" alt="Priority Handling Services, Inc." />
+      <small>{template?.organization_name || certificate?.organization_name || 'Priority Handling Services, Inc.'}</small>
       <h2>{template?.certificate_title || certificate?.certificate_title || 'Certificate of Excellence'}</h2>
       <em>{template?.subtitle || certificate?.subtitle || 'Recognition of achievement'}</em>
       <p>This certificate is presented to</p>
@@ -78,7 +78,7 @@ function Preview({ template, certificate, compact = false }) {
           Authorized by<br/><b>{template?.signatory_name || certificate?.signatory_name || 'Authorized signatory'}</b>
         </span>
       </div>
-      <footer>Certificate No. {certificate?.certificate_number || 'PDS-YYYY-00000000'}{verifyCode ? ` · Code: ${verifyCode}` : ''}</footer>
+      <footer>Certificate No. {certificate?.certificate_number || 'PHS-YYYY-00000000'}{verifyCode ? ` · Code: ${verifyCode}` : ''}</footer>
     </article>
   )
 }
@@ -313,7 +313,7 @@ export default function CertificateManagement({ embedded = false }) {
       qrDataUrl = ''
     }
 
-    const orgName = tmpl?.organization_name || certificate?.organization_name || 'PerDevSys Hospitality'
+    const orgName = tmpl?.organization_name || certificate?.organization_name || 'Priority Handling Services, Inc.'
     const title = tmpl?.certificate_title || certificate?.certificate_title || 'Certificate of Excellence'
     const subtitle = tmpl?.subtitle || certificate?.subtitle || 'Recognition of achievement'
     const empName = certificate?.employee_name || '{{Employee Name}}'
@@ -321,7 +321,7 @@ export default function CertificateManagement({ embedded = false }) {
     const awardedDate = date(certificate?.awarded_at || certificate?.issued_at)
     const signatory = tmpl?.signatory_name || certificate?.signatory_name || 'Authorized Signatory'
     const signatoryPos = tmpl?.signatory_position || certificate?.signatory_position || ''
-    const certNum = certificate?.certificate_number || 'PDS-YYYY-00000000'
+    const certNum = certificate?.certificate_number || 'PHS-YYYY-00000000'
     const logoHtml = tmpl?.logo_url ? `<img src="${tmpl.logo_url}" class="logo" alt="Logo" />` : ''
     const sigHtml = tmpl?.signature_url ? `<img src="${tmpl.signature_url}" class="sig" alt="Signature" />` : ''
 
@@ -348,7 +348,7 @@ export default function CertificateManagement({ embedded = false }) {
   html, body { width: 100%; height: 100%; margin: 0; padding: 0; background: #fcfbff; font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif; display: flex; align-items: center; justify-content: center; }
   .cert-container { width: 100vw; height: 100vh; padding: 44px 56px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: linear-gradient(135deg, #fcfbff 0%, #f4f0ff 100%); border: 3px solid #111827; box-sizing: border-box; position: relative; }
   .logo { position: absolute; left: 44px; top: 40px; max-width: 100px; max-height: 70px; object-fit: contain; }
-  .seal { position: absolute; right: 44px; top: 40px; width: 64px; height: 64px; display: grid; place-items: center; border: 2px solid #111827; border-radius: 50%; color: #111827; font-size: 15px; font-weight: 800; background: rgba(239,235,255,0.9); }
+  .seal-logo { position: absolute; right: 44px; top: 40px; width: 64px; height: 64px; object-fit: contain; background: #fff; border: 1px solid #e2e8f0; border-radius: 5px; }
   .org { font-size: 13px; color: #7c778a; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; font-weight: 600; }
   h2 { font-size: 32px; color: #282631; letter-spacing: -0.5px; font-weight: 800; margin-bottom: 4px; }
   em { font-size: 16px; color: #111827; font-style: normal; font-weight: 600; }
@@ -369,7 +369,7 @@ export default function CertificateManagement({ embedded = false }) {
 <body>
 <div class="cert-container">
   ${logoHtml}
-  <div class="seal">PDS</div>
+  <img class="seal-logo" src="/prioritylogo.png" alt="Priority Handling Services, Inc." />
   <div class="org">${orgName}</div>
   <h2>${title}</h2>
   <em>${subtitle}</em>
@@ -531,7 +531,7 @@ export default function CertificateManagement({ embedded = false }) {
     <Container className={`certificate-workspace${embedded ? ' embedded' : ''}`}>
       <PageBanner
         title={operationsManager ? 'Certificate Management' : 'My Certificates'}
-        description={operationsManager ? 'Review issued employee certificates and recognition records across the operation.' : 'View, print, or save certificates earned through PerDevSys.'}
+        description={operationsManager ? 'Review issued employee certificates and recognition records across the operation.' : 'View, print, or save certificates earned through Priority Handling Services, Inc.'}
         icon={<Award className="w-5 h-5 text-white" />}
       />
       <section className="certificate-archive">

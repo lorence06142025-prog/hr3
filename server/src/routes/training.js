@@ -353,7 +353,7 @@ router.post('/sessions/:id/participants', authorize('hr', 'supervisor'), async (
                 ],
                 actionUrl: `${process.env.CLIENT_ORIGIN || 'http://localhost:5173'}/training`,
                 actionText: 'View Training Session & QR Code',
-              }).catch(err => console.warn('[PDS EMAIL] Training invite dispatch error:', err.message))
+              }).catch(err => console.warn('[PHS EMAIL] Training invite dispatch error:', err.message))
             }
           }
         }
@@ -711,7 +711,7 @@ router.post('/sessions/:id/complete', authorize('hr', 'operations_manager'), asy
             'Certificate of Participation',
             'Certificate of Participation',
             'Training Program Completion',
-            'PerDevSys Hospitality',
+            'Priority Handling Services, Inc.',
             'This certificate is proudly presented to {{employee_name}} for successfully completing the training program.',
             'Ava Reyes',
             'HR Administrator',
@@ -737,7 +737,7 @@ router.post('/sessions/:id/complete', authorize('hr', 'operations_manager'), asy
           [p.emp_id, template.id, id]
         )
         if (existingCert.rows.length === 0) {
-          const certNumber = `PDS-${new Date().getFullYear()}-${crypto.randomUUID().slice(0, 8).toUpperCase()}`
+          const certNumber = `PHS-${new Date().getFullYear()}-${crypto.randomUUID().slice(0, 8).toUpperCase()}`
           const achievementText = `For successfully attending and completing the "${session.title}" training program on ${session.start_date} at ${session.venue}.`
           
           await query(

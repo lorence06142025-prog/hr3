@@ -22,6 +22,9 @@ CREATE TABLE IF NOT EXISTS learning_resources (
   duration_hours NUMERIC(6,2),
   objectives TEXT,
   url TEXT,
+  video_url TEXT,
+  pdf_url TEXT,
+  lesson_content TEXT,
   is_active BOOLEAN NOT NULL DEFAULT true,
   created_by UUID REFERENCES users(id),
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
@@ -50,7 +53,7 @@ CREATE TABLE IF NOT EXISTS learning_assignments (
   assigned_by UUID NOT NULL REFERENCES users(id),
   assigned_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   due_date DATE,
-  status TEXT NOT NULL DEFAULT 'assigned' CHECK (status IN ('assigned','in_progress','completed')),
+  status TEXT NOT NULL DEFAULT 'not_started' CHECK (status IN ('not_started','studying','completed','need_help')),
   progress NUMERIC(5,2) NOT NULL DEFAULT 0 CHECK (progress BETWEEN 0 AND 100),
   UNIQUE (resource_id, employee_id)
 );

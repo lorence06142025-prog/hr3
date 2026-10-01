@@ -606,7 +606,7 @@ router.post('/:id/approve', async (req, res, next) => {
             ],
             actionUrl: `${process.env.CLIENT_ORIGIN || 'http://localhost:5173'}/recognition`,
             actionText: 'View on Merit Wall',
-          }).catch(err => console.warn('[PDS EMAIL] Recognition email error:', err.message))
+          }).catch(err => console.warn('[PHS EMAIL] Recognition email error:', err.message))
         }
       }
     } catch {}

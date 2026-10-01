@@ -277,7 +277,7 @@ async function callOpenRouter(context) {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${config.openRouterApiKey}`,
       'HTTP-Referer': config.clientOrigin,
-      'X-Title': 'PerDevSys',
+      'X-Title': 'Priority Handling Services, Inc.',
     },
     body: JSON.stringify({
       model: config.openRouterModel,
@@ -428,7 +428,7 @@ Return a JSON object with this exact structure:
         'Content-Type': 'application/json',
         Authorization: `Bearer ${config.openRouterApiKey}`,
         'HTTP-Referer': config.clientOrigin,
-        'X-Title': 'PerDevSys',
+        'X-Title': 'Priority Handling Services, Inc.',
       },
       body: JSON.stringify({
         model: config.openRouterModel,
@@ -583,7 +583,7 @@ Return a JSON object with this exact structure:
       'Content-Type': 'application/json',
       Authorization: `Bearer ${config.openRouterApiKey}`,
       'HTTP-Referer': config.clientOrigin,
-      'X-Title': 'PerDevSys',
+      'X-Title': 'Priority Handling Services, Inc.',
     },
     body: JSON.stringify({
       model: config.openRouterModel,

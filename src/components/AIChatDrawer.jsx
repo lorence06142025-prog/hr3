@@ -126,7 +126,7 @@ export default function AIChatDrawer({ isOpen, onClose, onOpen }) {
     return [
       {
         role: 'assistant',
-        content: `Hi! I'm your **PerDevSys AI Assistant**. I can help you explore workforce insights — including performance scores, skill gaps, training sessions, learning progress, and succession readiness — tailored to your role (${role.replace('_', ' ').toUpperCase()}). What would you like to know?`,
+        content: `Hi! I'm the **Priority Handling Services, Inc. AI Assistant**. I can help you explore workforce insights — including performance scores, skill gaps, training sessions, learning progress, and succession readiness — tailored to your role (${role.replace('_', ' ').toUpperCase()}). What would you like to know?`,
         summary: 'Ready',
       }
     ]
@@ -302,7 +302,7 @@ export default function AIChatDrawer({ isOpen, onClose, onOpen }) {
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                 <Sparkles size={18} className="text-gray-400" />
-                <h2 style={{ margin: 0, fontSize: 15, color: '#fff', fontWeight: 700 }}>PerDevSys Assistant</h2>
+                <h2 style={{ margin: 0, fontSize: 15, color: '#fff', fontWeight: 700 }}>Priority Handling Services, Inc. Assistant</h2>
                 {isMaximized && (
                   <span style={{ fontSize: 10, background: 'rgba(255,255,255,0.15)', padding: '2px 6px', borderRadius: 4, color: '#d8d1f7' }}>
                     Expanded

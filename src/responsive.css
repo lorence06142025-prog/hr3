@@ -1,23 +1,53 @@
 /* ============================================================
-   RESPONSIVE ADAPTABILITY — PerDevSys
+  RESPONSIVE ADAPTABILITY — Priority Handling Services, Inc.
    Adapts the system to laptop, desktop/PC, tablet, and phone.
    Breakpoints:
      - Desktop (>1200px): full layout
      - Laptop (1024–1200px): slightly condensed
-     - Tablet (681–1024px): condensed sidebar + stacked panels
-     - Phone (≤680px): mobile drawer nav + full-width stack
+    - Tablet (769–1024px): condensed sidebar + stacked panels
+    - Phone (≤768px): mobile drawer nav + full-width stack
    ============================================================ */
 
 /* ---------- Fluid base ---------- */
 html {
-  overflow-x: hidden;
+  width: 100%;
+  min-width: 320px;
+  overflow-x: clip;
 }
 body {
   margin: 0;
-  overflow-x: visible;
+  width: 100%;
+  min-width: 320px;
+  overflow-x: clip;
 }
 img, svg { max-width: 100%; }
 button { touch-action: manipulation; }
+
+.fixed-main,
+.page-transition-wrapper,
+.page-transition-wrapper > *,
+.page-transition-wrapper main,
+.page-transition-wrapper section {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.page-transition-wrapper :where(.table-wrap, .table-responsive, .table-container, .er-table-wrap, .calibration-table-wrap, .sales-table, .ai-records, .module-content, .attendance-sheet-table-wrap) {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+
+.page-transition-wrapper table {
+  max-width: 100%;
+}
+
+.workflow-picker-dropdown,
+.searchable-selector-menu,
+.global-search-modal,
+.notif-panel-box {
+  max-width: calc(100vw - 24px);
+}
 
 /* Mobile menu button is hidden by default (desktop/tablet use the sidebar) */
 .mobile-menu-btn {
@@ -35,8 +65,8 @@ button { touch-action: manipulation; }
   .topbar .search { min-width: 160px; max-width: 200px; }
 }
 
-/* ---------- Mobile nav toggle (≤680px) ---------- */
-@media (max-width: 680px) {
+/* ---------- Mobile nav toggle (≤768px) ---------- */
+@media (max-width: 768px) {
   /* Hide desktop sidebar entirely; show via mobile drawer */
   .sidebar { display: none !important; }
   .fixed-main { margin-left: 0 !important; width: 100% !important; max-width: 100vw !important; }
@@ -47,6 +77,7 @@ button { touch-action: manipulation; }
     top: 0;
     z-index: 50;
     height: 58px;
+    min-height: 58px;
     padding: 0 12px;
     gap: 8px;
   }
@@ -86,6 +117,8 @@ button { touch-action: manipulation; }
     left: 0;
     bottom: 0;
     width: min(310px, 86vw);
+    max-width: calc(100vw - 24px);
+    height: 100dvh;
     z-index: 2001;
     background: #ffffff;
     border-right: 1px solid #ebeef5;
@@ -93,6 +126,7 @@ button { touch-action: manipulation; }
     display: flex;
     flex-direction: column;
     overflow-y: auto;
+    overscroll-behavior: contain;
     box-shadow: 8px 0 32px rgba(20, 15, 60, 0.25);
     animation: mobileDrawerIn 0.22s cubic-bezier(0.16, 1, 0.3, 1);
   }
@@ -109,12 +143,14 @@ button { touch-action: manipulation; }
     margin-bottom: 18px !important;
     padding-bottom: 12px !important;
     border-bottom: 1px solid #f1f3f9 !important;
+    padding-right: 28px !important;
   }
   .dark .mobile-nav-drawer .sidebar-brand-wrapper { border-bottom-color: #2e2c3d !important; }
   .mobile-nav-drawer .brand {
     display: flex !important;
     align-items: center !important;
     gap: 10px !important;
+    min-width: 0 !important;
   }
   .mobile-nav-drawer .brand-text-block {
     display: flex !important;
@@ -126,6 +162,7 @@ button { touch-action: manipulation; }
     font-weight: 800 !important;
     color: #1e1b4b !important;
     line-height: 1.2 !important;
+    overflow-wrap: anywhere !important;
   }
   .dark .mobile-nav-drawer .brand-name { color: #ffffff !important; }
   .mobile-nav-drawer .brand-badge {
@@ -362,6 +399,116 @@ button { touch-action: manipulation; }
   .module-steps { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 4px; }
   .module-step { flex: 0 0 auto; min-width: 120px; max-width: 160px; }
 
+  .fixed-main > *,
+  .page-transition-wrapper > * {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .page-skeleton-container {
+    padding: 20px 16px 36px !important;
+  }
+
+  .page-skeleton-container > div:nth-child(3) {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .module-workspace, .enterprise-review, .workflow-page,
+  .performance-process, .ai-dashboard, .dashboard, .sales-page,
+  .role-home, .learning-workspace, .certificate-workspace,
+  .er-workspace, .reports-hub, .org-chart-workspace {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .module-grid, .review-layout, .workflow-layout, .dashboard-grid,
+  .saas-analytics-grid, .saas-kpi-grid, .metrics, .role-home section,
+  .role-home-skeleton, .form-row-2, .er-dialog .er-form-grid {
+    min-width: 0;
+  }
+
+  .module-grid > *, .review-layout > *, .workflow-layout > *,
+  .dashboard-grid > *, .saas-analytics-grid > *, .role-home section > * {
+    min-width: 0;
+  }
+
+  .course-grid {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+  }
+
+  .assignment-row, .completion-row {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .assignment-progress {
+    width: 100%;
+    flex: 1 1 100%;
+  }
+
+  .assignment-actions {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .ccv-backdrop {
+    padding: 12px;
+  }
+
+  .ccv-modal {
+    width: 100%;
+    max-width: 100%;
+    max-height: calc(100dvh - 24px);
+  }
+
+  .workflow-picker-dropdown,
+  .notif-panel-box {
+    left: auto;
+    right: 8px;
+    width: calc(100vw - 16px);
+    max-width: calc(100vw - 16px);
+  }
+
+  .module-heading, .workflow-heading, .ai-heading, .page-intro,
+  .review-top, .performance-heading, .er-heading, .sales-title {
+    flex-wrap: wrap;
+  }
+
+  .module-heading-actions, .ai-actions, .er-heading-actions,
+  .top-stats, .revenue-cards, .course-actions, .learning-toolbar {
+    min-width: 0;
+    max-width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .module-heading-actions > *, .ai-actions > *, .er-heading-actions > * {
+    max-width: 100%;
+  }
+
+  .settings-dialog, .schedule-dialog, .composer-modal,
+  .bulk-launch-dialog, .cert-modal-dialog, .learning-modal-dialog,
+  .training-modal-content, .calibration-modal, [role="dialog"] {
+    box-sizing: border-box;
+    width: min(100%, calc(100vw - 32px)) !important;
+    max-width: calc(100vw - 32px) !important;
+    max-height: min(90dvh, calc(100vh - 32px)) !important;
+    overflow: auto;
+    overscroll-behavior: contain;
+  }
+
+  .settings-backdrop, .schedule-backdrop, .learning-modal-backdrop,
+  .cert-modal-backdrop {
+    padding: 12px !important;
+    align-items: center;
+  }
+
+  .modal-body, .dialog-body, .composer-modal, .training-modal-body {
+    min-width: 0;
+  }
+
   /* Smaller text for dense tables */
   .er-table { font-size: 11px; }
 }
@@ -371,8 +518,31 @@ button { touch-action: manipulation; }
   .metrics, .ai-kpis, .workflow-metrics, .review-metrics,
   .process-summary, .module-metrics { grid-template-columns: 1fr; }
   .topbar .crumb { display: none; }
-  .top-actions .avatar { display: none; }
+  .top-actions { gap: 4px; }
+  .topbar-clock-pill, .outbox-pill { display: none !important; }
+  .topbar-avatar-wrapper img, .topbar-avatar-wrapper .avatar { width: 30px !important; height: 30px !important; }
   .settings-dialog h2 { font-size: 17px; }
+  .mobile-nav-drawer { width: min(300px, calc(100vw - 20px)); max-width: calc(100vw - 20px); }
+  .module-heading-actions, .ai-actions, .er-heading-actions { flex-direction: column; align-items: stretch; }
+  .module-heading-actions > *, .ai-actions > *, .er-heading-actions > * { width: 100%; }
+  .form-row-2, .er-dialog .er-form-grid { grid-template-columns: 1fr; }
+  .er-dialog label.er-full { grid-column: auto; }
+  .page-skeleton-container > div:first-child { align-items: flex-start !important; }
+  .page-skeleton-container > div:first-child .skeleton-bar:last-child { display: none; }
+  .assignment-actions { grid-template-columns: 1fr; }
+  .ccv-header, .ccv-body { padding-left: 14px; padding-right: 14px; }
+  .role-home section,
+  .role-home-skeleton,
+  .saas-modules-grid {
+    grid-template-columns: 1fr;
+  }
+  .employee-picker,
+  .learning-toolbar select,
+  .learning-toolbar .learning-search,
+  .assignment-status-select {
+    min-width: 0;
+    max-width: 100%;
+  }
 }
 
 /* ---------- Landscape phones / small tablets (height constrained) ---------- */

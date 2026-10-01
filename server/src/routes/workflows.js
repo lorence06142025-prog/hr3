@@ -126,7 +126,7 @@ async function notifyNextOwners(client, workflow, destination) {
         ],
         actionUrl: `${process.env.CLIENT_ORIGIN || 'http://localhost:5173'}/${workflow.module}`,
         actionText: `Open ${destination.label}`,
-      }).catch(err => console.warn('[PDS EMAIL] Notification dispatch error:', err.message))
+      }).catch(err => console.warn('[PHS EMAIL] Notification dispatch error:', err.message))
     }
   }
 }

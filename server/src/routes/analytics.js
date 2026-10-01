@@ -376,9 +376,9 @@ router.get('/reports/:type', authorize('hr', 'supervisor', 'management', 'operat
       generatedAt: now,
       generatedBy: req.user.name || req.user.email,
       userRole: req.user.role,
-      organization: 'PerDevSys Executive Workforce Intelligence',
+      organization: 'Priority Handling Services, Inc.',
       classification: 'OFFICIAL / CONFIDENTIAL',
-      documentId: `PDS-RPT-${type.toUpperCase().replace(/-/g, '')}-${Date.now().toString().slice(-6)}`,
+      documentId: `PHS-RPT-${type.toUpperCase().replace(/-/g, '')}-${Date.now().toString().slice(-6)}`,
       period: period || 'Q1 2026'
     }
 

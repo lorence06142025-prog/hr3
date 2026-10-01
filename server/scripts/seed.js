@@ -3,7 +3,7 @@ import { pool } from '../src/db.js'
 
 const passwordHash = await bcrypt.hash('ChangeMe123!', 12)
 
-console.log('🌱 Starting comprehensive PerDevSys database seeding...')
+console.log('🌱 Starting Priority Handling Services, Inc. database seeding...')
 
 // 1. All 11 Hotel Departments
 const departments = [

@@ -12,8 +12,8 @@ export default function EmailOutboxDrawer({ isOpen, onClose }) {
   // Test email state
   const [showTestForm, setShowTestForm] = useState(false)
   const [testTo, setTestTo] = useState('celsigarcia036@gmail.com')
-  const [testSubject, setTestSubject] = useState('Horeca Hospitality HR Notification Test')
-  const [testMessage, setTestMessage] = useState('This is a test notification from the Horeca Hospitality HR system to verify live SMTP email delivery.')
+  const [testSubject, setTestSubject] = useState('Priority Handling Services, Inc. Notification Test')
+  const [testMessage, setTestMessage] = useState('This is a test notification from Priority Handling Services, Inc. to verify live SMTP email delivery.')
   const [sendingTest, setSendingTest] = useState(false)
 
   const load = async () => {

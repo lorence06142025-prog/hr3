@@ -51,7 +51,7 @@ export default function CertificateVerification() {
         <div className="verify-card loading-state">
           <div className="verify-spinner"></div>
           <h2>Verifying certificate...</h2>
-          <p>Checking PerDevSys official database records</p>
+          <p>Checking Priority Handling Services, Inc. official records</p>
         </div>
       </div>
     )
@@ -73,7 +73,7 @@ export default function CertificateVerification() {
             Code: <code>{verificationCode}</code>
           </div>
           <div className="verify-footer-text">
-            Please ensure you have scanned or entered a valid PerDevSys verification URL.
+            Please ensure you have scanned or entered a valid Priority Handling Services, Inc. verification URL.
           </div>
         </div>
       </div>
@@ -88,9 +88,9 @@ export default function CertificateVerification() {
   return (
     <div className="verify-page-container">
       <div className="verify-header-brand">
-        <span className="brand-seal">PDS</span>
+        <img className="verification-brand-logo" src="/prioritylogo.png" alt="" />
         <div>
-          <h2>PerDevSys</h2>
+          <h2>Priority Handling Services, Inc.</h2>
           <small>Official Certificate Verification Portal</small>
         </div>
       </div>
@@ -147,7 +147,7 @@ export default function CertificateVerification() {
             </div>
             <div className="detail-item full-width">
               <span className="detail-label">Issuing Organization</span>
-              <span className="detail-value">{cert.issuer || 'PerDevSys Hospitality'}</span>
+              <span className="detail-value">{cert.issuer || 'Priority Handling Services, Inc.'}</span>
             </div>
             <div className="detail-item full-width">
               <span className="detail-label">Authorized Signatory</span>
@@ -191,8 +191,8 @@ export default function CertificateVerification() {
           <div className="verify-certificate-preview-wrapper">
             <div className="certificate-preview standalone">
               {cert.logoUrl && <img className="certificate-logo" src={cert.logoUrl} alt="Organization Logo" />}
-              <div className="certificate-seal">PDS</div>
-              <small>{cert.issuer || 'PerDevSys Hospitality'}</small>
+              <img className="certificate-seal-logo" src="/prioritylogo.png" alt="Priority Handling Services, Inc." />
+              <small>{cert.issuer || 'Priority Handling Services, Inc.'}</small>
               <h2>{cert.title || 'Certificate of Excellence'}</h2>
               {cert.subtitle && <em>{cert.subtitle}</em>}
               <p>This certificate is presented to</p>
@@ -219,7 +219,7 @@ export default function CertificateVerification() {
         <div className="verify-footer-seal">
           <QRCodeImage value={verifyUrl} size={90} />
           <div>
-            <strong>Authentic PerDevSys Certificate</strong>
+            <strong>Authentic Priority Handling Services, Inc. Certificate</strong>
             <p>Verification Code: <code>{cert.verificationCode || verificationCode}</code></p>
           </div>
         </div>

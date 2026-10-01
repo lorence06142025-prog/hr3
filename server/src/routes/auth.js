@@ -89,7 +89,7 @@ async function generateTokens(user, req) {
       [user.id, refreshToken, req.headers['user-agent'] || null, req.ip || null, expiresAt]
     )
   } catch {
-    console.warn('[PDS] Could not persist refresh token — sessions table may not exist yet. Run `npm run migrate`.')
+    console.warn('[PHS] Could not persist refresh token — sessions table may not exist yet. Run `npm run migrate`.')
   }
   return { accessToken, refreshToken }
 }
@@ -379,7 +379,7 @@ router.post('/forgot-password', async (req, res, next) => {
       const resetUrl = `${origin}/reset-password?token=${resetToken}`
       await sendEmail({
         to: email,
-        subject: 'Reset your PerDevSys password',
+        subject: 'Reset your Priority Handling Services, Inc. password',
         text: `You requested a password reset. Open this link to set a new password (valid for 1 hour):\n\n${resetUrl}\n\nIf you did not request this, you can ignore this email.`,
       })
     }
@@ -425,8 +425,8 @@ router.post('/invite', authenticate, authorize('hr'), async (req, res, next) => 
     const registerUrl = `${origin}/register?token=${token}`
     await sendEmail({
       to: input.email,
-      subject: 'You have been invited to PerDevSys',
-      text: `Hello ${input.fullName},\n\nYou have been invited to join PerDevSys as ${input.role}. Set your password using this link (valid for 7 days):\n\n${registerUrl}\n\nIf you did not expect this invitation, you can ignore this email.`,
+      subject: 'You have been invited to Priority Handling Services, Inc.',
+      text: `Hello ${input.fullName},\n\nYou have been invited to join Priority Handling Services, Inc. as ${input.role}. Set your password using this link (valid for 7 days):\n\n${registerUrl}\n\nIf you did not expect this invitation, you can ignore this email.`,
     })
 await logActivity({ req, user: req.user, action: 'invite.created', category: 'auth', description: `${req.user.name} invited ${input.fullName} (${input.role})`, details: { email: input.email, role: input.role } })
     res.status(201).json({
@@ -466,7 +466,7 @@ router.post('/register', async (req, res, next) => {
           [user.id, refreshToken, req.headers['user-agent'] || null, req.ip || null, expiresAt]
         )
 } catch {
-        console.warn('[PDS] Could not persist refresh token during registration.')
+        console.warn('[PHS] Could not persist refresh token during registration.')
       }
       await logActivity({ req, user: { sub: user.id, role: user.role, name: user.full_name }, action: 'register', category: 'auth', description: `${user.full_name} completed registration (${invitation.email})`, details: { role: user.role } })
       return { token: accessToken, refreshToken, user: { id: user.id, email: user.email, role: user.role, name: user.full_name, employeeId: user.employee_id } }
@@ -494,14 +494,14 @@ router.post('/2fa/setup', authenticate, async (req, res, next) => {
     const secret = generateSecret()
     await query('UPDATE users SET two_factor_temp_secret = $1 WHERE id = $2', [secret, user.id])
 
-    const otpAuthURI = getOtpAuthURI(user.email, secret, 'PerDevSys')
+    const otpAuthURI = getOtpAuthURI(user.email, secret, 'Priority Handling Services, Inc.')
     const qrCode = await generateQRCodeDataUrl(otpAuthURI)
 
     res.json({
       secret,
       otpAuthURI,
       qrCode,
-      issuer: 'PerDevSys',
+      issuer: 'Priority Handling Services, Inc.',
       account: user.email,
     })
   } catch (error) { next(error) }

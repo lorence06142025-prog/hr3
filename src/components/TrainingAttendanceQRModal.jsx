@@ -195,7 +195,7 @@ export default function TrainingAttendanceQRModal({ session, onClose, onAttendan
       '.meta { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 400px; margin: 20px auto; background: #f8fafc; padding: 12px; border-radius: 8px; font-size: 13px; text-align: left; }' +
       '.qr-box { margin: 28px auto; padding: 20px; border: 2px dashed #111827; border-radius: 16px; display: inline-block; }' +
       '</style></head><body>' +
-      '<div class="header"><span class="badge">' + session.category + '</span><h1 style="margin-top:8px;">' + session.title + '</h1><p>PerDevSys Hospitality Training · Live Attendance</p></div>' +
+      '<div class="header"><span class="badge">' + session.category + '</span><h1 style="margin-top:8px;">' + session.title + '</h1><p>Priority Handling Services, Inc. · Live Training Attendance</p></div>' +
       '<div class="meta"><div><strong>Venue:</strong> ' + session.venue + '</div><div><strong>Date:</strong> ' + String(session.start_date).slice(0, 10) + '</div><div><strong>Time:</strong> ' + session.start_time + '</div><div><strong>Trainer:</strong> ' + (session.trainer || 'HR Specialist') + '</div></div>' +
       '<div class="qr-box"><div style="font-weight:700;margin-bottom:8px;font-size:12px;text-transform:uppercase;color:#111827;">Scan to Check In</div><img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=' + encodeURIComponent(sessionQrPayload) + '" width="220" height="220" /></div>' +
       '<p>Open your mobile camera or employee app and scan to record attendance as <strong>PRESENT</strong>.</p>' +

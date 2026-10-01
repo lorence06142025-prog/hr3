@@ -48,8 +48,8 @@ export default function Register() {
     <main className="login-page" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh' }}>
       <div className="login-card" style={{ padding: 40, maxWidth: 420 }}>
         <div className="brand" style={{ justifyContent: 'center', marginBottom: 24 }}>
-          <span className="brand-mark"><span /></span>
-          <span style={{ fontSize: 20, fontWeight: 700 }}>PerDevSys</span>
+          <img className="register-brand-logo" src="/prioritylogo.png" alt="" />
+          <span style={{ fontSize: 20, fontWeight: 700 }}>Priority Handling Services, Inc.</span>
         </div>
         <h1 style={{ fontSize: 20, marginBottom: 4 }}>Create your account</h1>
         <p style={{ fontSize: 13, marginBottom: 20, color: '#666' }}>Complete your registration to access the system.</p>

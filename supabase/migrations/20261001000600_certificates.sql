@@ -22,7 +22,7 @@ CREATE TABLE certificates (
   template_id UUID NOT NULL REFERENCES certificate_templates(id),
   employee_id UUID NOT NULL REFERENCES employees(id),
   certificate_number TEXT NOT NULL UNIQUE,
-  verification_code UUID NOT NULL UNIQUE DEFAULT gen_random_uuid(),
+  verification_code TEXT NOT NULL UNIQUE DEFAULT ('V-' || UPPER(SUBSTRING(gen_random_uuid()::text, 1, 8))),
   achievement_text TEXT NOT NULL,
   awarded_at DATE NOT NULL DEFAULT CURRENT_DATE,
   expires_at DATE,
@@ -35,3 +35,24 @@ CREATE TABLE certificates (
 );
 CREATE INDEX certificates_employee_idx ON certificates(employee_id, issued_at DESC);
 CREATE INDEX certificates_status_idx ON certificates(status, issued_at DESC);
+
+-- Auto-expire certificates: when a certificate's expires_at passes and it is still
+-- marked 'issued', it should become 'expired'.
+--
+-- NOTE: PostgreSQL does NOT support BEFORE SELECT triggers (that is Oracle syntax).
+-- The trigger fires only on INSERT/UPDATE/DELETE/TRUNCATE, so it cannot be used to
+-- refresh statuses "just in time" for a read. Instead, this function is invoked:
+--   1. automatically from the certificates GET / route before listing, and
+--   2. manually from the POST /api/certificates/check-expiry endpoint (HR button).
+
+CREATE OR REPLACE FUNCTION expire_certificates()
+RETURNS void AS $$
+BEGIN
+  UPDATE certificates
+  SET status = 'expired',
+      metadata = metadata || jsonb_build_object('expiredAt', NOW()::text)
+  WHERE status = 'issued'
+    AND expires_at IS NOT NULL
+    AND expires_at < NOW()::date;
+END;
+$$ LANGUAGE plpgsql;

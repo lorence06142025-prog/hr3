@@ -83,7 +83,7 @@ export function verifyTOTP(token, secret, window = 2, timeStep = 30) {
   return false
 }
 
-export function getOtpAuthURI(email, secret, issuer = 'PerDevSys') {
+export function getOtpAuthURI(email, secret, issuer = 'Priority Handling Services, Inc.') {
   try {
     return otplibGenerateURI({
       secret,

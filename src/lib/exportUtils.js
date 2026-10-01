@@ -36,7 +36,7 @@ export function downloadCsv(rows, filename = 'export.csv') {
  * Triggers a browser PDF print for a given HTML element by ID.
  * Opens print preview with only that element visible.
  */
-export function printElementAsPdf(elementId, title = 'PerDevSys Report') {
+export function printElementAsPdf(elementId, title = 'Priority Handling Services, Inc. Report') {
   const el = document.getElementById(elementId)
   if (!el) return
 
@@ -61,7 +61,7 @@ export function printElementAsPdf(elementId, title = 'PerDevSys Report') {
     <body>
       <div class="report-header">
         <h1>${title}</h1>
-        <small>Generated: ${new Date().toLocaleString()}<br/>PerDevSys — Personnel Development System</small>
+        <small>Generated: ${new Date().toLocaleString()}<br/>Priority Handling Services, Inc.</small>
       </div>
       ${el.innerHTML}
     </body>
@@ -158,8 +158,8 @@ export function exportCourseAsPdf(resource) {
           <p style="font-size:12px;color:#64748b;">Provider: ${provider} · Duration: ${duration}</p>
         </div>
         <div style="text-align:right;">
-          <b style="font-size:14px;color:#111827;">PerDevSys</b>
-          <div style="font-size:10px;color:#94a3b8;margin-top:2px;">Hospitality Learning & Development</div>
+          <b style="font-size:14px;color:#111827;">Priority Handling Services, Inc.</b>
+          <div style="font-size:10px;color:#94a3b8;margin-top:2px;">Workforce Learning & Development</div>
           <div style="font-size:10px;color:#94a3b8;">Printed: ${new Date().toLocaleDateString()}</div>
         </div>
       </div>
@@ -219,7 +219,7 @@ export function exportCourseAsPdf(resource) {
       </div>
 
       <div class="footer-note">
-        PerDevSys Hospitality Performance & Development System · Official Training Record
+        Priority Handling Services, Inc. · Official Training Record
       </div>
     </body>
     </html>

@@ -1,6 +1,6 @@
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
-CREATE TYPE user_role AS ENUM ('employee', 'supervisor', 'management', 'hr');
+CREATE TYPE user_role AS ENUM ('employee', 'supervisor', 'management', 'hr', 'operations_manager');
 CREATE TYPE workflow_status AS ENUM ('active', 'completed', 'cancelled');
 
 CREATE TABLE employees (

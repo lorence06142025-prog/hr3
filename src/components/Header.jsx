@@ -122,7 +122,7 @@ export default function Header({ user, onToggle, dark, onOpenMobileNav, onOpenAi
   return <>
     <header className="topbar">
       <div className="crumb">
-        <span className="crumb-brand">Hospitality HR</span>
+        <span className="crumb-brand">Priority Handling Services, Inc.</span>
         <span className="crumb-sep">/</span>
         <span className="crumb-current">Performance &amp; Development</span>
       </div>
@@ -350,7 +350,7 @@ export default function Header({ user, onToggle, dark, onOpenMobileNav, onOpenAi
 
           {/* Footer */}
           <div className="notif-panel-foot">
-            <small>Hospitality HR Personnel System</small>
+            <small>Priority Handling Services, Inc.</small>
             <button onClick={() => setOpen(false)}>Done</button>
           </div>
         </div>

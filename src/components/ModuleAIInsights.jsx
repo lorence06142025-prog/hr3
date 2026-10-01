@@ -107,7 +107,7 @@ export default function ModuleAIInsights({ module, stage, workflowId }) {
           title: result.insights?.[0]?.title || `${module[0].toUpperCase()}${module.slice(1)} Management Report`,
           content: result.insights?.[0]?.summary || '',
           created_at: new Date().toISOString(),
-          generated_by_model: 'PerDevSys AI',
+          generated_by_model: 'Priority Handling Services, Inc. AI',
           metrics_json: result.metrics || {},
         }
         setSavedReports([reportObj])

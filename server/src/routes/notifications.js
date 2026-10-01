@@ -9,8 +9,8 @@ router.use(authenticate)
 
 const testEmailSchema = z.object({
   to: z.string().email(),
-  subject: z.string().min(1).default('Horeca Live Test Email'),
-  message: z.string().min(1).default('This is a test notification email dispatched from Horeca Hospitality HR System.'),
+  subject: z.string().min(1).default('Priority Handling Services, Inc. Live Test Email'),
+  message: z.string().min(1).default('This is a test notification email dispatched from Priority Handling Services, Inc.'),
 })
 
 // GET /api/notifications — user's workflow notifications
@@ -69,7 +69,7 @@ router.post('/test-email', authorize('hr', 'management'), async (req, res, next)
         ['Delivery Mode', process.env.SMTP_HOST ? 'Live Production SMTP' : 'Ethereal Test Sandbox'],
       ],
       actionUrl: process.env.CLIENT_ORIGIN || 'http://localhost:5173',
-      actionText: 'Open Horeca Portal',
+      actionText: 'Open Priority Handling Services, Inc.',
     })
     res.json({
       success: result.sent !== false,

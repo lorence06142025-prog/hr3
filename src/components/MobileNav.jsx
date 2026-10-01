@@ -145,21 +145,10 @@ export default function MobileNav({ user, onLogout, open, onClose }) {
             <button className="mobile-nav-close" onClick={close} aria-label="Close menu">×</button>
             <div className="sidebar-brand-wrapper">
               <div className="brand">
-                <div className="brand-logo-icon">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                    <rect x="2" y="2" width="20" height="20" rx="6" fill="url(#brandGradM)" />
-                    <path d="M7 8h10M7 12h10M7 16h6" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" />
-                    <defs>
-                      <linearGradient id="brandGradM" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
-                        <stop stopColor="#111827" />
-                        <stop offset="1" stopColor="#111827" />
-                      </linearGradient>
-                    </defs>
-                  </svg>
-                </div>
+                <img className="brand-logo-icon" src="/prioritylogo.png" alt="" />
                 <div className="brand-text-block">
-                  <span className="brand-name">PerDevSys</span>
-                  <span className="brand-badge">HOSPITALITY HR</span>
+                  <span className="brand-name">Priority Handling Services, Inc.</span>
+                  <span className="brand-badge">WORKFORCE SERVICES</span>
                 </div>
               </div>
             </div>

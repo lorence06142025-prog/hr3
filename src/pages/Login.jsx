@@ -371,12 +371,12 @@ export default function Login({ onLogin, notice }) {
       </button>
 
       {/* LEFT SIDE: Centered Showcase with Hotel Circles & Full Photo Lightbox */}
-      <section className="login-illustration-column" aria-label="HORECAOS Hotel and Restaurant Showcase">
+      <section className="login-illustration-column" aria-label="Priority Handling Services, Inc.">
         <LoginIllustration isLoggingInSuccess={isLoggingInSuccess} />
       </section>
 
       {/* RIGHT SIDE: Clean Modern Executive Form */}
-      <section className="login-form-column" aria-label="Sign In to PerDevSys">
+      <section className="login-form-column" aria-label="Sign In to Priority Handling Services, Inc.">
         <div className="login-card-container">
           {/* ================================================================ */}
           {/* 1. TWO-FACTOR AUTHENTICATION VIEW                                */}
@@ -410,7 +410,7 @@ export default function Login({ onLogin, notice }) {
                 <h1 className="tfa-title">Two-Factor Authentication</h1>
                 <p className="tfa-desc">
                   Enter the 6-digit code from your authenticator app<br />
-                  to continue to PerDevSys.
+                  to continue to Priority Handling Services, Inc.
                 </p>
 
                 {/* ── Error banner ── */}
@@ -563,7 +563,7 @@ export default function Login({ onLogin, notice }) {
 
                 <div className="login-security-badge">
                   <ShieldCheck size={14} />
-                  <span>Protected by PerDevSys role-based security</span>
+                  <span>Protected by Priority Handling Services, Inc. role-based security</span>
                 </div>
               </div>
             </form>
@@ -666,7 +666,7 @@ export default function Login({ onLogin, notice }) {
 
                 <div className="login-security-badge">
                   <ShieldCheck size={14} />
-                  <span>Protected by PerDevSys role-based security</span>
+                  <span>Protected by Priority Handling Services, Inc. role-based security</span>
                 </div>
               </div>
             </form>
@@ -799,7 +799,7 @@ export default function Login({ onLogin, notice }) {
                 {/* 4. Protected by role-based security footnote */}
                 <div className="login-security-badge">
                   <ShieldCheck size={14} />
-                  <span>Protected by PerDevSys role-based security</span>
+                  <span>Protected by Priority Handling Services, Inc. role-based security</span>
                 </div>
               </div>
             </form>
@@ -807,7 +807,7 @@ export default function Login({ onLogin, notice }) {
 
           {/* Copyright Notice */}
           <div className="login-copyright-note">
-            © {new Date().getFullYear()} PerDevSys. All rights reserved.
+            © {new Date().getFullYear()} Priority Handling Services, Inc. All rights reserved.
           </div>
         </div>
       </section>
@@ -818,7 +818,7 @@ export default function Login({ onLogin, notice }) {
           <div className="login-success-zoom-stage">
             <img
               src="/horecaos_hotel_pool.jpg"
-              alt="HORECAOS Hotel & Restaurant"
+              alt="Priority Handling Services, Inc."
               className="login-success-hero-img"
             />
             <div className="login-success-light-sweep" />
@@ -830,7 +830,7 @@ export default function Login({ onLogin, notice }) {
                 <CheckCircle2 size={34} color="#34d399" />
               </div>
               <div className="login-success-title">AUTHENTICATION ACCEPTED</div>
-              <div className="login-success-hotel-name">HORECAOS HOTEL & RESTAURANT</div>
+              <div className="login-success-hotel-name">PRIORITY HANDLING SERVICES, INC.</div>
               <div className="login-success-sub-text">
                 <DoorOpen size={16} className="text-emerald-500" />
                 <span>Authentication accepted, logging in...</span>

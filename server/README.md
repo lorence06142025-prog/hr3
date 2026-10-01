@@ -22,11 +22,13 @@ The saved report stays viewable after the workflow is completed via `GET /api/wo
 
 ## Set up PostgreSQL
 
-Create a local database named `perdevsys`, then copy `.env.example` to `.env` and set a unique `JWT_SECRET`. The migrations automatically create the demo accounts listed below.
+The canonical migrations live in `supabase/migrations` at the repository root. Sign in to the Supabase CLI with a project role that has database write permission, then link the target project before applying migrations. For development, the database can be reset and recreated with `npx supabase db reset --linked --yes`; this deletes user-created database objects and data. To apply pending migrations without resetting, use `npm run migrate` from `server`.
 
 ```powershell
-cd pds/server
-npm install
+cd pds
+npx supabase login
+npx supabase link --project-ref YOUR_PROJECT_REF
+cd server
 npm run migrate
 npm run dev
 ```

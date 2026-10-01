@@ -13,14 +13,14 @@ async function initEmailClient() {
   // Priority 1: Brevo HTTP API (free, sends to any email, no domain needed, works on Render)
   if (process.env.BREVO_API_KEY) {
     useBrevo = true
-    console.log('[HORECA EMAIL] Using Brevo API for email delivery ✅')
+    console.log('[PHS EMAIL] Using Brevo API for email delivery ✅')
     return
   }
 
   // Priority 2: Resend API
   if (process.env.RESEND_API_KEY) {
     resendClient = new Resend(process.env.RESEND_API_KEY)
-    console.log('[HORECA EMAIL] Using Resend API for email delivery ✅')
+    console.log('[PHS EMAIL] Using Resend API for email delivery ✅')
     return
   }
 
@@ -34,7 +34,7 @@ async function initEmailClient() {
       greetingTimeout: 15000,
       socketTimeout: 20000,
     })
-    console.log(`[HORECA EMAIL] Using Gmail SMTP transport (${config.smtpUser})`)
+    console.log(`[PHS EMAIL] Using Gmail SMTP transport (${config.smtpUser})`)
   } else if (config.smtpHost && config.smtpUser) {
     transporter = nodemailer.createTransport({
       host: config.smtpHost,
@@ -46,7 +46,7 @@ async function initEmailClient() {
       socketTimeout: 20000,
       tls: { rejectUnauthorized: false },
     })
-    console.log(`[HORECA EMAIL] Using SMTP transport (${config.smtpHost}:${config.smtpPort})`)
+    console.log(`[PHS EMAIL] Using SMTP transport (${config.smtpHost}:${config.smtpPort})`)
   } else {
     try {
       etherealAccount = await nodemailer.createTestAccount()
@@ -56,9 +56,9 @@ async function initEmailClient() {
         secure: false,
         auth: { user: etherealAccount.user, pass: etherealAccount.pass },
       })
-      console.log(`[HORECA EMAIL] Using Ethereal sandbox account (${etherealAccount.user})`)
+      console.log(`[PHS EMAIL] Using Ethereal sandbox account (${etherealAccount.user})`)
     } catch (err) {
-      console.warn('[HORECA EMAIL] Ethereal unavailable, using simulated mode:', err.message)
+      console.warn('[PHS EMAIL] Ethereal unavailable, using simulated mode:', err.message)
       transporter = null
     }
   }
@@ -73,12 +73,12 @@ export function getOutboxQueue() {
   return outboxQueue.slice().reverse() // newest first
 }
 
-// Professional HTML Email Template Builder for Horeca Hospitality HR
+// Professional HTML Email Template Builder for Priority Handling Services, Inc.
 export function buildHtmlTemplate({
-  title = 'Horeca Notification',
+  title = 'Priority Handling Services, Inc. Notification',
   message = '',
   actionUrl = '',
-  actionText = 'View in Horeca',
+  actionText = 'View in Priority Handling Services, Inc.',
   details = [],
 }) {
   const detailsHtml = details.length > 0
@@ -110,8 +110,8 @@ export function buildHtmlTemplate({
         <table align="center" border="0" cellpadding="0" cellspacing="0" style="max-width:560px; width:100%; background:#ffffff; border-radius:12px; overflow:hidden; box-shadow:0 4px 6px -1px rgba(0,0,0,0.1); border:1px solid #e2e8f0;">
           <tr>
             <td style="background:linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4338ca 100%); padding:24px 28px; text-align:left;">
-              <div style="font-size:20px; font-weight:800; color:#ffffff; letter-spacing:0.8px;">🏨 HORECA</div>
-              <div style="font-size:12px; color:#c7d2fe; margin-top:4px;">Hotel, Restaurant &amp; Catering Hospitality HR System</div>
+              <div style="font-size:16px; font-weight:800; color:#ffffff; letter-spacing:0.8px;">PRIORITY HANDLING SERVICES, INC.</div>
+              <div style="font-size:12px; color:#c7d2fe; margin-top:4px;">Workforce Services &amp; Development</div>
             </td>
           </tr>
           <tr>
@@ -124,8 +124,8 @@ export function buildHtmlTemplate({
           </tr>
           <tr>
             <td style="background:#f8fafc; border-top:1px solid #e2e8f0; padding:16px 28px; text-align:center; font-size:11px; color:#94a3b8;">
-              This is an automated notification sent by Horeca HR System.<br>
-              © ${new Date().getFullYear()} Horeca Hospitality Solutions. All rights reserved.
+              This is an automated notification from Priority Handling Services, Inc.<br>
+              © ${new Date().getFullYear()} Priority Handling Services, Inc. All rights reserved.
             </td>
           </tr>
         </table>
@@ -159,7 +159,7 @@ export async function sendEmail({ to, subject, text, html, details, actionUrl, a
   if (useBrevo) {
     try {
       const senderEmail = process.env.BREVO_SENDER_EMAIL || process.env.SMTP_USER || 'celsigarcia036@gmail.com'
-      const senderName = process.env.BREVO_SENDER_NAME || 'Horeca Hospitality HR'
+      const senderName = process.env.BREVO_SENDER_NAME || 'Priority Handling Services, Inc.'
       const response = await fetch('https://api.brevo.com/v3/smtp/email', {
         method: 'POST',
         headers: {
@@ -178,10 +178,10 @@ export async function sendEmail({ to, subject, text, html, details, actionUrl, a
       const result = await response.json()
       if (!response.ok) throw new Error(result.message || `Brevo error ${response.status}`)
       emailRecord.status = 'sent'
-      console.log(`[HORECA EMAIL] Brevo delivered → ${to} | messageId: ${result.messageId}`)
+      console.log(`[PHS EMAIL] Brevo delivered → ${to} | messageId: ${result.messageId}`)
       return { sent: true, messageId: result.messageId, emailRecord }
     } catch (error) {
-      console.error('[HORECA EMAIL] Brevo failed:', error.message)
+      console.error('[PHS EMAIL] Brevo failed:', error.message)
       emailRecord.status = `error: ${error.message}`
       return { sent: false, error: error.message, emailRecord }
     }
@@ -190,7 +190,7 @@ export async function sendEmail({ to, subject, text, html, details, actionUrl, a
   // --- Resend API path ---
   if (resendClient) {
     try {
-      const fromAddress = process.env.RESEND_FROM || 'Horeca Hospitality HR <onboarding@resend.dev>'
+      const fromAddress = process.env.RESEND_FROM || 'Priority Handling Services, Inc. <onboarding@resend.dev>'
       const { data, error } = await resendClient.emails.send({
         from: fromAddress,
         to: [to],
@@ -200,10 +200,10 @@ export async function sendEmail({ to, subject, text, html, details, actionUrl, a
       })
       if (error) throw new Error(error.message)
       emailRecord.status = 'sent'
-      console.log(`[HORECA EMAIL] Resend delivered → ${to} | id: ${data.id}`)
+      console.log(`[PHS EMAIL] Resend delivered → ${to} | id: ${data.id}`)
       return { sent: true, messageId: data.id, emailRecord }
     } catch (error) {
-      console.error('[HORECA EMAIL] Resend failed:', error.message)
+      console.error('[PHS EMAIL] Resend failed:', error.message)
       emailRecord.status = `error: ${error.message}`
       return { sent: false, error: error.message, emailRecord }
     }
@@ -211,14 +211,14 @@ export async function sendEmail({ to, subject, text, html, details, actionUrl, a
 
   // --- Nodemailer SMTP path (local dev) ---
   if (!transporter) {
-    console.log(`[HORECA EMAIL (Simulated)] To: ${to} | Subject: ${subject}`)
+    console.log(`[PHS EMAIL (Simulated)] To: ${to} | Subject: ${subject}`)
     emailRecord.status = 'simulated (demo mode)'
     return { simulated: true, emailRecord }
   }
 
   try {
     const info = await transporter.sendMail({
-      from: config.smtpFrom || (config.smtpUser ? `"Horeca Hospitality HR" <${config.smtpUser}>` : '"Horeca HR" <noreply@horecahr.local>'),
+      from: config.smtpFrom || (config.smtpUser ? `"Priority Handling Services, Inc." <${config.smtpUser}>` : '"Priority Handling Services, Inc." <noreply@priorityhandlingservices.local>'),
       to,
       subject,
       text,
@@ -227,10 +227,10 @@ export async function sendEmail({ to, subject, text, html, details, actionUrl, a
     const previewUrl = nodemailer.getTestMessageUrl(info) || null
     emailRecord.status = 'sent'
     emailRecord.previewUrl = previewUrl
-    if (previewUrl) console.log(`[HORECA EMAIL] Preview: ${previewUrl}`)
+    if (previewUrl) console.log(`[PHS EMAIL] Preview: ${previewUrl}`)
     return { sent: true, messageId: info.messageId, previewUrl, emailRecord }
   } catch (error) {
-    console.error('[HORECA EMAIL] SMTP failed:', error.message)
+    console.error('[PHS EMAIL] SMTP failed:', error.message)
     emailRecord.status = `error: ${error.message}`
     return { sent: false, error: error.message, emailRecord }
   }

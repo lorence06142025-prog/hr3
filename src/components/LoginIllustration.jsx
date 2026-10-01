@@ -35,19 +35,14 @@ export default function LoginIllustration({ isLoggingInSuccess = false }) {
   return (
     <div
       className={`login-hero-stage ${isLoggingInSuccess ? 'login-transition-active' : ''}`}
-      aria-label="PerDevSys Executive Platform"
+      aria-label="Priority Handling Services, Inc. Workforce Platform"
     >
       {/* Top Brand Header */}
       <div className="login-hero-brand">
-        <div className="login-hero-logo-box">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <rect x="2" y="2" width="20" height="20" rx="6" fill="#111827" />
-            <path d="M7 8h10M7 12h10M7 16h6" stroke="#ffffff" strokeWidth="2.2" strokeLinecap="round" />
-          </svg>
-        </div>
+        <img className="login-hero-logo-box" src="/prioritylogo.png" alt="" />
         <div className="login-hero-brand-text">
-          <span className="login-hero-brand-name">PerDevSys</span>
-          <span className="login-hero-brand-sub">Hospitality HR Management</span>
+          <span className="login-hero-brand-name">Priority Handling Services, Inc.</span>
+          <span className="login-hero-brand-sub">Workforce Management</span>
         </div>
       </div>
 
