@@ -4,8 +4,8 @@
    Breakpoints:
      - Desktop (>1200px): full layout
      - Laptop (1024–1200px): slightly condensed
-    - Tablet (769–1024px): condensed sidebar + stacked panels
-    - Phone (≤768px): mobile drawer nav + full-width stack
+      - Tablet (769–1024px): condensed sidebar + stacked panels
+      - Phone (≤768px): mobile drawer nav + full-width stack
    ============================================================ */
 
 /* ---------- Fluid base ---------- */
@@ -70,6 +70,66 @@ button { touch-action: manipulation; }
   /* Hide desktop sidebar entirely; show via mobile drawer */
   .sidebar { display: none !important; }
   .fixed-main { margin-left: 0 !important; width: 100% !important; max-width: 100vw !important; }
+
+  .exec-console-banner {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 14px;
+    padding: 18px;
+  }
+  .exec-banner-left,
+  .exec-banner-text { min-width: 0; }
+  .exec-banner-left { align-items: flex-start; }
+  .exec-banner-title { font-size: 18px; overflow-wrap: anywhere; }
+  .exec-banner-sub { overflow-wrap: anywhere; }
+  .exec-banner-actions { width: 100%; }
+  .exec-banner-actions > * { flex: 1 1 auto; justify-content: center; }
+
+  .global-search-backdrop {
+    align-items: flex-start;
+    overflow-y: auto;
+    padding: calc(env(safe-area-inset-top, 0px) + 12px) 12px 12px;
+  }
+
+  .global-search-modal {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    max-height: calc(100dvh - 24px);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .global-search-results {
+    min-height: 0;
+    max-height: calc(100dvh - 150px);
+    overflow-y: auto;
+  }
+
+  .upm-overlay { padding: 12px; }
+  .upm-modal {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    max-height: calc(100dvh - 24px);
+  }
+
+  .upm-header { gap: 10px; padding: 16px 14px 12px; }
+  .upm-header-left { min-width: 0; gap: 10px; }
+  .upm-header-info { min-width: 0; overflow-wrap: anywhere; }
+  .upm-tabs { overflow-x: auto; }
+  .upm-tab { flex: 0 0 auto; white-space: nowrap; }
+  .upm-field-row { grid-template-columns: minmax(0, 1fr); }
+
+  .outbox-drawer-box {
+    width: min(480px, 100vw);
+    max-width: 100vw;
+    height: 100dvh;
+  }
+
+  .outbox-head { gap: 10px; padding: 16px; }
+  .outbox-body { padding: 12px 14px 16px; }
+  .outbox-foot { padding: 10px 14px; }
 
   /* Slim fixed top bar */
   .topbar {
@@ -529,8 +589,27 @@ button { touch-action: manipulation; }
   .er-dialog label.er-full { grid-column: auto; }
   .page-skeleton-container > div:first-child { align-items: flex-start !important; }
   .page-skeleton-container > div:first-child .skeleton-bar:last-child { display: none; }
-  .assignment-actions { grid-template-columns: 1fr; }
+  .assignment-actions { flex-direction: column; }
   .ccv-header, .ccv-body { padding-left: 14px; padding-right: 14px; }
+  .dashboard-skeleton,
+  .module-widgets,
+  .readiness-cards,
+  .award-cards,
+  .metrics-preview-grid,
+  .competency-table-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .competency-table-row .builder-remove { grid-column: auto; justify-self: end; }
+  .global-search-header { gap: 7px; padding: 12px; }
+  .global-search-tabs { overflow-x: auto; }
+  .global-search-tab { flex: 0 0 auto; white-space: nowrap; }
+  .upm-avatar-wrap { width: 48px; height: 48px; }
+  .outbox-head { flex-wrap: wrap; }
+  .exec-console-banner { padding: 14px; border-radius: 14px; }
+  .exec-banner-left { gap: 10px; }
+  .exec-banner-icon { width: 38px; height: 38px; }
+  .exec-banner-actions { flex-direction: column; align-items: stretch; }
+  .exec-banner-actions > * { width: 100%; }
   .role-home section,
   .role-home-skeleton,
   .saas-modules-grid {

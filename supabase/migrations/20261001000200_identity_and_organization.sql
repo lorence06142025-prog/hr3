@@ -73,9 +73,7 @@ ADD COLUMN IF NOT EXISTS two_factor_backup_codes JSONB NOT NULL DEFAULT '[]'::js
 
 CREATE INDEX IF NOT EXISTS users_2fa_enabled_idx ON users(two_factor_enabled) WHERE two_factor_enabled = true;
 
--- 015_hotel_org.sql
--- Redesign the demo organization to reflect a realistic Hotel & Restaurant
--- structure within the scope of the Performance & Development subsystem.
+-- Seed a freight and logistics company demo organization.
 -- Reuses existing roles: hr, management, operations_manager, supervisor, employee.
 -- All demo accounts share the password: ChangeMe123!
 -- (bcrypt hash below == bcrypt.hash('ChangeMe123!', 12))
@@ -86,24 +84,25 @@ CREATE INDEX IF NOT EXISTS users_2fa_enabled_idx ON users(two_factor_enabled) WH
 INSERT INTO departments (name) VALUES
   ('Executive Office'),
   ('Human Resources'),
-  ('Front Office'),
-  ('Housekeeping'),
-  ('Food & Beverage'),
-  ('Kitchen'),
-  ('Operations')
+  ('Fleet & Transportation'),
+  ('Dispatch & Routing'),
+  ('Warehouse & Inventory'),
+  ('Customer Service'),
+  ('Safety & Compliance'),
+  ('Finance & Administration')
 ON CONFLICT (name) DO NOTHING;
 
 -- ============================================================
 -- 2. Department heads & managers (seeded first to get their IDs)
 -- ============================================================
 
--- HR Administrator (hr)
+-- Human Resources Manager (hr)
 WITH e AS (
   INSERT INTO employees (
     employee_number, full_name, department, department_id, job_title,
     performance_score, competency_score, learning_progress
   )
-  SELECT 'E004', 'Ava Reyes', d.name, d.id, 'HR Administrator', 90, 90, 88
+  SELECT 'E004', 'Ava Reyes', d.name, d.id, 'HR Manager', 90, 90, 88
   FROM departments d WHERE d.name = 'Human Resources'
   ON CONFLICT (employee_number) DO UPDATE SET
     full_name = EXCLUDED.full_name,
@@ -127,13 +126,13 @@ ON CONFLICT (email) DO UPDATE SET
   role = EXCLUDED.role,
   is_active = true;
 
--- Senior Manager (management)
+-- General Manager (management)
 WITH e AS (
   INSERT INTO employees (
     employee_number, full_name, department, department_id, job_title,
     performance_score, competency_score, learning_progress
   )
-  SELECT 'E005', 'Noah Santos', d.name, d.id, 'Senior Manager', 91, 89, 86
+  SELECT 'E005', 'Noah Santos', d.name, d.id, 'General Manager', 91, 89, 86
   FROM departments d WHERE d.name = 'Executive Office'
   ON CONFLICT (employee_number) DO UPDATE SET
     full_name = EXCLUDED.full_name,
@@ -163,8 +162,8 @@ WITH e AS (
     employee_number, full_name, department, department_id, job_title,
     performance_score, competency_score, learning_progress
   )
-  SELECT 'E006', 'Samir Patel', d.name, d.id, 'Operations Manager', 89, 86, 75
-  FROM departments d WHERE d.name = 'Operations'
+  SELECT 'E006', 'Samir Patel', d.name, d.id, 'Fleet Operations Manager', 89, 86, 75
+  FROM departments d WHERE d.name = 'Fleet & Transportation'
   ON CONFLICT (employee_number) DO UPDATE SET
     full_name = EXCLUDED.full_name,
     department = EXCLUDED.department,
@@ -187,14 +186,14 @@ ON CONFLICT (email) DO UPDATE SET
   role = EXCLUDED.role,
   is_active = true;
 
--- Front Office Manager (supervisor / department head)
+-- Dispatch Supervisor
 WITH e AS (
   INSERT INTO employees (
     employee_number, full_name, department, department_id, job_title,
     performance_score, competency_score, learning_progress
   )
-  SELECT 'E002', 'Jordan Williams', d.name, d.id, 'Front Office Manager', 86, 88, 82
-  FROM departments d WHERE d.name = 'Front Office'
+  SELECT 'E002', 'Jordan Williams', d.name, d.id, 'Dispatch Supervisor', 86, 88, 82
+  FROM departments d WHERE d.name = 'Dispatch & Routing'
   ON CONFLICT (employee_number) DO UPDATE SET
     full_name = EXCLUDED.full_name,
     department = EXCLUDED.department,
@@ -217,14 +216,14 @@ ON CONFLICT (email) DO UPDATE SET
   role = EXCLUDED.role,
   is_active = true;
 
--- Housekeeping Manager (supervisor / department head)
+-- Warehouse Supervisor
 WITH e AS (
   INSERT INTO employees (
     employee_number, full_name, department, department_id, job_title,
     performance_score, competency_score, learning_progress
   )
-  SELECT 'E010', 'Anna Kowalski', d.name, d.id, 'Housekeeping Manager', 85, 84, 79
-  FROM departments d WHERE d.name = 'Housekeeping'
+  SELECT 'E010', 'Anna Kowalski', d.name, d.id, 'Warehouse Supervisor', 85, 84, 79
+  FROM departments d WHERE d.name = 'Warehouse & Inventory'
   ON CONFLICT (employee_number) DO UPDATE SET
     full_name = EXCLUDED.full_name,
     department = EXCLUDED.department,
@@ -247,14 +246,14 @@ ON CONFLICT (email) DO UPDATE SET
   role = EXCLUDED.role,
   is_active = true;
 
--- Restaurant Manager (supervisor / department head)
+-- Transportation Supervisor
 WITH e AS (
   INSERT INTO employees (
     employee_number, full_name, department, department_id, job_title,
     performance_score, competency_score, learning_progress
   )
-  SELECT 'E013', 'Robert Johnson', d.name, d.id, 'Restaurant Manager', 84, 84, 71
-  FROM departments d WHERE d.name = 'Food & Beverage'
+  SELECT 'E013', 'Robert Johnson', d.name, d.id, 'Transportation Supervisor', 84, 84, 71
+  FROM departments d WHERE d.name = 'Fleet & Transportation'
   ON CONFLICT (employee_number) DO UPDATE SET
     full_name = EXCLUDED.full_name,
     department = EXCLUDED.department,
@@ -277,14 +276,14 @@ ON CONFLICT (email) DO UPDATE SET
   role = EXCLUDED.role,
   is_active = true;
 
--- Executive Chef (supervisor / department head)
+-- Safety & Compliance Manager
 WITH e AS (
   INSERT INTO employees (
     employee_number, full_name, department, department_id, job_title,
     performance_score, competency_score, learning_progress
   )
-  SELECT 'E017', 'Marco Rossi', d.name, d.id, 'Executive Chef', 88, 87, 80
-  FROM departments d WHERE d.name = 'Kitchen'
+  SELECT 'E017', 'Marco Rossi', d.name, d.id, 'Safety & Compliance Manager', 88, 87, 80
+  FROM departments d WHERE d.name = 'Safety & Compliance'
   ON CONFLICT (employee_number) DO UPDATE SET
     full_name = EXCLUDED.full_name,
     department = EXCLUDED.department,
@@ -307,91 +306,27 @@ ON CONFLICT (email) DO UPDATE SET
   role = EXCLUDED.role,
   is_active = true;
 
--- ============================================================
--- 3. Line employees (report to their department head)
--- ============================================================
-
--- Front Office staff -> manager E002
+-- Operating staff report to their functional supervisors.
 INSERT INTO employees (
   employee_number, full_name, department, department_id, job_title, manager_id,
   performance_score, competency_score, learning_progress
 )
 SELECT v.number, v.name, d.name, d.id, v.title, m.id, v.perf, v.comp, v.learn
 FROM (VALUES
-  ('E007', 'Maria Lopez',     'Receptionist',    84, 82, 78),
-  ('E008', 'David Kim',       'Front Desk Staff', 80, 81, 74),
-  ('E009', 'Sofia Garcia',    'Concierge',        83, 85, 77)
-) AS v(number, name, title, perf, comp, learn)
-JOIN departments d ON d.name = 'Front Office'
-JOIN employees m ON m.employee_number = 'E002'
-ON CONFLICT (employee_number) DO UPDATE SET
-  full_name = EXCLUDED.full_name,
-  department = EXCLUDED.department,
-  department_id = EXCLUDED.department_id,
-  job_title = EXCLUDED.job_title,
-  manager_id = EXCLUDED.manager_id,
-  performance_score = EXCLUDED.performance_score,
-  competency_score = EXCLUDED.competency_score,
-  learning_progress = EXCLUDED.learning_progress;
-
--- Housekeeping staff -> manager E010
-INSERT INTO employees (
-  employee_number, full_name, department, department_id, job_title, manager_id,
-  performance_score, competency_score, learning_progress
-)
-SELECT v.number, v.name, d.name, d.id, v.title, m.id, v.perf, v.comp, v.learn
-FROM (VALUES
-  ('E011', 'Rosa Martinez', 'Housekeeping Staff', 82, 80, 73),
-  ('E012', 'Linda Chen',    'Housekeeping Staff', 81, 79, 72)
-) AS v(number, name, title, perf, comp, learn)
-JOIN departments d ON d.name = 'Housekeeping'
-JOIN employees m ON m.employee_number = 'E010'
-ON CONFLICT (employee_number) DO UPDATE SET
-  full_name = EXCLUDED.full_name,
-  department = EXCLUDED.department,
-  department_id = EXCLUDED.department_id,
-  job_title = EXCLUDED.job_title,
-  manager_id = EXCLUDED.manager_id,
-  performance_score = EXCLUDED.performance_score,
-  competency_score = EXCLUDED.competency_score,
-  learning_progress = EXCLUDED.learning_progress;
-
--- Food & Beverage staff -> manager E013
-INSERT INTO employees (
-  employee_number, full_name, department, department_id, job_title, manager_id,
-  performance_score, competency_score, learning_progress
-)
-SELECT v.number, v.name, d.name, d.id, v.title, m.id, v.perf, v.comp, v.learn
-FROM (VALUES
-  ('E001', 'Emily Thompson', 'Waitress',  84, 84, 71),
-  ('E014', 'Chloe Brown',    'Waitress',  82, 81, 72),
-  ('E015', 'James Wilson',   'Bartender', 83, 80, 70),
-  ('E016', 'Grace Lee',      'Cashier',   80, 82, 69)
-) AS v(number, name, title, perf, comp, learn)
-JOIN departments d ON d.name = 'Food & Beverage'
-JOIN employees m ON m.employee_number = 'E013'
-ON CONFLICT (employee_number) DO UPDATE SET
-  full_name = EXCLUDED.full_name,
-  department = EXCLUDED.department,
-  department_id = EXCLUDED.department_id,
-  job_title = EXCLUDED.job_title,
-  manager_id = EXCLUDED.manager_id,
-  performance_score = EXCLUDED.performance_score,
-  competency_score = EXCLUDED.competency_score,
-  learning_progress = EXCLUDED.learning_progress;
-
--- Kitchen staff -> manager E017
-INSERT INTO employees (
-  employee_number, full_name, department, department_id, job_title, manager_id,
-  performance_score, competency_score, learning_progress
-)
-SELECT v.number, v.name, d.name, d.id, v.title, m.id, v.perf, v.comp, v.learn
-FROM (VALUES
-  ('E018', 'Andre Tan',    'Cook',         85, 83, 76),
-  ('E019', 'Nina Petrova', 'Kitchen Staff', 80, 78, 70)
-) AS v(number, name, title, perf, comp, learn)
-JOIN departments d ON d.name = 'Kitchen'
-JOIN employees m ON m.employee_number = 'E017'
+  ('E001', 'Emily Thompson', 'Customer Service', 'Customer Service Representative', 'E006', 84, 84, 71),
+  ('E007', 'Maria Lopez', 'Fleet & Transportation', 'Driver', 'E013', 84, 82, 78),
+  ('E008', 'David Kim', 'Fleet & Transportation', 'Heavy Vehicle Driver', 'E013', 80, 81, 74),
+  ('E009', 'Sofia Garcia', 'Dispatch & Routing', 'Dispatcher', 'E002', 83, 85, 77),
+  ('E011', 'Rosa Martinez', 'Warehouse & Inventory', 'Warehouse Associate', 'E010', 82, 80, 73),
+  ('E012', 'Linda Chen', 'Warehouse & Inventory', 'Inventory Control Clerk', 'E010', 81, 79, 72),
+  ('E014', 'Chloe Brown', 'Fleet & Transportation', 'Delivery Driver', 'E013', 82, 81, 72),
+  ('E015', 'James Wilson', 'Warehouse & Inventory', 'Forklift Operator', 'E010', 83, 80, 70),
+  ('E016', 'Grace Lee', 'Dispatch & Routing', 'Route Planner', 'E002', 80, 82, 69),
+  ('E018', 'Andre Tan', 'Fleet & Transportation', 'Fleet Coordinator', 'E006', 85, 83, 76),
+  ('E019', 'Nina Petrova', 'Safety & Compliance', 'Safety Coordinator', 'E017', 80, 78, 70)
+) AS v(number, name, department_name, title, manager_number, perf, comp, learn)
+JOIN departments d ON d.name = v.department_name
+JOIN employees m ON m.employee_number = v.manager_number
 ON CONFLICT (employee_number) DO UPDATE SET
   full_name = EXCLUDED.full_name,
   department = EXCLUDED.department,

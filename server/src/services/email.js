@@ -11,14 +11,14 @@ let useBrevo = false
 // Initialize email client — priority: Brevo → Resend → SMTP → Simulated
 async function initEmailClient() {
   // Priority 1: Brevo HTTP API (free, sends to any email, no domain needed, works on Render)
-  if (process.env.BREVO_API_KEY) {
+  if (process.env.BREVO_API_KEY && process.env.BREVO_SENDER_EMAIL) {
     useBrevo = true
     console.log('[PHS EMAIL] Using Brevo API for email delivery ✅')
     return
   }
 
   // Priority 2: Resend API
-  if (process.env.RESEND_API_KEY) {
+  if (process.env.RESEND_API_KEY && process.env.RESEND_FROM) {
     resendClient = new Resend(process.env.RESEND_API_KEY)
     console.log('[PHS EMAIL] Using Resend API for email delivery ✅')
     return
@@ -39,12 +39,12 @@ async function initEmailClient() {
     transporter = nodemailer.createTransport({
       host: config.smtpHost,
       port: config.smtpPort,
-      secure: config.smtpSecure === 'true' || config.smtpPort === 465,
+      secure: config.smtpSecure || config.smtpPort === 465,
       auth: config.smtpPass ? { user: config.smtpUser, pass: config.smtpPass } : undefined,
       connectionTimeout: 15000,
       greetingTimeout: 15000,
       socketTimeout: 20000,
-      tls: { rejectUnauthorized: false },
+      tls: { rejectUnauthorized: true },
     })
     console.log(`[PHS EMAIL] Using SMTP transport (${config.smtpHost}:${config.smtpPort})`)
   } else {
@@ -158,7 +158,7 @@ export async function sendEmail({ to, subject, text, html, details, actionUrl, a
   // --- Brevo API path (production / cloud — sends to any email, 300/day free) ---
   if (useBrevo) {
     try {
-      const senderEmail = process.env.BREVO_SENDER_EMAIL || process.env.SMTP_USER || 'celsigarcia036@gmail.com'
+      const senderEmail = process.env.BREVO_SENDER_EMAIL || process.env.SMTP_USER
       const senderName = process.env.BREVO_SENDER_NAME || 'Priority Handling Services, Inc.'
       const response = await fetch('https://api.brevo.com/v3/smtp/email', {
         method: 'POST',

@@ -35,6 +35,18 @@ npm run dev
 
 The frontend is started separately from `pds` with `npm run dev`; its development proxy routes `/api` to port 4000.
 
+## Production environment
+
+Use [`server/.env.production.example`](.env.production.example) as a checklist only. Do not commit a populated `.env` file. Add these values as encrypted environment variables in the API hosting provider, and use the root `.env.production.example` values in the frontend hosting provider. Values in the frontend that start with `VITE_` are public and must never contain credentials.
+
+The API requires `DATABASE_URL`, `JWT_SECRET`, `CLIENT_ORIGIN`, and either `PUBLIC_APP_URL` or `APP_URL`. Set `CLIENT_ORIGIN` to the exact HTTPS origin serving the frontend, with no path. Use a production Supabase database URL with SSL enabled and rotate any password or key that has been shared outside the secret manager. Generate a unique JWT secret, for example with `node -e "console.log(require('node:crypto').randomBytes(48).toString('hex'))"`; use the same value on every API instance.
+
+Configure one email provider before starting the API in production: Brevo (`BREVO_API_KEY` and `BREVO_SENDER_EMAIL`), Resend (`RESEND_API_KEY` and `RESEND_FROM`), or authenticated SMTP (`SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, and `SMTP_FROM`). Use a sender/domain verified by that provider. OpenRouter and HR2 variables are optional integrations.
+
+`SUPABASE_ACCESS_TOKEN` is only for local Supabase CLI authentication. Keep it in the ignored root `.env` or your local shell; do not add it to frontend variables or the production API environment. Apply production schema changes with `npm run migrate` from `server`; never run `supabase db reset` against production.
+
+The API validates required production settings at startup and refuses development JWT/database fallbacks. Its CORS policy only allows the configured `CLIENT_ORIGIN`; update that value when the frontend domain changes. The `/smtp-check` diagnostic is development-only.
+
 ## AI insights with OpenRouter
 
 Add `OPENROUTER_API_KEY` and optionally `OPENROUTER_MODEL` to `pds/server/.env`, then restart the API. The key is used only by the backend; it is never sent to the browser. `POST /api/analytics/insights` sends aggregate, non-identifying workforce metrics to OpenRouter and returns concise insight cards.

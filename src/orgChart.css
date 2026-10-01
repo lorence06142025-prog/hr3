@@ -372,6 +372,91 @@
   position: relative;
 }
 
+@media (max-width: 1100px) {
+  .org-chart-page-container {
+    padding: 24px 22px 44px;
+  }
+
+  .org-chart-kpis {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .org-toolbar-left,
+  .org-toolbar-right {
+    min-width: 0;
+  }
+
+}
+
+@media (max-width: 768px) {
+  .org-chart-page-container {
+    gap: 14px;
+    padding: 18px 14px 32px;
+  }
+
+  .org-chart-kpis {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .org-kpi-card {
+    padding: 12px 14px;
+  }
+
+  .org-chart-toolbar {
+    align-items: stretch;
+    padding: 12px;
+  }
+
+  .org-toolbar-left,
+  .org-toolbar-right {
+    width: 100%;
+  }
+
+  .org-toolbar-left {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .org-search-box,
+  .org-select-filter {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .org-toolbar-right {
+    justify-content: flex-start;
+  }
+
+  .org-zoom-suite {
+    max-width: 100%;
+    flex-wrap: wrap;
+    border-radius: 12px;
+  }
+
+}
+
+@media (max-width: 420px) {
+  .org-chart-kpis {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .org-toolbar-right > .org-btn-tool {
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+
+  .org-zoom-slider {
+    width: 72px;
+  }
+
+  .org-zoom-select-presets {
+    max-width: 78px;
+  }
+
+}
+
 .org-node-card {
   position: relative;
   width: 270px;
@@ -1035,4 +1120,43 @@
 .dark .org-drawer-secondary-btn:hover {
   background: rgba(255, 255, 255, 0.08);
   color: #ffffff;
+}
+
+@media (max-width: 1100px) {
+  .org-chart-canvas-wrapper {
+    min-height: 560px;
+    justify-content: flex-start;
+    overscroll-behavior-x: contain;
+    touch-action: pan-x pan-y;
+  }
+}
+
+@media (max-width: 768px) {
+  .org-chart-canvas-wrapper {
+    min-height: 56vh;
+    max-height: 72vh;
+    padding: 24px 14px;
+    border-radius: 12px;
+    justify-content: flex-start;
+    overflow: auto;
+    overscroll-behavior: contain;
+    touch-action: pan-x pan-y;
+  }
+
+  .org-tree-root-container {
+    width: max-content;
+    min-width: 100%;
+    align-items: flex-start;
+  }
+
+  .org-children-container { gap: 16px; }
+  .org-node-card { width: 250px; }
+  .org-drawer-header, .org-drawer-body { padding: 16px; }
+  .org-profile-hero { align-items: flex-start; padding: 12px; }
+}
+
+@media (max-width: 420px) {
+  .org-chart-canvas-wrapper { min-height: 52vh; padding: 18px 10px; }
+  .org-node-card { width: 236px; padding: 13px; }
+  .org-floating-zoom-badge { right: 8px; bottom: 8px; }
 }

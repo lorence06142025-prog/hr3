@@ -26,12 +26,9 @@ app.use(helmet())
 app.use(cors({
   origin: (origin, callback) => {
     if (!origin) return callback(null, true)
-    if (
-      origin.includes('hostforge') ||
-      origin.endsWith('.vercel.app') ||
-      origin.includes('localhost') ||
-      origin === config.clientOrigin
-    ) {
+    const isDevelopmentOrigin = origin.includes('localhost') || origin.includes('127.0.0.1')
+    const isKnownDevelopmentHost = origin.includes('hostforge') || origin.endsWith('.vercel.app')
+    if (origin === config.clientOrigin || (!config.isProduction && (isDevelopmentOrigin || isKnownDevelopmentHost))) {
       return callback(null, true)
     }
     return callback(null, false)
@@ -45,19 +42,20 @@ app.use(requestLogger)
 app.get('/', (_req, res) => res.json({ status: 'ok', name: 'pds-api' }))
 app.get('/health', async (_req, res, next) => { try { await pool.query('SELECT 1'); res.json({ status: 'ok' }) } catch (error) { next(error) } })
 
-// Public SMTP diagnostic — shows whether env vars reached the server (no auth required)
-app.get('/smtp-check', (_req, res) => {
-  res.json({
-    BREVO_API_KEY: process.env.BREVO_API_KEY ? `✅ set (${process.env.BREVO_API_KEY.slice(0, 8)}...)` : '❌ NOT SET',
-    RESEND_API_KEY: process.env.RESEND_API_KEY ? `✅ set (${process.env.RESEND_API_KEY.slice(0, 8)}...)` : '❌ NOT SET',
-    SMTP_HOST: process.env.SMTP_HOST || '❌ NOT SET',
-    SMTP_PORT: process.env.SMTP_PORT || '❌ NOT SET',
-    SMTP_USER: process.env.SMTP_USER ? `✅ ${process.env.SMTP_USER}` : '❌ NOT SET',
-    SMTP_PASS: process.env.SMTP_PASS ? `✅ set (${process.env.SMTP_PASS.length} chars)` : '❌ NOT SET',
-    SMTP_FROM: process.env.SMTP_FROM || '❌ NOT SET',
-    NODE_ENV: process.env.NODE_ENV || 'not set',
+if (!config.isProduction) {
+  app.get('/smtp-check', (_req, res) => {
+    res.json({
+      BREVO_API_KEY: process.env.BREVO_API_KEY ? 'set' : 'not set',
+      RESEND_API_KEY: process.env.RESEND_API_KEY ? 'set' : 'not set',
+      SMTP_HOST: process.env.SMTP_HOST || 'not set',
+      SMTP_PORT: process.env.SMTP_PORT || 'not set',
+      SMTP_USER: process.env.SMTP_USER ? 'set' : 'not set',
+      SMTP_PASS: process.env.SMTP_PASS ? 'set' : 'not set',
+      SMTP_FROM: process.env.SMTP_FROM ? 'set' : 'not set',
+      NODE_ENV: process.env.NODE_ENV || 'not set',
+    })
   })
-})
+}
 
 app.use('/api/auth', authRoutes)
 app.use('/api/workflows', workflowRoutes)

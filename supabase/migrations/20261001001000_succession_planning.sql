@@ -70,122 +70,53 @@ CREATE INDEX IF NOT EXISTS succession_records_workflow_idx ON succession_records
 CREATE INDEX IF NOT EXISTS succession_records_status_idx ON succession_records(review_status);
 
 -- ============================================================
--- 4. Seed Positions catalog with actual hotel job positions
+-- Seed freight and logistics succession positions.
 -- ============================================================
-INSERT INTO positions (title, department, is_critical, description, required_competencies, required_learning, min_performance_score, min_competency_score, min_learning_progress)
+-- Freight and logistics position catalog: 39 roles across the eight seeded departments.
+INSERT INTO positions (
+  title, department, is_critical, description, required_competencies,
+  required_learning, min_performance_score, min_competency_score, min_learning_progress
+)
 VALUES
-  -- Front Office
-  ('Front Desk Staff', 'Front Office', false, 'Guest reception, check-in/out, and guest inquiries handling.',
-   '[{"competency": "Customer Service", "requiredScore": 85}, {"competency": "Communication", "requiredScore": 80}, {"competency": "Reservation Management", "requiredScore": 80}]'::jsonb,
-   '["Front Desk Operations & PMS Mastery", "Guest Conflict Resolution & Recovery"]'::jsonb, 75, 75, 70),
-
-  ('Receptionist', 'Front Office', false, 'Welcoming guests, room assignments, and switchboard operations.',
-   '[{"competency": "Customer Service", "requiredScore": 85}, {"competency": "Communication", "requiredScore": 85}, {"competency": "Hospitality SOP Compliance", "requiredScore": 80}]'::jsonb,
-   '["Front Desk Operations & PMS Mastery"]'::jsonb, 75, 75, 70),
-
-  ('Night Auditor & Reception', 'Front Office', false, 'Night audit reconciliation, reporting, and late guest reception.',
-   '[{"competency": "Reservation Management", "requiredScore": 88}, {"competency": "Communication", "requiredScore": 82}, {"competency": "Hospitality SOP Compliance", "requiredScore": 85}]'::jsonb,
-   '["Front Desk Operations & PMS Mastery"]'::jsonb, 80, 80, 75),
-
-  ('Concierge', 'Front Office', false, 'Local tours, reservations, VIP guest assistance, and recommendations.',
-   '[{"competency": "Customer Service", "requiredScore": 90}, {"competency": "Communication", "requiredScore": 88}, {"competency": "Upselling", "requiredScore": 75}]'::jsonb,
-   '["Concierge & Guest Experience Excellence"]'::jsonb, 80, 80, 75),
-
-  ('Head Concierge', 'Front Office', true, 'Oversees concierge operations, VIP services, and transportation desk.',
-   '[{"competency": "Customer Service", "requiredScore": 92}, {"competency": "Communication", "requiredScore": 90}, {"competency": "Leadership", "requiredScore": 80}]'::jsonb,
-   '["Concierge & Guest Experience Excellence", "Hospitality Leadership & Supervisory Skills"]'::jsonb, 85, 85, 80),
-
-  ('Front Desk Supervisor', 'Front Office', true, 'Supervises front desk shift operations, guest escalations, and room inventory.',
-   '[{"competency": "Customer Service", "requiredScore": 90}, {"competency": "Communication", "requiredScore": 88}, {"competency": "Reservation Management", "requiredScore": 88}, {"competency": "Conflict Resolution", "requiredScore": 82}, {"competency": "Leadership", "requiredScore": 80}]'::jsonb,
-   '["Front Desk Operations & PMS Mastery", "Guest Conflict Resolution & Recovery", "Hospitality Leadership & Supervisory Skills"]'::jsonb, 85, 85, 80),
-
-  ('Front Office Manager', 'Front Office', true, 'Overall responsibility for Front Desk, Concierge, Reservations, and Night Audit.',
-   '[{"competency": "Customer Service", "requiredScore": 92}, {"competency": "Communication", "requiredScore": 90}, {"competency": "Reservation Management", "requiredScore": 90}, {"competency": "Conflict Resolution", "requiredScore": 88}, {"competency": "Leadership", "requiredScore": 88}, {"competency": "Financial Acumen", "requiredScore": 80}]'::jsonb,
-   '["Hospitality Leadership & Supervisory Skills", "Guest Conflict Resolution & Recovery"]'::jsonb, 88, 88, 85),
-
-  -- Housekeeping
-  ('Housekeeping Staff', 'Housekeeping', false, 'Daily guest room cleaning, bed making, and linen changes.',
-   '[{"competency": "Room Standards & Inspection", "requiredScore": 85}, {"competency": "Chemical & Bio-Safety Compliance", "requiredScore": 85}, {"competency": "Speed & Turnover Efficiency", "requiredScore": 80}]'::jsonb,
-   '["Housekeeping Standards & Room Inspection", "OSHA & Chemical Safety in Hospitality"]'::jsonb, 75, 75, 70),
-
-  ('Senior Room Attendant', 'Housekeeping', false, 'VIP floor room preparation, mentoring junior attendants, deep cleaning.',
-   '[{"competency": "Room Standards & Inspection", "requiredScore": 90}, {"competency": "Chemical & Bio-Safety Compliance", "requiredScore": 88}, {"competency": "Speed & Turnover Efficiency", "requiredScore": 85}]'::jsonb,
-   '["Housekeeping Standards & Room Inspection", "OSHA & Chemical Safety in Hospitality"]'::jsonb, 80, 80, 75),
-
-  ('Linen & Laundry Lead', 'Housekeeping', false, 'Coordinates linen inventory, laundry machinery operations, and dry cleaning.',
-   '[{"competency": "Chemical & Bio-Safety Compliance", "requiredScore": 88}, {"competency": "Speed & Turnover Efficiency", "requiredScore": 85}, {"competency": "Lost & Found SOP", "requiredScore": 85}]'::jsonb,
-   '["OSHA & Chemical Safety in Hospitality"]'::jsonb, 80, 80, 75),
-
-  ('Floor Supervisor', 'Housekeeping', true, 'Inspects cleaned rooms, releases inventory to front desk, manages floor attendants.',
-   '[{"competency": "Room Standards & Inspection", "requiredScore": 92}, {"competency": "Chemical & Bio-Safety Compliance", "requiredScore": 90}, {"competency": "Speed & Turnover Efficiency", "requiredScore": 88}, {"competency": "Leadership", "requiredScore": 80}]'::jsonb,
-   '["Housekeeping Standards & Room Inspection", "Hospitality Leadership & Supervisory Skills"]'::jsonb, 85, 85, 80),
-
-  ('Housekeeping Supervisor', 'Housekeeping', true, 'Supervises housekeeping sections, public areas, and linen coordination.',
-   '[{"competency": "Room Standards & Inspection", "requiredScore": 92}, {"competency": "Chemical & Bio-Safety Compliance", "requiredScore": 90}, {"competency": "Leadership", "requiredScore": 82}]'::jsonb,
-   '["Housekeeping Standards & Room Inspection", "Hospitality Leadership & Supervisory Skills"]'::jsonb, 85, 85, 80),
-
-  ('Executive Housekeeper', 'Housekeeping', true, 'Directs housekeeping operations, asset maintenance, contractor management, and budgets.',
-   '[{"competency": "Room Standards & Inspection", "requiredScore": 95}, {"competency": "Chemical & Bio-Safety Compliance", "requiredScore": 92}, {"competency": "Operational Management", "requiredScore": 85}, {"competency": "Leadership", "requiredScore": 88}]'::jsonb,
-   '["Hospitality Leadership & Supervisory Skills"]'::jsonb, 88, 88, 85),
-
-  -- Food & Beverage
-  ('Waitress', 'Food & Beverage', false, 'Table service, order taking, guest greeting, and station maintenance.',
-   '[{"competency": "Customer Service", "requiredScore": 85}, {"competency": "Floor Operations & Speed", "requiredScore": 85}, {"competency": "Hygiene & Health Standards", "requiredScore": 85}]'::jsonb,
-   '["Food & Beverage Service Excellence", "Food Safety & ServSafe Certification Prep"]'::jsonb, 75, 75, 70),
-
-  ('Lead Server', 'Food & Beverage', false, 'Paces dining room sections, handles VIP tables, guides line servers.',
-   '[{"competency": "Customer Service", "requiredScore": 88}, {"competency": "Floor Operations & Speed", "requiredScore": 88}, {"competency": "POS & Cash Reconciliation", "requiredScore": 82}]'::jsonb,
-   '["Food & Beverage Service Excellence", "POS & Cash Handling Procedures"]'::jsonb, 80, 80, 75),
-
-  ('Banquet Server', 'Food & Beverage', false, 'Event banquet service, buffet setup, banquet hall breakdown.',
-   '[{"competency": "Floor Operations & Speed", "requiredScore": 85}, {"competency": "Customer Service", "requiredScore": 82}, {"competency": "Hygiene & Health Standards", "requiredScore": 85}]'::jsonb,
-   '["Food & Beverage Service Excellence"]'::jsonb, 75, 75, 70),
-
-  ('Bartender', 'Food & Beverage', false, 'Mixology, beverage prep, bar sanitation, and alcohol compliance.',
-   '[{"competency": "Customer Service", "requiredScore": 85}, {"competency": "POS & Cash Reconciliation", "requiredScore": 85}, {"competency": "Hygiene & Health Standards", "requiredScore": 85}]'::jsonb,
-   '["Bar & Mixology Fundamentals", "POS & Cash Handling Procedures"]'::jsonb, 78, 78, 72),
-
-  ('Cashier', 'Food & Beverage', false, 'Bill presentation, payment processing, register balancing, shift close.',
-   '[{"competency": "POS & Cash Reconciliation", "requiredScore": 90}, {"competency": "Customer Service", "requiredScore": 82}, {"competency": "Hygiene & Health Standards", "requiredScore": 80}]'::jsonb,
-   '["POS & Cash Handling Procedures"]'::jsonb, 78, 78, 72),
-
-  ('F&B Supervisor', 'Food & Beverage', true, 'Supervises dining floor, bar service, shift briefings, and guest issues.',
-   '[{"competency": "Customer Service", "requiredScore": 90}, {"competency": "Floor Operations & Speed", "requiredScore": 90}, {"competency": "POS & Cash Reconciliation", "requiredScore": 88}, {"competency": "Leadership", "requiredScore": 82}]'::jsonb,
-   '["Food & Beverage Service Excellence", "Hospitality Leadership & Supervisory Skills"]'::jsonb, 85, 85, 80),
-
-  ('Restaurant Manager', 'Food & Beverage', true, 'Directs all restaurant outlets, service quality, labor scheduling, and F&B revenues.',
-   '[{"competency": "Customer Service", "requiredScore": 92}, {"competency": "Floor Operations & Speed", "requiredScore": 90}, {"competency": "Leadership", "requiredScore": 88}, {"competency": "Financial Acumen", "requiredScore": 82}]'::jsonb,
-   '["Hospitality Leadership & Supervisory Skills"]'::jsonb, 88, 88, 85),
-
-  -- Kitchen
-  ('Kitchen Staff', 'Kitchen', false, 'Basic kitchen prep, dishwashing sanitation, station restocking.',
-   '[{"competency": "HACCP & Kitchen Sanitation", "requiredScore": 90}, {"competency": "Food Safety", "requiredScore": 88}, {"competency": "Prep & Station Inventory", "requiredScore": 80}]'::jsonb,
-   '["Culinary Arts & Kitchen Operations", "Food Safety & ServSafe Certification Prep"]'::jsonb, 75, 75, 70),
-
-  ('Cook', 'Kitchen', false, 'Line cooking, station preparation, plate presentation, recipe execution.',
-   '[{"competency": "Line Expediting & Speed", "requiredScore": 88}, {"competency": "Recipe Consistency & Flavor", "requiredScore": 88}, {"competency": "Food Safety", "requiredScore": 90}]'::jsonb,
-   '["Culinary Arts & Kitchen Operations", "Food Safety & ServSafe Certification Prep"]'::jsonb, 80, 80, 75),
-
-  ('Sous Chef', 'Kitchen', true, 'Directs kitchen stations, expedites during peak rush, oversees sanitation & food quality.',
-   '[{"competency": "Line Expediting & Speed", "requiredScore": 92}, {"competency": "Recipe Consistency & Flavor", "requiredScore": 92}, {"competency": "HACCP & Kitchen Sanitation", "requiredScore": 95}, {"competency": "Leadership", "requiredScore": 82}]'::jsonb,
-   '["Culinary Arts & Kitchen Operations", "Hospitality Leadership & Supervisory Skills"]'::jsonb, 85, 85, 80),
-
-  ('Executive Chef', 'Kitchen', true, 'Oversees entire culinary division, menu development, kitchen safety, and food cost control.',
-   '[{"competency": "Recipe Consistency & Flavor", "requiredScore": 95}, {"competency": "HACCP & Kitchen Sanitation", "requiredScore": 95}, {"competency": "Leadership", "requiredScore": 90}, {"competency": "Operational Management", "requiredScore": 85}]'::jsonb,
-   '["Hospitality Leadership & Supervisory Skills"]'::jsonb, 90, 90, 85),
-
-  -- Operations & Management
-  ('Operations Manager', 'Operations', true, 'Hotel day-to-day operations, cross-department coordination, compliance, guest ratings.',
-   '[{"competency": "Operational Management", "requiredScore": 88}, {"competency": "Leadership", "requiredScore": 88}, {"competency": "Financial Acumen", "requiredScore": 82}]'::jsonb,
-   '["Hospitality Leadership & Supervisory Skills"]'::jsonb, 88, 88, 85),
-
-  ('HR Administrator', 'Human Resources', true, 'Talent acquisition, employee development, HR compliance, and succession tracking.',
-   '[{"competency": "Compliance", "requiredScore": 90}, {"competency": "Communication", "requiredScore": 88}, {"competency": "Leadership", "requiredScore": 85}]'::jsonb,
-   '["Hospitality Leadership & Supervisory Skills"]'::jsonb, 88, 88, 85),
-
-  ('Senior Manager', 'Executive Office', true, 'Executive decision-making, organizational strategy, P&L oversight, and executive governance.',
-   '[{"competency": "Leadership", "requiredScore": 92}, {"competency": "Financial Acumen", "requiredScore": 90}, {"competency": "Operational Management", "requiredScore": 90}]'::jsonb,
-   '["Hospitality Leadership & Supervisory Skills"]'::jsonb, 90, 90, 85)
+  ('General Manager', 'Executive Office', true, 'Leads company strategy, service performance, and financial results.', '[{"competency":"Operational Management","requiredScore":95},{"competency":"Leadership","requiredScore":95},{"competency":"Financial Acumen","requiredScore":90}]'::jsonb, '["Freight Operations Leadership","Logistics Finance & Performance"]'::jsonb, 90, 90, 85),
+  ('Chief Operating Officer', 'Executive Office', true, 'Owns transportation, dispatch, warehouse, and service operations.', '[{"competency":"Operational Management","requiredScore":95},{"competency":"Strategic Planning","requiredScore":92},{"competency":"Regulatory Compliance","requiredScore":90}]'::jsonb, '["Freight Operations Leadership","Supply Chain Risk Management"]'::jsonb, 90, 90, 85),
+  ('Operations Director', 'Executive Office', true, 'Coordinates operating departments, service levels, capacity, and improvement.', '[{"competency":"Operational Management","requiredScore":92},{"competency":"Data-Driven Decision Making","requiredScore":88},{"competency":"Leadership","requiredScore":90}]'::jsonb, '["Freight Network Planning","Operational Analytics"]'::jsonb, 88, 88, 85),
+  ('HR Manager', 'Human Resources', true, 'Leads workforce planning, employee relations, recruiting, and labor compliance.', '[{"competency":"Employee Relations","requiredScore":90},{"competency":"Recruitment & Selection","requiredScore":90},{"competency":"Labor Compliance","requiredScore":92}]'::jsonb, '["HR Operations","Workforce Planning"]'::jsonb, 85, 85, 80),
+  ('HR Generalist', 'Human Resources', false, 'Supports onboarding, employee records, benefits, and employee inquiries.', '[{"competency":"Employee Relations","requiredScore":85},{"competency":"Communication","requiredScore":85},{"competency":"Documentation Accuracy","requiredScore":88}]'::jsonb, '["HR Operations","Employee Onboarding"]'::jsonb, 78, 78, 75),
+  ('Recruitment Specialist', 'Human Resources', false, 'Recruits drivers, dispatchers, warehouse staff, and support employees.', '[{"competency":"Recruitment & Selection","requiredScore":90},{"competency":"Communication","requiredScore":85},{"competency":"Labor Compliance","requiredScore":82}]'::jsonb, '["Driver Qualification & Hiring","Structured Interviewing"]'::jsonb, 80, 80, 75),
+  ('Fleet Operations Manager', 'Fleet & Transportation', true, 'Manages fleet utilization, driver capacity, vehicle readiness, and transport costs.', '[{"competency":"Vehicle Inspection & Preventive Checks","requiredScore":92},{"competency":"Operational Management","requiredScore":90},{"competency":"Fuel-Efficient Operations","requiredScore":88}]'::jsonb, '["Fleet Utilization","Freight Operations Leadership"]'::jsonb, 88, 88, 85),
+  ('Transportation Supervisor', 'Fleet & Transportation', true, 'Supervises drivers, vehicle readiness, and delivery execution.', '[{"competency":"Defensive Driving","requiredScore":90},{"competency":"Route Compliance","requiredScore":90},{"competency":"Driver Coaching","requiredScore":85}]'::jsonb, '["Driver Safety","Transportation Supervision"]'::jsonb, 85, 85, 80),
+  ('Fleet Coordinator', 'Fleet & Transportation', false, 'Coordinates vehicle assignments, maintenance schedules, fuel, and fleet records.', '[{"competency":"Vehicle Inspection & Preventive Checks","requiredScore":88},{"competency":"Documentation Accuracy","requiredScore":85},{"competency":"Communication","requiredScore":82}]'::jsonb, '["Fleet Maintenance Planning","Fleet Systems"]'::jsonb, 78, 78, 75),
+  ('Heavy Vehicle Driver', 'Fleet & Transportation', false, 'Operates heavy vehicles safely and completes assigned freight routes.', '[{"competency":"Defensive Driving","requiredScore":92},{"competency":"Vehicle Inspection & Preventive Checks","requiredScore":90},{"competency":"Cargo Securement","requiredScore":90}]'::jsonb, '["Defensive Driving","Cargo Securement","Hours-of-Service Compliance"]'::jsonb, 80, 82, 75),
+  ('Delivery Driver', 'Fleet & Transportation', false, 'Completes deliveries, verifies shipments, and captures proof of delivery.', '[{"competency":"Defensive Driving","requiredScore":90},{"competency":"Route Compliance","requiredScore":88},{"competency":"Proof-of-Delivery Accuracy","requiredScore":90}]'::jsonb, '["Delivery Procedures","Customer Communication"]'::jsonb, 78, 80, 75),
+  ('Driver', 'Fleet & Transportation', false, 'Transports freight safely, on schedule, and in accordance with regulations.', '[{"competency":"Defensive Driving","requiredScore":90},{"competency":"Cargo Securement","requiredScore":88},{"competency":"Regulatory Compliance","requiredScore":88}]'::jsonb, '["Driver Safety","Cargo Securement","Incident Reporting"]'::jsonb, 78, 80, 75),
+  ('Vehicle Maintenance Technician', 'Fleet & Transportation', false, 'Inspects and repairs fleet vehicles to maintain safe operating condition.', '[{"competency":"Vehicle Inspection & Preventive Checks","requiredScore":92},{"competency":"Risk Assessment","requiredScore":85},{"competency":"Documentation Accuracy","requiredScore":82}]'::jsonb, '["Preventive Fleet Maintenance","Workshop Safety"]'::jsonb, 80, 82, 75),
+  ('Vehicle Inspector', 'Fleet & Transportation', false, 'Performs pre-trip and scheduled inspections and records vehicle defects.', '[{"competency":"Vehicle Inspection & Preventive Checks","requiredScore":92},{"competency":"Incident Reporting","requiredScore":85},{"competency":"Regulatory Compliance","requiredScore":88}]'::jsonb, '["Pre-Trip Inspection","Defect Reporting"]'::jsonb, 80, 82, 75),
+  ('Dispatch Manager', 'Dispatch & Routing', true, 'Leads dispatch planning, load assignments, route performance, and exceptions.', '[{"competency":"Route Planning & Optimization","requiredScore":92},{"competency":"Load Scheduling","requiredScore":90},{"competency":"Exception Management","requiredScore":90}]'::jsonb, '["Dispatch Operations","Transportation Management Systems"]'::jsonb, 88, 88, 85),
+  ('Dispatch Supervisor', 'Dispatch & Routing', true, 'Coordinates dispatcher shifts, route execution, updates, and escalations.', '[{"competency":"Dispatch Communication","requiredScore":92},{"competency":"TMS & GPS Proficiency","requiredScore":90},{"competency":"Exception Management","requiredScore":88}]'::jsonb, '["Dispatch Supervision","Shipment Exception Handling"]'::jsonb, 85, 85, 80),
+  ('Dispatcher', 'Dispatch & Routing', false, 'Assigns loads and drivers, monitors routes, and communicates service changes.', '[{"competency":"Load Scheduling","requiredScore":88},{"competency":"Dispatch Communication","requiredScore":90},{"competency":"TMS & GPS Proficiency","requiredScore":88}]'::jsonb, '["Dispatch Operations","TMS & GPS Basics"]'::jsonb, 78, 80, 75),
+  ('Senior Dispatcher', 'Dispatch & Routing', false, 'Handles complex loads and supports dispatchers with route exceptions.', '[{"competency":"Route Planning & Optimization","requiredScore":90},{"competency":"Exception Management","requiredScore":92},{"competency":"Dispatch Communication","requiredScore":90}]'::jsonb, '["Advanced Dispatch","Service Recovery"]'::jsonb, 82, 85, 78),
+  ('Route Planner', 'Dispatch & Routing', false, 'Builds efficient routes using delivery windows, capacity, and service constraints.', '[{"competency":"Route Planning & Optimization","requiredScore":92},{"competency":"TMS & GPS Proficiency","requiredScore":88},{"competency":"Data-Driven Decision Making","requiredScore":82}]'::jsonb, '["Route Optimization","Network Planning"]'::jsonb, 80, 85, 78),
+  ('Load Planner', 'Dispatch & Routing', false, 'Plans loads to balance vehicle capacity, delivery needs, and cost.', '[{"competency":"Load Scheduling","requiredScore":92},{"competency":"Cargo Securement","requiredScore":85},{"competency":"Documentation Accuracy","requiredScore":85}]'::jsonb, '["Load Planning","Freight Classification"]'::jsonb, 80, 82, 75),
+  ('Warehouse Manager', 'Warehouse & Inventory', true, 'Leads warehouse throughput, inventory control, staffing, and safety.', '[{"competency":"Inventory Accuracy","requiredScore":95},{"competency":"Warehouse Safety","requiredScore":92},{"competency":"Operational Management","requiredScore":88}]'::jsonb, '["Warehouse Operations Leadership","WMS Administration"]'::jsonb, 88, 88, 85),
+  ('Warehouse Supervisor', 'Warehouse & Inventory', true, 'Supervises receiving, put-away, picking, packing, loading, and shift safety.', '[{"competency":"Picking & Packing","requiredScore":90},{"competency":"Forklift Operation & Safety","requiredScore":92},{"competency":"Warehouse Safety","requiredScore":92}]'::jsonb, '["Warehouse Supervision","Safe Material Handling"]'::jsonb, 85, 85, 80),
+  ('Warehouse Associate', 'Warehouse & Inventory', false, 'Receives, stores, picks, and stages freight accurately and safely.', '[{"competency":"Picking & Packing","requiredScore":85},{"competency":"Inventory Accuracy","requiredScore":85},{"competency":"Warehouse Safety","requiredScore":88}]'::jsonb, '["Warehouse Safety","Freight Handling"]'::jsonb, 75, 78, 72),
+  ('Forklift Operator', 'Warehouse & Inventory', false, 'Moves and stages freight using powered industrial trucks safely.', '[{"competency":"Forklift Operation & Safety","requiredScore":95},{"competency":"Warehouse Safety","requiredScore":90},{"competency":"Inventory Accuracy","requiredScore":82}]'::jsonb, '["Powered Industrial Truck Safety","Load Stability"]'::jsonb, 78, 82, 75),
+  ('Inventory Control Clerk', 'Warehouse & Inventory', false, 'Maintains inventory records, reconciles counts, and investigates variances.', '[{"competency":"Inventory Accuracy","requiredScore":95},{"competency":"WMS Proficiency","requiredScore":88},{"competency":"Documentation Accuracy","requiredScore":90}]'::jsonb, '["Cycle Counting","Warehouse Management Systems"]'::jsonb, 80, 85, 78),
+  ('Picking & Packing Associate', 'Warehouse & Inventory', false, 'Picks orders and packs shipments to accuracy and cargo-protection standards.', '[{"competency":"Picking & Packing","requiredScore":92},{"competency":"Cargo Securement","requiredScore":82},{"competency":"Inventory Accuracy","requiredScore":85}]'::jsonb, '["Order Picking","Packaging & Freight Protection"]'::jsonb, 75, 80, 72),
+  ('Warehouse Lead', 'Warehouse & Inventory', false, 'Coordinates floor assignments, shipping cutoffs, and shift handoffs.', '[{"competency":"Picking & Packing","requiredScore":90},{"competency":"Warehouse Safety","requiredScore":90},{"competency":"Communication","requiredScore":85}]'::jsonb, '["Warehouse Shift Leadership","Safe Material Handling"]'::jsonb, 82, 84, 78),
+  ('Customer Service Manager', 'Customer Service', true, 'Leads shipment support, customer communication, claims, and service quality.', '[{"competency":"Shipment Tracking","requiredScore":92},{"competency":"Claims Resolution","requiredScore":90},{"competency":"Service Recovery","requiredScore":90}]'::jsonb, '["Freight Customer Service","Claims Management"]'::jsonb, 88, 88, 85),
+  ('Customer Service Representative', 'Customer Service', false, 'Answers shipment inquiries and provides timely, accurate updates.', '[{"competency":"Shipment Tracking","requiredScore":90},{"competency":"Customer Communication","requiredScore":90},{"competency":"Proof-of-Delivery Accuracy","requiredScore":85}]'::jsonb, '["Freight Customer Service","Shipment Tracking Systems"]'::jsonb, 78, 82, 75),
+  ('Shipment Tracking Specialist', 'Customer Service', false, 'Monitors shipment milestones and communicates delays or exceptions.', '[{"competency":"Shipment Tracking","requiredScore":92},{"competency":"TMS & GPS Proficiency","requiredScore":88},{"competency":"Customer Communication","requiredScore":88}]'::jsonb, '["Shipment Visibility","Exception Communication"]'::jsonb, 80, 84, 78),
+  ('Claims Coordinator', 'Customer Service', false, 'Coordinates freight claims, evidence collection, follow-up, and resolution.', '[{"competency":"Claims Resolution","requiredScore":92},{"competency":"Documentation Accuracy","requiredScore":92},{"competency":"Customer Communication","requiredScore":85}]'::jsonb, '["Freight Claims Handling","Evidence & Document Control"]'::jsonb, 80, 85, 78),
+  ('Safety & Compliance Manager', 'Safety & Compliance', true, 'Leads transportation safety, compliance, incident review, and corrective action.', '[{"competency":"Regulatory Compliance","requiredScore":95},{"competency":"Risk Assessment","requiredScore":92},{"competency":"Incident Reporting","requiredScore":92}]'::jsonb, '["Transportation Safety Leadership","Regulatory Compliance"]'::jsonb, 88, 90, 85),
+  ('Safety Coordinator', 'Safety & Compliance', false, 'Maintains safety records, supports inspections, and tracks corrective actions.', '[{"competency":"Incident Reporting","requiredScore":90},{"competency":"Risk Assessment","requiredScore":88},{"competency":"Regulatory Compliance","requiredScore":88}]'::jsonb, '["Incident Reporting","Workplace Safety"]'::jsonb, 80, 84, 78),
+  ('Compliance Specialist', 'Safety & Compliance', false, 'Maintains operating records and monitors regulatory obligations.', '[{"competency":"Regulatory Compliance","requiredScore":95},{"competency":"Documentation Accuracy","requiredScore":90},{"competency":"Risk Assessment","requiredScore":85}]'::jsonb, '["Freight Regulations","Document Retention"]'::jsonb, 82, 88, 80),
+  ('Driver Trainer', 'Safety & Compliance', false, 'Coaches drivers on safe driving, inspections, and operating procedures.', '[{"competency":"Driver Coaching","requiredScore":92},{"competency":"Defensive Driving","requiredScore":95},{"competency":"Emergency Response","requiredScore":85}]'::jsonb, '["Defensive Driving Instruction","Driver Qualification"]'::jsonb, 82, 88, 80),
+  ('Incident Investigator', 'Safety & Compliance', false, 'Investigates incidents, identifies causes, and recommends preventive actions.', '[{"competency":"Incident Reporting","requiredScore":95},{"competency":"Risk Assessment","requiredScore":92},{"competency":"Regulatory Compliance","requiredScore":88}]'::jsonb, '["Incident Investigation","Root Cause Analysis"]'::jsonb, 82, 88, 80),
+  ('Finance Manager', 'Finance & Administration', true, 'Leads freight billing, accounting controls, payroll, and financial reporting.', '[{"competency":"Freight Billing & Audit","requiredScore":95},{"competency":"Accounts Reconciliation","requiredScore":92},{"competency":"Internal Controls","requiredScore":92}]'::jsonb, '["Logistics Finance","Freight Revenue Auditing"]'::jsonb, 88, 90, 85),
+  ('Freight Billing Specialist', 'Finance & Administration', false, 'Audits shipment charges and prepares accurate freight invoices.', '[{"competency":"Freight Billing & Audit","requiredScore":92},{"competency":"Documentation Accuracy","requiredScore":90},{"competency":"Accounts Reconciliation","requiredScore":85}]'::jsonb, '["Freight Rating & Invoicing","Billing Exception Handling"]'::jsonb, 80, 85, 78),
+  ('Accounts Payable Clerk', 'Finance & Administration', false, 'Processes vendor invoices and maintains accurate payment records.', '[{"competency":"Accounts Reconciliation","requiredScore":90},{"competency":"Internal Controls","requiredScore":88},{"competency":"Documentation Accuracy","requiredScore":90}]'::jsonb, '["Accounts Payable","Financial Document Control"]'::jsonb, 78, 84, 75)
 ON CONFLICT (title) DO UPDATE SET
   department = EXCLUDED.department,
   is_critical = EXCLUDED.is_critical,
@@ -197,81 +128,12 @@ ON CONFLICT (title) DO UPDATE SET
   min_learning_progress = EXCLUDED.min_learning_progress,
   updated_at = NOW();
 
--- Update department_id foreign keys on positions table
 UPDATE positions p
 SET department_id = d.id
 FROM departments d
-WHERE p.department = d.name AND p.department_id IS NULL;
+WHERE p.department = d.name AND p.department_id IS DISTINCT FROM d.id;
 
--- Backfill initial position_history for all current employees if not present
 INSERT INTO position_history (employee_id, previous_position, new_position, effective_date, reason)
 SELECT e.id, 'Initial Placement', e.job_title, e.created_at::date, 'Initial Position'
 FROM employees e
 WHERE NOT EXISTS (SELECT 1 FROM position_history ph WHERE ph.employee_id = e.id);
-
--- 028_hotel_department_positions.sql
--- Add positions for Security, Engineering, Sales & Marketing, and Finance to ensure all 11 departments are fully covered.
-
-INSERT INTO positions (title, department, is_critical, description, required_competencies, required_learning, min_performance_score, min_competency_score, min_learning_progress)
-VALUES
-  -- Security
-  ('CCTV & Patrol Officer', 'Security', false, 'Surveillance monitoring, premise patrol, and incident reporting.',
-   '[{"competency": "Patrol & Inspection", "requiredScore": 80}, {"competency": "Surveillance Systems", "requiredScore": 80}, {"competency": "Incident Response & Safety", "requiredScore": 80}]'::jsonb,
-   '["Hotel Safety & Emergency Response Procedures", "Security Operations & Surveillance"]'::jsonb, 75, 75, 70),
-
-  ('Security Supervisor', 'Security', true, 'Supervises security shifts, incident management, patrol dispatch, and safety protocols.',
-   '[{"competency": "Patrol & Inspection", "requiredScore": 85}, {"competency": "Surveillance Systems", "requiredScore": 85}, {"competency": "Incident Response & Safety", "requiredScore": 85}, {"competency": "Crisis Management & Evacuation", "requiredScore": 80}, {"competency": "Leadership", "requiredScore": 80}]'::jsonb,
-   '["Hotel Safety & Emergency Response Procedures", "Hospitality Leadership & Supervisory Skills"]'::jsonb, 85, 85, 80),
-
-  ('Director of Security', 'Security', true, 'Directs security division, guest safety strategy, crisis response, and law enforcement liaison.',
-   '[{"competency": "Crisis Management & Evacuation", "requiredScore": 90}, {"competency": "Incident Response & Safety", "requiredScore": 90}, {"competency": "Leadership", "requiredScore": 88}, {"competency": "Operational Management", "requiredScore": 85}]'::jsonb,
-   '["Hospitality Leadership & Supervisory Skills"]'::jsonb, 88, 88, 85),
-
-  -- Engineering
-  ('HVAC & Maintenance Tech', 'Engineering', false, 'Facility maintenance, HVAC operation, and preventive repair checks.',
-   '[{"competency": "HVAC & Mechanical Systems", "requiredScore": 82}, {"competency": "Preventive Maintenance", "requiredScore": 80}, {"competency": "Workplace Safety & OSHA", "requiredScore": 80}]'::jsonb,
-   '["Engineering Systems & Equipment Maintenance"]'::jsonb, 75, 75, 70),
-
-  ('Assistant Chief Engineer', 'Engineering', true, 'Supervises engineering crews, energy efficiency, and hotel mechanical systems.',
-   '[{"competency": "HVAC & Mechanical Systems", "requiredScore": 88}, {"competency": "Preventive Maintenance", "requiredScore": 88}, {"competency": "Workplace Safety & OSHA", "requiredScore": 88}, {"competency": "Leadership", "requiredScore": 80}]'::jsonb,
-   '["Engineering Systems & Equipment Maintenance", "Hospitality Leadership & Supervisory Skills"]'::jsonb, 85, 85, 80),
-
-  ('Chief Engineer', 'Engineering', true, 'Directs property operations, facilities management, capital projects, and sustainability.',
-   '[{"competency": "Preventive Maintenance", "requiredScore": 92}, {"competency": "HVAC & Mechanical Systems", "requiredScore": 90}, {"competency": "Leadership", "requiredScore": 88}, {"competency": "Financial Acumen", "requiredScore": 85}]'::jsonb,
-   '["Hospitality Leadership & Supervisory Skills"]'::jsonb, 88, 88, 85),
-
-  -- Sales & Marketing
-  ('Events & Banquet Coordinator', 'Sales & Marketing', false, 'Client inquiries, event logistics, banquet setup coordination, and client proposals.',
-   '[{"competency": "Client Relationship Management", "requiredScore": 85}, {"competency": "Event Planning & Execution", "requiredScore": 85}, {"competency": "Communication", "requiredScore": 85}]'::jsonb,
-   '["Hotel Sales Strategies & Revenue Maximization"]'::jsonb, 80, 80, 75),
-
-  ('Sales Manager', 'Sales & Marketing', true, 'Corporate account management, group sales contracts, and revenue target delivery.',
-   '[{"competency": "Client Relationship Management", "requiredScore": 90}, {"competency": "Negotiation & Contracting", "requiredScore": 88}, {"competency": "Communication", "requiredScore": 88}, {"competency": "Leadership", "requiredScore": 82}]'::jsonb,
-   '["Hotel Sales Strategies & Revenue Maximization", "Hospitality Leadership & Supervisory Skills"]'::jsonb, 85, 85, 80),
-
-  ('Director of Sales', 'Sales & Marketing', true, 'Directs commercial sales strategy, digital marketing, partnerships, and revenue performance.',
-   '[{"competency": "Negotiation & Contracting", "requiredScore": 92}, {"competency": "Client Relationship Management", "requiredScore": 92}, {"competency": "Financial Acumen", "requiredScore": 88}, {"competency": "Leadership", "requiredScore": 90}]'::jsonb,
-   '["Hospitality Leadership & Supervisory Skills"]'::jsonb, 90, 90, 85),
-
-  -- Finance
-  ('Senior General Accountant', 'Finance', false, 'General ledger reconciliation, journal entries, AP/AR auditing, and tax schedules.',
-   '[{"competency": "Financial Reporting & USALI", "requiredScore": 88}, {"competency": "Account Reconciliation & Ledger", "requiredScore": 88}, {"competency": "Internal Controls & Compliance", "requiredScore": 85}]'::jsonb,
-   '["Hotel Financial Accounting & Controls"]'::jsonb, 82, 82, 78),
-
-  ('Assistant Financial Controller', 'Finance', true, 'Supervises accounting operations, daily audits, monthly financial closures, and budget variance.',
-   '[{"competency": "Financial Reporting & USALI", "requiredScore": 92}, {"competency": "Account Reconciliation & Ledger", "requiredScore": 90}, {"competency": "Internal Controls & Compliance", "requiredScore": 90}, {"competency": "Leadership", "requiredScore": 82}]'::jsonb,
-   '["Hotel Financial Accounting & Controls", "Hospitality Leadership & Supervisory Skills"]'::jsonb, 88, 88, 82),
-
-  ('Financial Controller', 'Finance', true, 'Directs hotel finance, USALI compliance, fiscal risk management, owner relations, and capital planning.',
-   '[{"competency": "Financial Reporting & USALI", "requiredScore": 95}, {"competency": "Internal Controls & Compliance", "requiredScore": 95}, {"competency": "Leadership", "requiredScore": 90}, {"competency": "Financial Acumen", "requiredScore": 95}]'::jsonb,
-   '["Hospitality Leadership & Supervisory Skills"]'::jsonb, 92, 92, 88)
-ON CONFLICT (title) DO UPDATE SET
-  department = EXCLUDED.department,
-  is_critical = EXCLUDED.is_critical,
-  description = EXCLUDED.description,
-  required_competencies = EXCLUDED.required_competencies,
-  required_learning = EXCLUDED.required_learning,
-  min_performance_score = EXCLUDED.min_performance_score,
-  min_competency_score = EXCLUDED.min_competency_score,
-  min_learning_progress = EXCLUDED.min_learning_progress,
-  updated_at = NOW();

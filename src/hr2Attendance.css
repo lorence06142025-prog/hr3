@@ -360,6 +360,49 @@
   background: #0f172a;
 }
 
+@media (max-width: 768px) {
+  .hr2-kpi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .hr2-controls {
+    align-items: stretch;
+  }
+
+  .hr2-search-group,
+  .hr2-search-box {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .hr2-search-group {
+    flex-wrap: wrap;
+  }
+
+  .hr2-table-wrapper {
+    max-width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+  }
+
+  .hr2-table {
+    min-width: 720px;
+  }
+}
+
+@media (max-width: 420px) {
+  .hr2-kpi-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .hr2-sync-alert {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
 .hr2-emp-cell {
   display: flex;
   align-items: center;

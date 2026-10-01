@@ -79,99 +79,61 @@ CREATE TRIGGER trg_competency_updated_at
 
 -- ============================================================
 
--- 026_role_based_competency_reseed.sql
--- Reseed baseline competency assessments by department and role so employees have role-specific competencies and gaps.
-
--- Delete generic baseline assessments to clean up legacy cross-department contamination
+-- Seed role-relevant freight and logistics competency baselines.
 DELETE FROM competency_assessments
 WHERE source = 'baseline';
 
--- 1. Front Office
 INSERT INTO competency_assessments (employee_id, competency, score, required_score, source)
-SELECT e.id, c.comp, GREATEST(35, LEAST(100, round(COALESCE(e.competency_score, 75)::numeric + c.offset_pct)::int)), c.req, 'baseline'
+SELECT
+  e.id,
+  c.competency,
+  GREATEST(35, LEAST(100, round(COALESCE(e.competency_score, 75)::numeric + c.offset_points)::int)),
+  c.required_score,
+  'baseline'
 FROM employees e
-CROSS JOIN (
-  VALUES
-    ('Customer Service', 90, -8),
-    ('Communication', 88, -6),
-    ('Reservation Management', 88, -10),
-    ('Conflict Resolution', 80, -5),
-    ('Hospitality SOP Compliance', 85, 2)
-) AS c(comp, req, offset_pct)
-WHERE e.department = 'Front Office'
-ON CONFLICT (employee_id, competency) DO NOTHING;
-
--- 2. Kitchen
-INSERT INTO competency_assessments (employee_id, competency, score, required_score, source)
-SELECT e.id, c.comp, GREATEST(35, LEAST(100, round(COALESCE(e.competency_score, 75)::numeric + c.offset_pct)::int)), c.req, 'baseline'
-FROM employees e
-CROSS JOIN (
-  VALUES
-    ('Line Expediting & Speed', 90, -8),
-    ('Recipe Consistency & Flavor', 90, -6),
-    ('HACCP & Kitchen Sanitation', 95, -12),
-    ('Food Safety', 90, -5),
-    ('Prep & Station Inventory', 85, 2)
-) AS c(comp, req, offset_pct)
-WHERE e.department = 'Kitchen'
-ON CONFLICT (employee_id, competency) DO NOTHING;
-
--- 3. Food & Beverage
-INSERT INTO competency_assessments (employee_id, competency, score, required_score, source)
-SELECT e.id, c.comp, GREATEST(35, LEAST(100, round(COALESCE(e.competency_score, 75)::numeric + c.offset_pct)::int)), c.req, 'baseline'
-FROM employees e
-CROSS JOIN (
-  VALUES
-    ('Floor Operations & Speed', 90, -8),
-    ('Customer Service', 90, -7),
-    ('POS & Cash Reconciliation', 85, -5),
-    ('Hygiene & Health Standards', 88, -9),
-    ('Team Collaboration', 85, 2)
-) AS c(comp, req, offset_pct)
-WHERE e.department = 'Food & Beverage'
-ON CONFLICT (employee_id, competency) DO NOTHING;
-
--- 4. Housekeeping
-INSERT INTO competency_assessments (employee_id, competency, score, required_score, source)
-SELECT e.id, c.comp, GREATEST(35, LEAST(100, round(COALESCE(e.competency_score, 75)::numeric + c.offset_pct)::int)), c.req, 'baseline'
-FROM employees e
-CROSS JOIN (
-  VALUES
-    ('Room Standards & Inspection', 95, -10),
-    ('Chemical & Bio-Safety Compliance', 90, -6),
-    ('Turnaround Time Optimization', 85, -8),
-    ('Linen & Inventory Management', 85, 2),
-    ('Hospitality SOP Compliance', 85, -4)
-) AS c(comp, req, offset_pct)
-WHERE e.department = 'Housekeeping'
-ON CONFLICT (employee_id, competency) DO NOTHING;
-
--- 5. Human Resources
-INSERT INTO competency_assessments (employee_id, competency, score, required_score, source)
-SELECT e.id, c.comp, GREATEST(35, LEAST(100, round(COALESCE(e.competency_score, 75)::numeric + c.offset_pct)::int)), c.req, 'baseline'
-FROM employees e
-CROSS JOIN (
-  VALUES
-    ('Employee Relations', 88, -7),
-    ('Recruitment', 88, -8),
-    ('Compliance', 88, -5),
-    ('Communication', 80, 2),
-    ('Leadership', 80, -4)
-) AS c(comp, req, offset_pct)
-WHERE e.department = 'Human Resources'
-ON CONFLICT (employee_id, competency) DO NOTHING;
-
--- 6. Other departments (Executive Office, General, etc.)
-INSERT INTO competency_assessments (employee_id, competency, score, required_score, source)
-SELECT e.id, c.comp, GREATEST(35, LEAST(100, round(COALESCE(e.competency_score, 75)::numeric + c.offset_pct)::int)), c.req, 'baseline'
-FROM employees e
-CROSS JOIN (
-  VALUES
-    ('Operational Management', 95, -8),
-    ('Leadership', 95, -6),
-    ('Financial Acumen', 88, -7),
-    ('Customer Service', 88, 2),
-    ('Communication', 88, -4)
-) AS c(comp, req, offset_pct)
-WHERE e.department NOT IN ('Front Office', 'Kitchen', 'Food & Beverage', 'Housekeeping', 'Human Resources')
+CROSS JOIN LATERAL (
+  SELECT * FROM (VALUES
+    ('Fleet & Transportation', 'Defensive Driving', 92, -8),
+    ('Fleet & Transportation', 'Vehicle Inspection & Preventive Checks', 90, -6),
+    ('Fleet & Transportation', 'Route Compliance', 88, -10),
+    ('Fleet & Transportation', 'Cargo Securement', 92, -5),
+    ('Fleet & Transportation', 'Fuel-Efficient Operations', 82, 2),
+    ('Dispatch & Routing', 'Route Planning & Optimization', 92, -8),
+    ('Dispatch & Routing', 'Load Scheduling', 88, -6),
+    ('Dispatch & Routing', 'Dispatch Communication', 90, -10),
+    ('Dispatch & Routing', 'TMS & GPS Proficiency', 88, -5),
+    ('Dispatch & Routing', 'Exception Management', 85, 2),
+    ('Warehouse & Inventory', 'Inventory Accuracy', 95, -10),
+    ('Warehouse & Inventory', 'Picking & Packing', 90, -6),
+    ('Warehouse & Inventory', 'Forklift Operation & Safety', 95, -8),
+    ('Warehouse & Inventory', 'Warehouse Safety', 92, 2),
+    ('Warehouse & Inventory', 'WMS Proficiency', 85, -4),
+    ('Customer Service', 'Shipment Tracking', 90, -7),
+    ('Customer Service', 'Customer Communication', 90, -8),
+    ('Customer Service', 'Claims Resolution', 88, -5),
+    ('Customer Service', 'Proof-of-Delivery Accuracy', 90, 2),
+    ('Customer Service', 'Service Recovery', 85, -4),
+    ('Safety & Compliance', 'Regulatory Compliance', 95, -8),
+    ('Safety & Compliance', 'Incident Reporting', 92, -6),
+    ('Safety & Compliance', 'Risk Assessment', 90, -7),
+    ('Safety & Compliance', 'Driver Coaching', 88, 2),
+    ('Safety & Compliance', 'Emergency Response', 90, -4),
+    ('Human Resources', 'Employee Relations', 88, -7),
+    ('Human Resources', 'Recruitment & Selection', 88, -8),
+    ('Human Resources', 'Labor Compliance', 92, -5),
+    ('Human Resources', 'Communication', 85, 2),
+    ('Human Resources', 'Leadership', 82, -4),
+    ('Executive Office', 'Operational Management', 95, -8),
+    ('Executive Office', 'Leadership', 95, -6),
+    ('Executive Office', 'Financial Acumen', 90, -7),
+    ('Executive Office', 'Strategic Planning', 92, 2),
+    ('Executive Office', 'Data-Driven Decision Making', 88, -4),
+    ('Finance & Administration', 'Freight Billing & Audit', 92, -7),
+    ('Finance & Administration', 'Accounts Reconciliation', 90, -8),
+    ('Finance & Administration', 'Payroll Accuracy', 90, -5),
+    ('Finance & Administration', 'Internal Controls', 92, 2),
+    ('Finance & Administration', 'Documentation Accuracy', 88, -4)
+  ) AS competencies(department, competency, required_score, offset_points)
+  WHERE competencies.department = e.department
+) c
 ON CONFLICT (employee_id, competency) DO NOTHING;

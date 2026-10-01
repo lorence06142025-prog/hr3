@@ -349,3 +349,130 @@
   border-top-color: #3e3a54 !important;
   color: #94a3b8 !important;
 }
+
+@media (max-width: 1024px) {
+  .reports-hub-container {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 20px 24px 40px !important;
+  }
+
+  .reports-paper-card {
+    padding: 22px;
+  }
+}
+
+@media (max-width: 768px) {
+  .reports-hub-container {
+    padding: 16px 14px 32px !important;
+  }
+
+  .reports-hub-container > .no-print {
+    align-items: stretch !important;
+    flex-direction: column;
+  }
+
+  .reports-hub-container > .no-print > div:first-child {
+    min-width: 0 !important;
+    width: 100%;
+  }
+
+  .reports-hub-container > .no-print > div:last-child {
+    display: flex !important;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .reports-hub-container > .no-print > div:last-child button {
+    flex: 1 1 160px;
+    justify-content: center;
+    white-space: normal;
+  }
+
+  .reports-paper-card {
+    padding: 16px;
+    border-radius: 10px;
+  }
+
+  .reports-filter-bar {
+    align-items: stretch;
+    padding: 10px;
+  }
+
+  .reports-filter-bar > div,
+  .reports-filter-bar > form {
+    box-sizing: border-box;
+    flex: 1 1 100% !important;
+    width: 100%;
+    min-width: 0 !important;
+  }
+
+  .reports-filter-bar form > div {
+    min-width: 0;
+  }
+
+  .reports-filter-bar .reports-input {
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  .reports-meta-card {
+    padding: 12px;
+  }
+
+  .reports-meta-card > div {
+    grid-template-columns: minmax(0, 1fr) !important;
+    overflow-wrap: anywhere;
+  }
+
+  .reports-kpi-value {
+    font-size: 20px;
+    overflow-wrap: anywhere;
+  }
+
+  .reports-ai-brief {
+    padding: 14px;
+  }
+
+  .reports-table-wrap {
+    max-width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+  }
+
+  .reports-table {
+    min-width: 600px;
+  }
+
+  .reports-footer {
+    flex-wrap: wrap;
+    overflow-wrap: anywhere;
+  }
+}
+
+@media (max-width: 420px) {
+  .reports-title {
+    font-size: 19px;
+    overflow-wrap: anywhere;
+  }
+
+  .reports-subtitle {
+    font-size: 12px;
+  }
+
+  .reports-hub-container > .no-print > div:last-child button {
+    flex-basis: 100%;
+  }
+
+  .reports-paper-card {
+    padding: 12px;
+  }
+
+  .reports-filter-bar form > div {
+    align-items: stretch;
+  }
+
+  .reports-filter-bar form .reports-btn-apply {
+    flex: 0 0 auto;
+  }
+}
