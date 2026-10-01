@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import UserProfileModal from './UserProfileModal'
 
-const sectionsByRole = {
+export const sectionsByRole = {
   hr: [
     {
       title: 'Overview',

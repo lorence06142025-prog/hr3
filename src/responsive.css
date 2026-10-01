@@ -141,6 +141,8 @@ button { touch-action: manipulation; }
     padding: 0 12px;
     gap: 8px;
   }
+  .topbar-main { min-height: 58px; width: 100%; }
+  .role-nav { display: none; }
   .topbar .crumb { font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 40vw; }
   .topbar .crumb span { display: none; }
   .topbar .search { display: none; }

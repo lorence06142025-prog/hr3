@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react'
-import { Icon } from './Sidebar'
+import React, { useEffect, useRef, useState } from 'react'
+import { NavLink } from 'react-router-dom'
+import { Icon, sectionsByRole } from './Sidebar'
 import { api } from '../lib/api'
 import EmailOutboxDrawer from './EmailOutboxDrawer'
 import TwoFactorModal from './TwoFactorModal'
@@ -48,6 +49,8 @@ export default function Header({ user, onToggle, dark, onOpenMobileNav, onOpenAi
   const [twoFactorOpen, setTwoFactorOpen] = useState(false)
   const [notifFilter, setNotifFilter] = useState('all')
   const [searchOpen, setSearchOpen] = useState(false)
+  const [activeNavGroup, setActiveNavGroup] = useState(null)
+  const roleNavRef = useRef(null)
 
   // ── All useEffect hooks after useState ──
 
@@ -93,6 +96,22 @@ export default function Header({ user, onToggle, dark, onOpenMobileNav, onOpenAi
     return () => { active = false; clearInterval(timer) }
   }, [])
 
+  useEffect(() => {
+    if (!activeNavGroup) return undefined
+    const closeOnOutsideClick = (event) => {
+      if (!roleNavRef.current?.contains(event.target)) setActiveNavGroup(null)
+    }
+    const closeOnEscape = (event) => {
+      if (event.key === 'Escape') setActiveNavGroup(null)
+    }
+    document.addEventListener('pointerdown', closeOnOutsideClick)
+    document.addEventListener('keydown', closeOnEscape)
+    return () => {
+      document.removeEventListener('pointerdown', closeOnOutsideClick)
+      document.removeEventListener('keydown', closeOnEscape)
+    }
+  }, [activeNavGroup])
+
   const canSeeOutbox = user?.role === 'hr' || user?.role === 'management'
 
   const showNotifications = async () => {
@@ -118,16 +137,18 @@ export default function Header({ user, onToggle, dark, onOpenMobileNav, onOpenAi
   const displayNotifs = notifFilter === 'unread'
     ? notifications.filter(n => !n.is_read)
     : notifications
+  const roleNavSections = sectionsByRole[user?.role] || sectionsByRole.employee
 
   return <>
     <header className="topbar">
-      <div className="crumb">
-        <span className="crumb-brand">Priority Handling Services, Inc.</span>
-        <span className="crumb-sep">/</span>
-        <span className="crumb-current">Performance &amp; Development</span>
-      </div>
+      <div className="topbar-main">
+        <div className="crumb">
+          <span className="crumb-brand">Priority Handling Services, Inc.</span>
+          <span className="crumb-sep">/</span>
+          <span className="crumb-current">Performance &amp; Development</span>
+        </div>
 
-      <div className="top-actions">
+        <div className="top-actions">
         <button className="mobile-menu-btn" type="button" onClick={onOpenMobileNav} aria-label="Open menu">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
             <path d="M3 6h18M3 12h18M3 18h18" />
@@ -251,7 +272,40 @@ export default function Header({ user, onToggle, dark, onOpenMobileNav, onOpenAi
           )}
           <span className="topbar-online-dot" />
         </div>
+        </div>
       </div>
+
+      <nav className="role-nav" aria-label="Main navigation" ref={roleNavRef}>
+        {roleNavSections.map((section) => (
+          <div className="role-nav-group" key={section.title}>
+            <button
+              type="button"
+              className={`role-nav-trigger ${activeNavGroup === section.title ? 'is-open' : ''}`}
+              aria-expanded={activeNavGroup === section.title}
+              onClick={() => setActiveNavGroup((openGroup) => openGroup === section.title ? null : section.title)}
+            >
+              {section.title}
+              <Icon name="chevron" size={15} />
+            </button>
+            {activeNavGroup === section.title && (
+              <div className="role-nav-panel">
+                {section.links.map((item) => (
+                  <NavLink
+                    key={item.to}
+                    to={item.to}
+                    end={item.to === '/'}
+                    className={({ isActive }) => `role-nav-link ${isActive ? 'is-active' : ''}`}
+                    onClick={() => setActiveNavGroup(null)}
+                  >
+                    <Icon name={item.icon} size={17} />
+                    <span>{item.label}</span>
+                  </NavLink>
+                ))}
+              </div>
+            )}
+          </div>
+        ))}
+      </nav>
     </header>
 
     {/* Professional Notification Panel Dropdown */}
