@@ -72,7 +72,7 @@ const sectionsByRole = {
       title: 'Core Modules',
       links: [
         { to: '/performance', label: 'Performance Management', icon: 'trend' },
-        { to: '/succession', label: 'Succession Approvals', icon: 'crown' },
+        { to: '/succession', label: 'Succession Planning', icon: 'crown' },
         { to: '/recognition', label: 'Social Recognition', icon: 'heart' }
       ]
     },
