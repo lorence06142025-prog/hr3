@@ -1580,9 +1580,10 @@ function SkillGapPlanBuilder({ value, onChange, role, people = [], subject }) {
               const isAssigned = assignedMap[selectedCompetency] === course.title || Boolean(course.assignment_id)
               const isVerified = Boolean(course.is_completed)
               const progressPct = course.assignment_progress !== undefined && course.assignment_progress !== null ? Number(course.assignment_progress) : null
+              const courseCardClass = `recommended-course-card${isVerified ? ' is-verified' : ''}${isAssigned ? ' is-assigned' : ''}`
 
               return (
-                <div className={'recommended-course-card' + (isVerified ? ' is-verified' : '') + (isAssigned ? ' is-assigned' : '')}>
+                <div className={courseCardClass}>
                   <div className="course-card-head">
                     <span className="course-category-tag">{course.category}</span>
                     <span className="course-duration" style={{ display: 'inline-flex', alignItems: 'center', gap: 3 }}><Clock size={12} /> {course.duration_hours || course.duration || '-'} hrs</span>
