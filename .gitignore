@@ -40,3 +40,4 @@ tmp_*.txt
 !**/.env.example
 !**/.env.production.example
 server/.env
+.env*

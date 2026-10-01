@@ -1195,17 +1195,17 @@
 }
 
 /* ==========================================================================
-   HOTEL & RESTAURANT EMPLOYEE EVALUATION FORM & CALIBRATION STYLES
+  FREIGHT & LOGISTICS EMPLOYEE EVALUATION FORM & CALIBRATION STYLES
    ========================================================================== */
 
-.hospitality-eval-form {
+.logistics-eval-form {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
 /* Document Header Card */
-.hospitality-eval-header-card {
+.logistics-eval-header-card {
   background: #ffffff;
   border: 1.5px solid #e2e8f0;
   border-radius: 14px;
@@ -1213,8 +1213,8 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
-:root.dark .hospitality-eval-header-card,
-.dark .hospitality-eval-header-card {
+:root.dark .logistics-eval-header-card,
+.dark .logistics-eval-header-card {
   background: #1e1c2e;
   border-color: rgba(255, 255, 255, 0.1);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
@@ -1392,13 +1392,13 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
 }
 
-.hospitality-eval-table {
+.logistics-eval-table {
   width: 100%;
   border-collapse: collapse;
   text-align: left;
 }
 
-.hospitality-eval-table th {
+.logistics-eval-table th {
   background: #f1f5f9;
   padding: 12px 14px;
   font-size: 12px;
@@ -1409,19 +1409,19 @@
   letter-spacing: 0.3px;
 }
 
-:root.dark .hospitality-eval-table th,
-.dark .hospitality-eval-table th {
+:root.dark .logistics-eval-table th,
+.dark .logistics-eval-table th {
   background: #181624;
   color: #cbd5e1;
   border-bottom-color: rgba(255, 255, 255, 0.12);
 }
 
-.hospitality-eval-table th.th-rating {
+.logistics-eval-table th.th-rating {
   text-align: center;
   font-size: 13px;
 }
 
-.hospitality-eval-table th.th-rating small {
+.logistics-eval-table th.th-rating small {
   display: block;
   font-size: 9.5px;
   font-weight: 600;
@@ -1430,36 +1430,36 @@
   margin-top: 1px;
 }
 
-:root.dark .hospitality-eval-table th.th-rating small,
-.dark .hospitality-eval-table th.th-rating small {
+:root.dark .logistics-eval-table th.th-rating small,
+.dark .logistics-eval-table th.th-rating small {
   color: #94a3b8;
 }
 
-.hospitality-eval-table th.th-score {
+.logistics-eval-table th.th-score {
   text-align: center;
 }
 
-.hospitality-eval-table td {
+.logistics-eval-table td {
   padding: 13px 14px;
   border-bottom: 1px solid #e2e8f0;
   vertical-align: middle;
 }
 
-:root.dark .hospitality-eval-table td,
-.dark .hospitality-eval-table td {
+:root.dark .logistics-eval-table td,
+.dark .logistics-eval-table td {
   border-bottom-color: rgba(255, 255, 255, 0.07);
 }
 
-.hospitality-eval-table tr:last-child td {
+.logistics-eval-table tr:last-child td {
   border-bottom: none;
 }
 
-.hospitality-eval-table tr:hover {
+.logistics-eval-table tr:hover {
   background: #f8fafc;
 }
 
-:root.dark .hospitality-eval-table tr:hover,
-.dark .hospitality-eval-table tr:hover {
+:root.dark .logistics-eval-table tr:hover,
+.dark .logistics-eval-table tr:hover {
   background: rgba(255, 255, 255, 0.02);
 }
 
@@ -1631,7 +1631,7 @@
 :root.dark .eval-score-pill.score-1 { background: rgba(239, 68, 68, 0.15); color: #fca5a5; }
 
 /* Qualitative Feedback Card */
-.hospitality-qualitative-card {
+.logistics-qualitative-card {
   background: #ffffff;
   border: 1.5px solid #e2e8f0;
   border-radius: 14px;
@@ -1642,8 +1642,8 @@
   gap: 16px;
 }
 
-:root.dark .hospitality-qualitative-card,
-.dark .hospitality-qualitative-card {
+:root.dark .logistics-qualitative-card,
+.dark .logistics-qualitative-card {
   background: #1e1c2e;
   border-color: rgba(255, 255, 255, 0.1);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
@@ -1719,7 +1719,7 @@
 }
 
 /* Score Summary Card */
-.hospitality-score-summary-card {
+.logistics-score-summary-card {
   background: linear-gradient(135deg, #f8fafc, #eff6ff);
   border: 1.5px solid #c7d2fe;
   border-radius: 14px;
@@ -1732,8 +1732,8 @@
   box-shadow: 0 4px 12px rgba(17, 24, 39, 0.08);
 }
 
-:root.dark .hospitality-score-summary-card,
-.dark .hospitality-score-summary-card {
+:root.dark .logistics-score-summary-card,
+.dark .logistics-score-summary-card {
   background: linear-gradient(135deg, #1e1c2e, #252338);
   border-color: rgba(17, 24, 39, 0.35);
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);

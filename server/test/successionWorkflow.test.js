@@ -69,12 +69,12 @@ before(async () => {
   }
 
 
-  // Security supervisor (Marcus Vance)
+  // Safety & Compliance supervisor (Marco Rossi)
   const secSupRes = await query(`
     SELECT u.id, u.email, u.role, u.employee_id, u.full_name, e.department
     FROM users u
     JOIN employees e ON e.id = u.employee_id
-    WHERE u.role = 'supervisor' AND e.department = 'Security' AND u.is_active = true
+    WHERE u.role = 'supervisor' AND e.department = 'Safety & Compliance' AND u.is_active = true
     LIMIT 1
   `)
   if (secSupRes.rows[0]) {
@@ -89,12 +89,12 @@ before(async () => {
     }
   }
 
-  // Front Office supervisor (Jordan Williams)
+  // Fleet & Transportation supervisor (Robert Johnson)
   const foSupRes = await query(`
     SELECT u.id, u.email, u.role, u.employee_id, u.full_name, e.department
     FROM users u
     JOIN employees e ON e.id = u.employee_id
-    WHERE u.role = 'supervisor' AND e.department = 'Front Office' AND u.is_active = true
+    WHERE u.role = 'supervisor' AND e.department = 'Fleet & Transportation' AND u.is_active = true
     LIMIT 1
   `)
   if (foSupRes.rows[0]) {
@@ -109,12 +109,12 @@ before(async () => {
     }
   }
 
-  // Front Office Employee (Maria Lopez or Sofia Garcia)
+  // Fleet & Transportation employee
   const foEmpRes = await query(`
     SELECT u.id, u.email, u.role, u.employee_id, u.full_name, e.department
     FROM users u
     JOIN employees e ON e.id = u.employee_id
-    WHERE u.role = 'employee' AND e.department = 'Front Office' AND u.is_active = true
+    WHERE u.role = 'employee' AND e.department = 'Fleet & Transportation' AND u.is_active = true
     LIMIT 1
   `)
   if (foEmpRes.rows[0]) {
@@ -129,13 +129,13 @@ before(async () => {
     }
   }
 
-  // Create an isolated test employee in Security department
+  // Create an isolated test employee in Safety & Compliance
   const empInsert = await query(`
     INSERT INTO employees (
       employee_number, full_name, department, job_title, manager_id,
       performance_score, competency_score, learning_progress, is_active
     ) VALUES (
-      'TEST-SUCC-99', 'Test Succession Candidate', 'Security', 'CCTV & Patrol Officer',
+      'TEST-SUCC-99', 'Test Succession Candidate', 'Safety & Compliance', 'Safety Coordinator',
       $1, 88, 86, 82, true
     ) RETURNING *
   `, [securitySupervisorUser?.employeeId || null])
@@ -156,17 +156,17 @@ before(async () => {
     email: userInsert.rows[0].email,
     role: 'employee',
     employeeId: testEmployee.id,
-    department: 'Security',
+    department: 'Safety & Compliance',
   }
 
   // Seed competency assessment for test employee
   await query(`
     INSERT INTO competency_assessments (employee_id, competency, score, required_score, source)
     VALUES
-      ($1, 'Patrol & Inspection', 90, 80, 'assessment'),
-      ($1, 'Incident Response & Safety', 85, 80, 'assessment'),
-      ($1, 'Surveillance Systems', 88, 80, 'assessment'),
-      ($1, 'Crisis Management & Evacuation', 75, 85, 'assessment')
+      ($1, 'Regulatory Compliance', 90, 80, 'assessment'),
+      ($1, 'Incident Investigation', 85, 80, 'assessment'),
+      ($1, 'Risk Assessment', 88, 80, 'assessment'),
+      ($1, 'Corrective Action Management', 75, 85, 'assessment')
     ON CONFLICT DO NOTHING
   `, [testEmployee.id])
 
@@ -183,7 +183,7 @@ before(async () => {
   // Seed baseline position history for test employee
   await query(`
     INSERT INTO position_history (employee_id, previous_position, new_position, effective_date, reason)
-    VALUES ($1, 'Security Trainee', 'CCTV & Patrol Officer', CURRENT_DATE - INTERVAL '1 year', 'Initial placement')
+    VALUES ($1, 'Safety Associate', 'Safety Coordinator', CURRENT_DATE - INTERVAL '1 year', 'Initial placement')
   `, [testEmployee.id])
 
   // Create a succession workflow for test employee
@@ -198,8 +198,8 @@ before(async () => {
     testEmployee.id,
     hrUser.sub,
     JSON.stringify({
-      targetRole: 'Security Supervisor',
-      recommendedPosition: 'Security Supervisor',
+      targetRole: 'Safety & Compliance Manager',
+      recommendedPosition: 'Safety & Compliance Manager',
     }),
   ])
   testWorkflow = wfRes.rows[0]
@@ -212,27 +212,27 @@ test('Scenario 1: HR starts assessment across any department', async () => {
   assert.ok(data, 'HR should retrieve employee data')
   assert.equal(data.employee.id, testEmployee.id)
   assert.equal(data.employee.department, 'Security')
-  assert.ok(data.availableTargetPositions.length > 0, 'HR should see available positions across hotel')
+  assert.ok(data.availableTargetPositions.length > 0, 'HR should see available positions across the company')
   assert.ok(data.readinessScore > 0, 'Official readiness score should be calculated')
 })
 
 // Scenario 2: Supervisor starts assessment for departmental employee
 test('Scenario 2: Supervisor starts assessment for departmental employee', async () => {
-  assert.ok(securitySupervisorUser, 'Security supervisor must exist')
+  assert.ok(securitySupervisorUser, 'Safety & Compliance supervisor must exist')
   const data = await getAuthorizedEmployeeData(securitySupervisorUser, testEmployee.id)
   assert.ok(data, 'Supervisor should retrieve data for employee in their department')
   assert.equal(data.employee.id, testEmployee.id)
-  assert.equal(data.employee.department, 'Security')
+  assert.equal(data.employee.department, 'Safety & Compliance')
   // Supervisor only sees positions in their department
   for (const pos of data.availableTargetPositions) {
-    assert.equal(pos.department, 'Security', 'Supervisor must only see departmental positions')
+    assert.equal(pos.department, 'Safety & Compliance', 'Supervisor must only see departmental positions')
   }
 })
 
 // Scenario 3: Supervisor attempts cross-department assessment -> 403 DENY
 test('Scenario 3: Supervisor attempts cross-department assessment -> 403 DENY', async () => {
-  assert.ok(foSupervisorUser, 'Front Office supervisor must exist')
-  // Front Office supervisor attempting to access Security employee
+  assert.ok(foSupervisorUser, 'Fleet & Transportation supervisor must exist')
+  // Fleet & Transportation supervisor attempting to access a Safety & Compliance employee
   await assert.rejects(
     async () => {
       await getAuthorizedEmployeeData(foSupervisorUser, testEmployee.id)
@@ -286,7 +286,7 @@ test('Scenario 6: Rejects invented or arbitrary positions and enforces valid sys
   const validPositionTitles = new Set(data.availableTargetPositions.map(p => p.title.toLowerCase()))
 
   // Directly simulate invalid position validation in generateSuccessionAssessment
-  const inventedPosition = 'Chief Galactic Hospitality Officer'
+  const inventedPosition = 'Chief Galactic Freight Officer'
   assert.equal(validPositionTitles.has(inventedPosition.toLowerCase()), false, 'Invented position is not in system')
 
   const fallback = matchTargetPositionsDeterministically(
@@ -331,34 +331,34 @@ test('Scenario 8: AI recommendation generated successfully with structured field
 
 // Scenario 9: AI offline/timeout fallback to deterministic matching
 test('Scenario 9: AI offline or timeout fallback produces deterministic match', () => {
-  const employee = { department: 'Security', jobTitle: 'CCTV & Patrol Officer' }
+  const employee = { department: 'Safety & Compliance', jobTitle: 'Safety Coordinator' }
   const competencies = [
-    { competency: 'Patrol & Inspection', score: 90 },
-    { competency: 'Incident Response & Safety', score: 85 },
+    { competency: 'Regulatory Compliance', score: 90 },
+    { competency: 'Incident Investigation', score: 85 },
   ]
   const targetPositions = [
     {
-      title: 'Security Supervisor',
-      department: 'Security',
+      title: 'Safety & Compliance Manager',
+      department: 'Safety & Compliance',
       is_critical: true,
       required_competencies: [
-        { competency: 'Patrol & Inspection', requiredScore: 85 },
-        { competency: 'Incident Response & Safety', requiredScore: 80 },
+        { competency: 'Regulatory Compliance', requiredScore: 85 },
+        { competency: 'Incident Investigation', requiredScore: 80 },
       ],
     },
     {
-      title: 'Director of Security',
-      department: 'Security',
+      title: 'Director of Fleet Operations',
+      department: 'Fleet & Transportation',
       is_critical: true,
       required_competencies: [
-        { competency: 'Crisis Leadership', requiredScore: 95 },
+        { competency: 'Fleet Utilization & Availability', requiredScore: 95 },
       ],
     },
   ]
 
   const match = matchTargetPositionsDeterministically(employee, competencies, targetPositions)
   assert.ok(match)
-  assert.equal(match.title, 'Security Supervisor', 'Deterministic matching should select best suited role')
+  assert.equal(match.title, 'Safety & Compliance Manager', 'Deterministic matching should select best suited role')
 })
 
 // Scenario 10: Authorized reviewer approves succession
@@ -370,8 +370,8 @@ test('Scenario 9: AI offline or timeout fallback produces deterministic match', 
 // Scenario 16: Notifications created for employee, supervisor, HR
 // Scenario 17: Dashboard reflects new position and succession status
 test('Scenarios 10-17: Succession Approval 13-step atomic transaction completes all side-effects', async () => {
-  const previousTitle = testEmployee.job_title // 'CCTV & Patrol Officer'
-  const newTargetRole = 'Security Supervisor'
+  const previousTitle = testEmployee.job_title // 'Safety Coordinator'
+  const newTargetRole = 'Safety & Compliance Manager'
 
   // Execute approval transaction
   const result = await transaction(async (client) => {
@@ -463,7 +463,7 @@ test('Scenario 18: Unauthorized user role cannot approve succession (403)', asyn
         return await approveSuccessionTransaction(client, {
           workflowId: null,
           employeeId: testEmployee.id,
-          targetPosition: 'Security Supervisor',
+          targetPosition: 'Safety & Compliance Manager',
           actorUser: unauthorizedUser,
         })
       })
@@ -484,7 +484,7 @@ test('Scenario 19: Employee cannot approve own succession (403)', async () => {
         return await approveSuccessionTransaction(client, {
           workflowId: null,
           employeeId: testEmployee.id,
-          targetPosition: 'Security Supervisor',
+          targetPosition: 'Safety & Compliance Manager',
           actorUser: securityEmployeeUser, // Actor is the subject employee
         })
       })
@@ -521,7 +521,7 @@ test('Scenario 21: Historical succession records accessible according to RBAC', 
   const supScope = await getScopeFilter(securitySupervisorUser)
   assert.equal(supScope.isHr, false)
   assert.equal(supScope.isScoped, true)
-  assert.equal(supScope.department, 'Security')
+  assert.equal(supScope.department, 'Safety & Compliance')
 
   // 3. Employee scope: scoped to self
   const empScope = await getScopeFilter(securityEmployeeUser)

@@ -68,7 +68,7 @@ router.get('/competencies', async (_req, res, next) => {
     const { rows } = await query(
       `SELECT DISTINCT competency FROM learning_resource_competencies ORDER BY competency`,
     )
-    const base = ['Customer Service', 'Leadership', 'Communication', 'Food Safety', 'Kitchen Operations', 'Compliance', 'Conflict Resolution', 'Technical Skills', 'Reservation Management', 'Upselling', 'Operational Management', 'Financial Acumen', 'Teamwork']
+    const base = ['Customer Service', 'Leadership', 'Communication', 'Defensive Driving', 'Vehicle Inspection & Preventive Checks', 'Route Planning & Optimization', 'Dispatch Communication', 'Inventory Accuracy', 'Warehouse Safety', 'Forklift Operation & Safety', 'Compliance', 'Conflict Resolution', 'Technical Skills', 'Shipment Tracking', 'Operational Management', 'Financial Acumen', 'Teamwork']
     const tags = [...new Set([...base, ...rows.map(r => r.competency)])].sort()
     res.json({ competencies: tags })
   } catch (error) { next(error) }
@@ -76,78 +76,127 @@ router.get('/competencies', async (_req, res, next) => {
 
 // Centralized role and department competency profiles
 const ROLE_COMPETENCY_MAP = {
-  'Front Desk Officer': [
-    { comp: 'Customer Service', req: 90, offset: -8 },
-    { comp: 'Communication', req: 88, offset: -6 },
-    { comp: 'Reservation Management', req: 88, offset: -10 },
-    { comp: 'Conflict Resolution', req: 80, offset: -5 },
-    { comp: 'Hospitality SOP Compliance', req: 85, offset: 2 },
+  Driver: [
+    { comp: 'Defensive Driving', req: 95, offset: -8 },
+    { comp: 'Vehicle Inspection & Preventive Checks', req: 95, offset: -6 },
+    { comp: 'Route Compliance', req: 95, offset: -5 },
+    { comp: 'Cargo Securement', req: 92, offset: -10 },
+    { comp: 'Delivery Documentation & Communication', req: 88, offset: 2 },
   ],
-  'Head Concierge': [
-    { comp: 'Customer Service', req: 95, offset: -8 },
-    { comp: 'Communication', req: 90, offset: -6 },
-    { comp: 'Reservation Management', req: 90, offset: -7 },
-    { comp: 'Conflict Resolution', req: 85, offset: 2 },
-    { comp: 'Hospitality SOP Compliance', req: 90, offset: -4 },
+  'Heavy Vehicle Driver': [
+    { comp: 'Defensive Driving', req: 95, offset: -8 },
+    { comp: 'Vehicle Inspection & Preventive Checks', req: 95, offset: -6 },
+    { comp: 'Route Compliance', req: 95, offset: -5 },
+    { comp: 'Cargo Securement', req: 95, offset: -10 },
+    { comp: 'Incident Reporting', req: 90, offset: 2 },
   ],
-  'Sous Chef': [
-    { comp: 'Line Expediting & Speed', req: 90, offset: -8 },
-    { comp: 'Recipe Consistency & Flavor', req: 90, offset: -6 },
-    { comp: 'HACCP & Kitchen Sanitation', req: 95, offset: -12 },
-    { comp: 'Food Safety', req: 90, offset: -5 },
-    { comp: 'Prep & Station Inventory', req: 85, offset: 2 },
+  'Delivery Driver': [
+    { comp: 'Defensive Driving', req: 92, offset: -8 },
+    { comp: 'Vehicle Inspection & Preventive Checks', req: 92, offset: -6 },
+    { comp: 'Route Compliance', req: 92, offset: -5 },
+    { comp: 'Proof-of-Delivery Accuracy', req: 90, offset: -10 },
+    { comp: 'Customer Communication', req: 85, offset: 2 },
   ],
-  'Executive Chef': [
-    { comp: 'Line Expediting & Speed', req: 95, offset: -6 },
-    { comp: 'Recipe Consistency & Flavor', req: 95, offset: -6 },
-    { comp: 'HACCP & Kitchen Sanitation', req: 98, offset: -8 },
-    { comp: 'Food Safety', req: 95, offset: -5 },
-    { comp: 'Prep & Station Inventory', req: 90, offset: 2 },
+  Dispatcher: [
+    { comp: 'Route Planning & Optimization', req: 92, offset: -8 },
+    { comp: 'Load Scheduling', req: 90, offset: -6 },
+    { comp: 'TMS & GPS Proficiency', req: 95, offset: -5 },
+    { comp: 'Exception Management', req: 90, offset: -10 },
+    { comp: 'Dispatch Communication', req: 88, offset: 2 },
   ],
-  'Restaurant Supervisor': [
-    { comp: 'Floor Operations & Speed', req: 90, offset: -8 },
-    { comp: 'Customer Service', req: 90, offset: -7 },
-    { comp: 'POS & Cash Reconciliation', req: 85, offset: -5 },
-    { comp: 'Hygiene & Health Standards', req: 88, offset: -9 },
-    { comp: 'Team Collaboration', req: 85, offset: 2 },
+  'Dispatch Supervisor': [
+    { comp: 'Route Planning & Optimization', req: 95, offset: -8 },
+    { comp: 'Load Scheduling', req: 92, offset: -6 },
+    { comp: 'TMS & GPS Proficiency', req: 95, offset: -5 },
+    { comp: 'Exception Management', req: 92, offset: -10 },
+    { comp: 'Shift Leadership & Coaching', req: 88, offset: 2 },
   ],
-  'Housekeeping Executive': [
-    { comp: 'Room Standards & Inspection', req: 95, offset: -10 },
-    { comp: 'Chemical & Bio-Safety Compliance', req: 90, offset: -6 },
-    { comp: 'Turnaround Time Optimization', req: 85, offset: -8 },
-    { comp: 'Linen & Inventory Management', req: 85, offset: 2 },
-    { comp: 'Hospitality SOP Compliance', req: 85, offset: -4 },
+  'Warehouse Associate': [
+    { comp: 'Warehouse Safety', req: 95, offset: -8 },
+    { comp: 'Inventory Accuracy', req: 92, offset: -6 },
+    { comp: 'Picking & Packing', req: 92, offset: -5 },
+    { comp: 'Shipment Staging & Load Readiness', req: 90, offset: -10 },
+    { comp: 'WMS Proficiency', req: 85, offset: 2 },
+  ],
+  'Inventory Control Clerk': [
+    { comp: 'Inventory Accuracy', req: 95, offset: -8 },
+    { comp: 'Cycle Counting & Variance Resolution', req: 92, offset: -6 },
+    { comp: 'WMS Data Integrity', req: 95, offset: -5 },
+    { comp: 'Receiving & Shipping Documentation', req: 90, offset: -10 },
+    { comp: 'Cross-Functional Communication', req: 85, offset: 2 },
+  ],
+  'Forklift Operator': [
+    { comp: 'Forklift Operation & Safety', req: 95, offset: -8 },
+    { comp: 'Load Stability & Handling', req: 95, offset: -6 },
+    { comp: 'Warehouse Traffic & Pedestrian Safety', req: 95, offset: -5 },
+    { comp: 'Freight Scanning & Staging', req: 90, offset: -10 },
+    { comp: 'Equipment Inspection & Reporting', req: 90, offset: 2 },
+  ],
+  'Customer Service Representative': [
+    { comp: 'Shipment Tracking & Visibility', req: 90, offset: -8 },
+    { comp: 'Customer Communication', req: 90, offset: -6 },
+    { comp: 'Issue & Claims Resolution', req: 88, offset: -5 },
+    { comp: 'Proof-of-Delivery Accuracy', req: 95, offset: -10 },
+    { comp: 'TMS Data Accuracy', req: 92, offset: 2 },
+  ],
+  'Safety & Compliance Manager': [
+    { comp: 'Regulatory Compliance', req: 95, offset: -8 },
+    { comp: 'Risk Assessment', req: 92, offset: -6 },
+    { comp: 'Incident Investigation', req: 90, offset: -5 },
+    { comp: 'Corrective Action Management', req: 92, offset: -10 },
+    { comp: 'Safety Training & Communication', req: 88, offset: 2 },
+  ],
+  'Safety Coordinator': [
+    { comp: 'Workplace & Transport Risk Assessment', req: 92, offset: -8 },
+    { comp: 'Incident Reporting & Investigation', req: 90, offset: -6 },
+    { comp: 'Regulatory Documentation', req: 95, offset: -5 },
+    { comp: 'Corrective Action Follow-Up', req: 90, offset: -10 },
+    { comp: 'Safety Communication & Training', req: 88, offset: 2 },
   ],
 }
 
 const DEPARTMENT_COMPETENCY_MAP = {
-  'Front Office': [
-    { comp: 'Customer Service', req: 90, offset: -8 },
-    { comp: 'Communication', req: 88, offset: -6 },
-    { comp: 'Reservation Management', req: 88, offset: -10 },
-    { comp: 'Conflict Resolution', req: 80, offset: -5 },
-    { comp: 'Hospitality SOP Compliance', req: 85, offset: 2 },
+  'Fleet & Transportation': [
+    { comp: 'On-Time Delivery', req: 95, offset: -8 },
+    { comp: 'Defensive Driving', req: 95, offset: -6 },
+    { comp: 'Vehicle Inspection & Preventive Checks', req: 95, offset: -5 },
+    { comp: 'Route Compliance', req: 95, offset: -10 },
+    { comp: 'Cargo Securement', req: 92, offset: 2 },
   ],
-  'Kitchen': [
-    { comp: 'Line Expediting & Speed', req: 90, offset: -8 },
-    { comp: 'Recipe Consistency & Flavor', req: 90, offset: -6 },
-    { comp: 'HACCP & Kitchen Sanitation', req: 95, offset: -12 },
-    { comp: 'Food Safety', req: 90, offset: -5 },
-    { comp: 'Prep & Station Inventory', req: 85, offset: 2 },
+  'Dispatch & Routing': [
+    { comp: 'Dispatch Accuracy', req: 95, offset: -8 },
+    { comp: 'Route Planning & Optimization', req: 92, offset: -6 },
+    { comp: 'Load Scheduling', req: 90, offset: -5 },
+    { comp: 'TMS & GPS Proficiency', req: 95, offset: -10 },
+    { comp: 'Exception Management', req: 90, offset: 2 },
   ],
-  'Food & Beverage': [
-    { comp: 'Floor Operations & Speed', req: 90, offset: -8 },
-    { comp: 'Customer Service', req: 90, offset: -7 },
-    { comp: 'POS & Cash Reconciliation', req: 85, offset: -5 },
-    { comp: 'Hygiene & Health Standards', req: 88, offset: -9 },
-    { comp: 'Team Collaboration', req: 85, offset: 2 },
+  'Warehouse & Inventory': [
+    { comp: 'Warehouse Safety', req: 95, offset: -8 },
+    { comp: 'Inventory Accuracy', req: 95, offset: -6 },
+    { comp: 'Picking & Packing', req: 92, offset: -5 },
+    { comp: 'WMS Proficiency', req: 90, offset: -10 },
+    { comp: 'Forklift Operation & Safety', req: 95, offset: 2 },
   ],
-  'Housekeeping': [
-    { comp: 'Room Standards & Inspection', req: 95, offset: -10 },
-    { comp: 'Chemical & Bio-Safety Compliance', req: 90, offset: -6 },
-    { comp: 'Turnaround Time Optimization', req: 85, offset: -8 },
-    { comp: 'Linen & Inventory Management', req: 85, offset: 2 },
-    { comp: 'Hospitality SOP Compliance', req: 85, offset: -4 },
+  'Customer Service': [
+    { comp: 'Shipment Tracking & Visibility', req: 90, offset: -8 },
+    { comp: 'Customer Communication', req: 90, offset: -6 },
+    { comp: 'Issue & Claims Resolution', req: 88, offset: -5 },
+    { comp: 'Proof-of-Delivery Accuracy', req: 95, offset: -10 },
+    { comp: 'TMS Data Accuracy', req: 92, offset: 2 },
+  ],
+  'Safety & Compliance': [
+    { comp: 'Regulatory Compliance', req: 95, offset: -8 },
+    { comp: 'Risk Assessment', req: 92, offset: -6 },
+    { comp: 'Incident Investigation', req: 90, offset: -5 },
+    { comp: 'Corrective Action Management', req: 92, offset: -10 },
+    { comp: 'Safety Training & Communication', req: 88, offset: 2 },
+  ],
+  'Finance & Administration': [
+    { comp: 'Freight Billing & Audit', req: 95, offset: -8 },
+    { comp: 'Invoice Accuracy', req: 95, offset: -6 },
+    { comp: 'Accounts Reconciliation', req: 92, offset: -5 },
+    { comp: 'Internal Controls', req: 95, offset: -10 },
+    { comp: 'Cost Control Compliance', req: 90, offset: 2 },
   ],
   'Human Resources': [
     { comp: 'Employee Relations', req: 88, offset: -7 },
@@ -156,11 +205,25 @@ const DEPARTMENT_COMPETENCY_MAP = {
     { comp: 'Communication', req: 80, offset: 2 },
     { comp: 'Leadership', req: 80, offset: -4 },
   ],
-  'default': [
+  'Executive Office': [
     { comp: 'Operational Management', req: 95, offset: -8 },
     { comp: 'Leadership', req: 95, offset: -6 },
     { comp: 'Financial Acumen', req: 88, offset: -7 },
     { comp: 'Customer Service', req: 88, offset: 2 },
+    { comp: 'Communication', req: 88, offset: -4 },
+  ],
+  'Human Resources': [
+    { comp: 'Employee Relations', req: 88, offset: -7 },
+    { comp: 'Recruitment & Selection', req: 88, offset: -8 },
+    { comp: 'Labor Compliance', req: 95, offset: -5 },
+    { comp: 'Learning & Development', req: 85, offset: 2 },
+    { comp: 'HR Data & Documentation Accuracy', req: 95, offset: -4 },
+  ],
+  'default': [
+    { comp: 'Operational Management', req: 90, offset: -8 },
+    { comp: 'Leadership', req: 88, offset: -6 },
+    { comp: 'Compliance', req: 90, offset: -7 },
+    { comp: 'Customer Service', req: 85, offset: 2 },
     { comp: 'Communication', req: 88, offset: -4 },
   ],
 }

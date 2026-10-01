@@ -8,9 +8,9 @@ test('Scenario 1: KPI achievement and weighted contribution calculation', () => 
       stage: 'configure_kpi',
       details: {
         formData: [
-          { name: 'Guest Satisfaction', target: '90', weight: 15, description: 'Guest satisfaction' },
+          { name: 'Customer Satisfaction', target: '90', weight: 15, description: 'Customer satisfaction' },
           { name: 'Attendance', target: '95', weight: 35, description: 'Punctuality' },
-          { name: 'Food Quality', target: '90', weight: 50, description: 'Quality standard' },
+          { name: 'Freight Handling Quality', target: '90', weight: 50, description: 'Quality standard' },
         ],
       },
     },
@@ -19,9 +19,9 @@ test('Scenario 1: KPI achievement and weighted contribution calculation', () => 
       details: {
         formData: {
           kpiRatings: [
-            { name: 'Guest Satisfaction', target: '90', weight: 15, score: 90 },
+            { name: 'Customer Satisfaction', target: '90', weight: 15, score: 90 },
             { name: 'Attendance', target: '95', weight: 35, score: 95 },
-            { name: 'Food Quality', target: '90', weight: 50, score: 90 },
+            { name: 'Freight Handling Quality', target: '90', weight: 50, score: 90 },
           ],
         },
       },
@@ -31,9 +31,9 @@ test('Scenario 1: KPI achievement and weighted contribution calculation', () => 
       details: {
         formData: {
           kpiRatings: [
-            { name: 'Guest Satisfaction', target: '90', weight: 15, score: 88 },
+            { name: 'Customer Satisfaction', target: '90', weight: 15, score: 88 },
             { name: 'Attendance', target: '95', weight: 35, score: 95 },
-            { name: 'Food Quality', target: '90', weight: 50, score: 90 },
+            { name: 'Freight Handling Quality', target: '90', weight: 50, score: 90 },
           ],
         },
       },
@@ -71,7 +71,7 @@ test('Scenario 2: Fallback to supervisor weighted score if calibration decision 
       details: {
         formData: {
           kpiRatings: [
-            { name: 'Guest Satisfaction', target: 90, weight: 15, score: 88 }, // 88/90 * 15 = 14.67
+            { name: 'Customer Satisfaction', target: 90, weight: 15, score: 88 }, // 88/90 * 15 = 14.67
             { name: 'Attendance', target: 100, weight: 85, score: 85 },        // 85/100 * 85 = 72.25
           ],
         },

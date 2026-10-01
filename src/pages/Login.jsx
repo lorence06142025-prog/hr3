@@ -817,9 +817,10 @@ export default function Login({ onLogin, notice }) {
         <div className="login-success-portal-curtain" aria-live="assertive">
           <div className="login-success-zoom-stage">
             <img
-              src="/horecaos_hotel_pool.jpg"
-              alt="Priority Handling Services, Inc."
+              src="/prioritylogo.png"
+              alt="Priority Handling Services company logo"
               className="login-success-hero-img"
+              style={{ width: 72, height: 72, objectFit: 'contain' }}
             />
             <div className="login-success-light-sweep" />
             <div className="login-success-lens-flare" />
@@ -830,7 +831,7 @@ export default function Login({ onLogin, notice }) {
                 <CheckCircle2 size={34} color="#34d399" />
               </div>
               <div className="login-success-title">AUTHENTICATION ACCEPTED</div>
-              <div className="login-success-hotel-name">PRIORITY HANDLING SERVICES, INC.</div>
+              <div className="login-success-company-name">PRIORITY HANDLING SERVICES, INC.</div>
               <div className="login-success-sub-text">
                 <DoorOpen size={16} className="text-emerald-500" />
                 <span>Authentication accepted, logging in...</span>

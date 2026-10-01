@@ -157,10 +157,20 @@ export default function LearningManagement() {
           if (!userDept) return true
           const text = `${r.title} ${r.description} ${r.category} ${(r.competencies || []).join(' ')}`.toLowerCase()
           const dept = userDept.toLowerCase()
-          if (dept.includes('front')) return !text.includes('kitchen') && !text.includes('culinary') && !text.includes('cook') && !text.includes('hvac') && !text.includes('maintenance') && !text.includes('engineering')
-          if (dept.includes('kitchen')) return !text.includes('front desk') && !text.includes('concierge') && !text.includes('reservation')
-          if (dept.includes('housekeeping')) return !text.includes('sous chef') && !text.includes('culinary') && !text.includes('front desk')
-          return true
+          const sharedTerms = ['leadership', 'communication', 'compliance', 'safety', 'teamwork']
+          const departmentTerms = {
+            'fleet & transportation': ['fleet', 'driver', 'vehicle', 'cargo', 'transport', 'delivery', 'route'],
+            'dispatch & routing': ['dispatch', 'route', 'load', 'tms', 'gps', 'planning', 'exception'],
+            'warehouse & inventory': ['warehouse', 'inventory', 'forklift', 'freight', 'picking', 'packing', 'wms'],
+            'customer service': ['customer', 'shipment', 'claim', 'proof of delivery', 'service recovery'],
+            'safety & compliance': ['safety', 'compliance', 'regulatory', 'incident', 'risk'],
+            'finance & administration': ['finance', 'billing', 'invoice', 'audit', 'cost', 'accounts'],
+            'human resources': ['onboarding', 'employee', 'people', 'labor', 'recruitment', 'hr'],
+            'executive office': ['leadership', 'management', 'strategy', 'finance', 'operations'],
+          }
+          const matchedDepartment = Object.keys(departmentTerms).find(name => dept.includes(name))
+          if (!matchedDepartment) return true
+          return [...sharedTerms, ...departmentTerms[matchedDepartment]].some(term => text.includes(term))
         }
         return false
       })

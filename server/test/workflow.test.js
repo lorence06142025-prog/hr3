@@ -91,7 +91,7 @@ test('performance assessment fallback uses weighted KPI average', () => {
         formData: {
           overall: 50,
           kpiRatings: [
-            { name: 'Guest Satisfaction', score: 100, weight: 80 },
+            { name: 'Customer Satisfaction', score: 100, weight: 80 },
             { name: 'Attendance', score: 0, weight: 20 },
           ],
         },

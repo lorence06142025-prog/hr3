@@ -247,7 +247,7 @@ function KpiBuilder({ value = [], onChange }) {
       {value.map((row, index) => (
         <div className="builder-row" key={index}>
           <div className="builder-grid">
-            <label>KPI name<input value={row.name} onChange={e => set(index, { name: e.target.value })} placeholder="e.g. Guest satisfaction" /></label>
+            <label>KPI name<input value={row.name} onChange={e => set(index, { name: e.target.value })} placeholder="e.g. Customer satisfaction" /></label>
             <label>Weight %<input type="number" value={row.weight} onChange={e => set(index, { weight: e.target.value === '' ? '' : Number(e.target.value) })} min={0} max={100} /></label>
             <label>Target value<input value={row.target} onChange={e => set(index, { target: e.target.value })} placeholder="e.g. 90%" /></label>
             <button type="button" className="builder-remove" onClick={() => remove(index)} aria-label="Delete KPI">×</button>
@@ -726,7 +726,7 @@ function AssessmentBuilder({ value = {}, onChange, role, people = [], events = [
   return (
     <div className="builder logistics-eval-form">
       {/* 1. Header Information (matching attached template) */}
-      <div className="hospitality-eval-header-card">
+      <div className="logistics-eval-header-card">
         <div className="eval-doc-title">
           <h2>Freight & Logistics Employee Evaluation</h2>
           <p>{employeeInfo.department} · Performance Appraisal & Logistics Competency Assessment</p>
@@ -826,7 +826,7 @@ function AssessmentBuilder({ value = {}, onChange, role, people = [], events = [
 
       {/* 3. Performance Criteria Table (14 Department-Specific Items) */}
       <div className="eval-table-container">
-        <table className="hospitality-eval-table">
+        <table className="logistics-eval-table">
           <thead>
             <tr>
               <th className="th-criteria" style={{ width: '24%' }}>Criteria</th>
@@ -910,7 +910,7 @@ function AssessmentBuilder({ value = {}, onChange, role, people = [], events = [
       </div>
 
       {/* 4. Qualitative Performance Feedback Section */}
-      <div className="hospitality-qualitative-card">
+      <div className="logistics-qualitative-card">
         <h4 className="qualitative-heading">Specific Examples of Performance</h4>
         
         <div className="qualitative-field">
@@ -954,7 +954,7 @@ function AssessmentBuilder({ value = {}, onChange, role, people = [], events = [
       </div>
 
       {/* 5. Live Score & Percentage Summary Card */}
-      <div className="hospitality-score-summary-card">
+      <div className="logistics-score-summary-card">
         <div className="summary-col">
           <span className="summary-label">Average Evaluation Rating</span>
           <div className="summary-rating-big">
@@ -1305,17 +1305,7 @@ function SkillGapPlanBuilder({ value, onChange, role, people = [], subject }) {
   // Recommended courses: strictly aligned with the selected competency gap
   const recommendedCourses = useMemo(() => {
     const gap = gaps.find(g => g.competency === selectedCompetency)
-    const dbCourses = (gap?.courses || gap?.recommendedResources || []).filter(c => {
-      // Ensure the course doesn't carry irrelevant cross-department terms if we're evaluating Front Office
-      const titleLower = (c.title || '').toLowerCase()
-      const compLower = selectedCompetency.toLowerCase()
-      if (compLower.includes('customer') || compLower.includes('reservation') || compLower.includes('communication') || compLower.includes('conflict')) {
-        if (titleLower.includes('kitchen') || titleLower.includes('haccp') || titleLower.includes('housekeep') || titleLower.includes('engineering')) {
-          return false
-        }
-      }
-      return true
-    })
+    const dbCourses = gap?.courses || gap?.recommendedResources || []
 
     if (dbCourses.length > 0) return dbCourses
 
@@ -1580,10 +1570,9 @@ function SkillGapPlanBuilder({ value, onChange, role, people = [], subject }) {
               const isAssigned = assignedMap[selectedCompetency] === course.title || Boolean(course.assignment_id)
               const isVerified = Boolean(course.is_completed)
               const progressPct = course.assignment_progress !== undefined && course.assignment_progress !== null ? Number(course.assignment_progress) : null
-              const courseCardClass = `recommended-course-card${isVerified ? ' is-verified' : ''}${isAssigned ? ' is-assigned' : ''}`
 
               return (
-                <div className={courseCardClass}>
+                <div className="recommended-course-card">
                   <div className="course-card-head">
                     <span className="course-category-tag">{course.category}</span>
                     <span className="course-duration" style={{ display: 'inline-flex', alignItems: 'center', gap: 3 }}><Clock size={12} /> {course.duration_hours || course.duration || '-'} hrs</span>

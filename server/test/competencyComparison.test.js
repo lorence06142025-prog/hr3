@@ -11,8 +11,8 @@ test('getCompetencyComparison computes auto-lift and AI recommendation with vari
             {
               id: params[0],
               full_name: 'Maria Lopez',
-              job_title: 'Front Office Officer',
-              department: 'Front Office',
+              job_title: 'Driver',
+              department: 'Fleet & Transportation',
               performance_score: 90,
               competency_score: 75,
               learning_progress: 100,
@@ -23,7 +23,7 @@ test('getCompetencyComparison computes auto-lift and AI recommendation with vari
       if (sql.includes('FROM learning_assignments')) {
         return {
           rows: [
-            { title: 'Front Desk Excellence', category: 'Customer Service' },
+            { title: 'Defensive Driving & Hours-of-Service Compliance', category: 'Fleet Safety' },
             { title: 'Customer Service Excellence', category: 'Customer Service' },
           ],
         }

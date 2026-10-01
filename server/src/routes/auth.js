@@ -356,7 +356,7 @@ res.clearCookie('pds_refresh_token')
     let actor = req.user || null
     if (!actor && token) {
       try {
-        const decoded = jwt.verify(token, config.jwtSecret)
+        let decoded = jwt.verify(token, config.jwtSecret)
         if (decoded.exp && decoded.exp - decoded.iat > 3600) decoded = null
         actor = decoded
       } catch { /* best-effort */ }

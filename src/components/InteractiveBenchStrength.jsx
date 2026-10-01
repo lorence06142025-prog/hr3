@@ -59,7 +59,9 @@ export default function InteractiveBenchStrength({ employees = [], onSelectCandi
         e.department?.toLowerCase() === pos.department.toLowerCase() &&
         (e.job_title?.toLowerCase().includes('manager') ||
          e.job_title?.toLowerCase().includes('director') ||
-         e.job_title?.toLowerCase().includes('chef') ||
+         e.job_title?.toLowerCase().includes('fleet') ||
+         e.job_title?.toLowerCase().includes('warehouse') ||
+         e.job_title?.toLowerCase().includes('dispatch') ||
          e.job_title?.toLowerCase().includes('head') ||
          e.job_title?.toLowerCase().includes('supervisor'))
       ) || employees.find(e => e.department?.toLowerCase() === pos.department.toLowerCase())

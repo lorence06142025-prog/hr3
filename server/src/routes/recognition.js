@@ -133,8 +133,8 @@ let kudosStore = [...initialKudos]
 const createKudosSchema = z.object({
   recipientId: z.string().min(1),
   recipientName: z.string().min(1),
-  recipientDepartment: z.string().optional().default('Hospitality'),
-  recipientJobTitle: z.string().optional().default('Hotel Staff'),
+  recipientDepartment: z.string().optional().default('Operations'),
+  recipientJobTitle: z.string().optional().default('Operations Staff'),
   badge: z.string().min(1),
   coreValue: z.string().min(1),
   tag: z.string().min(1),
@@ -170,17 +170,17 @@ router.get('/feed', async (req, res, next) => {
       dbKudos = wfRes.rows.map((row) => ({
         id: `wf-${row.id}`,
         senderId: 'system-hr',
-        senderName: row.sender_name || 'Hospitality Leadership',
+        senderName: row.sender_name || 'Logistics Leadership',
         senderRole: row.sender_role || 'HR',
         senderDepartment: 'Human Resources',
         recipientId: row.id,
         recipientName: row.recipient_name,
         recipientDepartment: row.recipient_department,
         recipientJobTitle: row.recipient_job_title,
-        badge: 'Hospitality Merit Award',
-        coreValue: 'Excellence in Hospitality',
-        tag: '#ExcellenceInHospitality',
-        message: row.metadata?.reason || row.title || 'Recognized through official hotel recognition program.',
+        badge: 'Logistics Excellence Award',
+        coreValue: 'Excellence in Logistics',
+        tag: '#ExcellenceInLogistics',
+        message: row.metadata?.reason || row.title || 'Recognized for a documented contribution to freight and logistics operations.',
         reactions: { heart: 7, trophy: 5 },
         userReactions: [],
         comments: [],
@@ -449,7 +449,7 @@ router.post('/post', async (req, res, next) => {
       senderId: req.user.sub,
       senderName: req.user.name || 'Team Member',
       senderRole: role,
-      senderDepartment: req.user.department || 'Hospitality',
+      senderDepartment: req.user.department || 'Operations',
       recipientId: input.recipientId,
       recipientName: input.recipientName,
       recipientDepartment: input.recipientDepartment,
@@ -600,7 +600,7 @@ router.post('/:id/approve', async (req, res, next) => {
             text: `Congratulations ${post.recipientName}! You have received recognition from ${post.senderName} (${post.senderRole}): "${post.message}"`,
             details: [
               ['Commendation Badge', post.badge],
-              ['Core Hospitality Value', post.coreValue],
+              ['Core Logistics Value', post.coreValue],
               ['Recognized By', `${post.senderName} (${post.senderDepartment})`],
               ['Commendation Note', post.message],
             ],
@@ -720,11 +720,11 @@ function calculateMonthlySpotlight(monthKey) {
   // Baseline sample figures ONLY for September 2026 if it hasn't been reset
   if (!isResetOrUpcoming && currentKey === '2026-09') {
     const baseStaff = [
-      { name: 'Maria Lopez', department: 'Front Office', jobTitle: 'Receptionist', count: 12, heartsCount: 38, badgesCount: 6 },
-      { name: 'Andre Tan', department: 'Kitchen', jobTitle: 'Cook', count: 10, heartsCount: 29, badgesCount: 5 },
-      { name: 'Rosa Martinez', department: 'Housekeeping', jobTitle: 'Housekeeping Staff', count: 9, heartsCount: 24, badgesCount: 4 },
-      { name: 'James Wilson', department: 'Food & Beverage', jobTitle: 'Bartender', count: 8, heartsCount: 21, badgesCount: 4 },
-      { name: 'Emily Thompson', department: 'Food & Beverage', jobTitle: 'Waitress', count: 7, heartsCount: 18, badgesCount: 3 },
+      { name: 'Maria Lopez', department: 'Fleet & Transportation', jobTitle: 'Driver', count: 12, heartsCount: 38, badgesCount: 6 },
+      { name: 'Andre Tan', department: 'Fleet & Transportation', jobTitle: 'Fleet Coordinator', count: 10, heartsCount: 29, badgesCount: 5 },
+      { name: 'Rosa Martinez', department: 'Warehouse & Inventory', jobTitle: 'Warehouse Associate', count: 9, heartsCount: 24, badgesCount: 4 },
+      { name: 'James Wilson', department: 'Warehouse & Inventory', jobTitle: 'Forklift Operator', count: 8, heartsCount: 21, badgesCount: 4 },
+      { name: 'Emily Thompson', department: 'Customer Service', jobTitle: 'Customer Service Representative', count: 7, heartsCount: 18, badgesCount: 3 },
     ]
     baseStaff.forEach(s => staffMap.set(s.name, { ...s }))
   }
@@ -737,8 +737,8 @@ function calculateMonthlySpotlight(monthKey) {
     if (matchesMonth && k.recipientName) {
       const existing = staffMap.get(k.recipientName) || {
         name: k.recipientName,
-        department: k.recipientDepartment || 'Hospitality',
-        jobTitle: k.recipientJobTitle || 'Hotel Staff',
+        department: k.recipientDepartment || 'Operations',
+        jobTitle: k.recipientJobTitle || 'Operations Staff',
         count: 0,
         heartsCount: 0,
         badgesCount: 0,
@@ -757,10 +757,11 @@ function calculateMonthlySpotlight(monthKey) {
 
   // Aggregate Department Kudos (reset to 0 for upcoming / reset months)
   const deptMap = new Map([
-    ['Front Office', { department: 'Front Office', totalKudos: isResetOrUpcoming ? 0 : 34, icon: 'hotel' }],
-    ['Kitchen', { department: 'Kitchen', totalKudos: isResetOrUpcoming ? 0 : 31, icon: 'utensils' }],
-    ['Food & Beverage', { department: 'Food & Beverage', totalKudos: isResetOrUpcoming ? 0 : 27, icon: 'coffee' }],
-    ['Housekeeping', { department: 'Housekeeping', totalKudos: isResetOrUpcoming ? 0 : 23, icon: 'sparkles' }],
+    ['Fleet & Transportation', { department: 'Fleet & Transportation', totalKudos: isResetOrUpcoming ? 0 : 34, icon: 'truck' }],
+    ['Dispatch & Routing', { department: 'Dispatch & Routing', totalKudos: isResetOrUpcoming ? 0 : 31, icon: 'route' }],
+    ['Warehouse & Inventory', { department: 'Warehouse & Inventory', totalKudos: isResetOrUpcoming ? 0 : 27, icon: 'package' }],
+    ['Customer Service', { department: 'Customer Service', totalKudos: isResetOrUpcoming ? 0 : 23, icon: 'headset' }],
+    ['Safety & Compliance', { department: 'Safety & Compliance', totalKudos: isResetOrUpcoming ? 0 : 18, icon: 'shield' }],
     ['Operations', { department: 'Operations', totalKudos: isResetOrUpcoming ? 0 : 15, icon: 'settings' }],
   ])
 
@@ -772,7 +773,7 @@ function calculateMonthlySpotlight(monthKey) {
       if (dept && deptMap.has(dept)) {
         deptMap.get(dept).totalKudos += 1
       } else if (dept) {
-        deptMap.set(dept, { department: dept, totalKudos: 1, icon: 'hotel' })
+        deptMap.set(dept, { department: dept, totalKudos: 1, icon: 'building' })
       }
     }
   })
@@ -781,11 +782,11 @@ function calculateMonthlySpotlight(monthKey) {
     .sort((a, b) => b.totalKudos - a.totalKudos)
 
   const coreValues = [
-    { tag: '#ExcellenceInHospitality', label: 'Excellence in Hospitality', count: 48, icon: 'award' },
-    { tag: '#GuestDelight', label: 'Guest Delight', count: 42, icon: 'star' },
+    { tag: '#ExcellenceInLogistics', label: 'Excellence in Logistics', count: 48, icon: 'award' },
+    { tag: '#OnTimeDelivery', label: 'On-Time Delivery', count: 42, icon: 'truck' },
     { tag: '#Teamwork', label: 'Teamwork & Integrity', count: 36, icon: 'users' },
-    { tag: '#CulinaryMastery', label: 'Culinary Mastery', count: 28, icon: 'flame' },
-    { tag: '#SafetyFirst', label: 'Safety & Hygiene First', count: 22, icon: 'shield' },
+    { tag: '#OperationalAccuracy', label: 'Operational Accuracy', count: 28, icon: 'check-circle' },
+    { tag: '#SafetyFirst', label: 'Safety First', count: 22, icon: 'shield' },
     { tag: '#Leadership', label: 'Leadership in Action', count: 19, icon: 'crown' },
   ]
 

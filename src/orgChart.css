@@ -523,10 +523,12 @@
 }
 
 .bar-executive { background: #4b5563; }
-.bar-frontoffice { background: #3b82f6; }
-.bar-housekeeping { background: #ec4899; }
-.bar-foodbeverage { background: #f59e0b; }
-.bar-kitchen { background: #ef4444; }
+.bar-fleet { background: #0f766e; }
+.bar-warehouse { background: #2563eb; }
+.bar-dispatch { background: #d97706; }
+.bar-customer-service { background: #0284c7; }
+.bar-safety { background: #dc2626; }
+.bar-finance { background: #059669; }
 .bar-operations { background: #10b981; }
 .bar-hr { background: #111827; }
 

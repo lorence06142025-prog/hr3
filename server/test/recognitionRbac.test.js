@@ -228,9 +228,9 @@ test('Employee without completed performance evaluation cannot submit nomination
     recipientName: eligibleNominee.full_name,
     recipientDepartment: eligibleNominee.department,
     recipientJobTitle: eligibleNominee.job_title,
-    badge: 'Guest Delight Champion',
-    coreValue: 'Guest Delight',
-    tag: '#GuestDelight',
+    badge: 'Logistics Excellence Champion',
+    coreValue: 'Excellence in Logistics',
+    tag: '#ExcellenceInLogistics',
     message: 'Test recognition nomination from unevaluated employee.',
   })
 
@@ -247,9 +247,9 @@ test('Employee with completed performance evaluation can submit nomination for e
     recipientName: eligibleNominee.full_name,
     recipientDepartment: eligibleNominee.department,
     recipientJobTitle: eligibleNominee.job_title,
-    badge: 'Guest Delight Champion',
-    coreValue: 'Guest Delight',
-    tag: '#GuestDelight',
+    badge: 'Logistics Excellence Champion',
+    coreValue: 'Excellence in Logistics',
+    tag: '#ExcellenceInLogistics',
     message: 'Test recognition nomination from evaluated employee for evaluated peer.',
   })
 
@@ -266,9 +266,9 @@ test('Nomination is rejected if recipient employee has not completed performance
     recipientName: ineligibleNominee.full_name,
     recipientDepartment: ineligibleNominee.department,
     recipientJobTitle: ineligibleNominee.job_title,
-    badge: 'Guest Delight Champion',
-    coreValue: 'Guest Delight',
-    tag: '#GuestDelight',
+    badge: 'Logistics Excellence Champion',
+    coreValue: 'Excellence in Logistics',
+    tag: '#ExcellenceInLogistics',
     message: 'Test recognition for unevaluated recipient.',
   })
 

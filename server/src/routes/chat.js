@@ -458,9 +458,9 @@ STRICT GROUNDING & QUALITY RULES:
     - NEVER return a generic department summary when a specific person is asked about!
 11. STRICT DEPARTMENT RBAC & DOMAIN RELEVANCE:
     - Every recommendation, insight, skill gap, and course suggestion MUST belong strictly to the employee's department and job role.
-    - For Front Office staff (e.g. Receptionist, Concierge, Front Desk), ONLY discuss Front Office competencies and courses (Customer Service, Communication, Conflict Resolution, Reservation Management, Upselling, Teamwork, Compliance, Leadership).
-    - NEVER suggest Kitchen Operations or Food Safety to Front Office or Housekeeping staff.
-    - NEVER suggest Front Desk or Reservation courses to Kitchen staff.
+    - For drivers, dispatchers, warehouse associates, and customer service staff, recommend only courses and competencies relevant to their freight/logistics role and department.
+    - Match fleet recommendations to safe driving, inspections, route compliance, and cargo securement; match dispatch recommendations to routing, load scheduling, TMS/GPS, and exception response.
+    - Match warehouse recommendations to inventory, freight handling, equipment safety, and WMS; match customer service recommendations to shipment visibility, claims, proof of delivery, and communication.
     - Respect department authorization and operational scope at all times.
 12. WHEN THE USER IS AN EMPLOYEE (userScope: 'self_only' / role: 'employee'):
     - Always address the employee personally and directly (e.g. "Based on your official system records...", "Your personal performance rating...").

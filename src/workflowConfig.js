@@ -292,3 +292,313 @@ export function getAiCurriculumForCourse(resource = {}) {
   return `# Module 1: ${courseName}\n- Review the role requirements, operating procedure, and safety controls.\n- Identify the system, equipment, and records used for this task.\n\n# Module 2: Practical Application\n- Complete the workflow using current company procedures.\n- Verify freight, data, and handoffs before closing the task.\n\n# Module 3: Exceptions and Assessment\n- Recognize common exceptions and escalate risks to the correct owner.\n- Demonstrate the task and document the result.\n\n# Key Practices\n> Apply the procedure consistently, protect people and freight, and record accurate outcomes.`
 }
 
+const benchmark = (competency, category, targetScore = 85, level = 'Proficient', weight = 20) => ({
+  competency,
+  category,
+  targetScore,
+  level,
+  weight,
+})
+
+export const COMPETENCY_TEMPLATES = {
+  'Logistics General Manager': [
+    benchmark('Operational Management', 'Leadership', 92, 'Expert', 25),
+    benchmark('Strategic Planning', 'Leadership', 90, 'Expert', 20),
+    benchmark('Financial Acumen', 'Finance', 88, 'Expert', 20),
+    benchmark('Safety & Compliance Leadership', 'Compliance', 95, 'Expert', 20),
+    benchmark('Customer Service', 'Customer Service', 88, 'Expert', 15),
+  ],
+  'HR Manager': [
+    benchmark('Employee Relations', 'People', 88, 'Expert', 25),
+    benchmark('Labor Compliance', 'Compliance', 95, 'Expert', 25),
+    benchmark('Recruitment & Selection', 'People', 88, 'Proficient', 20),
+    benchmark('Learning & Development', 'People', 85, 'Proficient', 15),
+    benchmark('HR Data & Documentation Accuracy', 'Administration', 95, 'Expert', 15),
+  ],
+  'Fleet Operations Manager': [
+    benchmark('Fleet Utilization & Availability', 'Fleet Operations', 90, 'Expert', 20),
+    benchmark('Preventive Maintenance Coordination', 'Fleet Operations', 92, 'Expert', 20),
+    benchmark('Route Compliance', 'Safety', 95, 'Expert', 20),
+    benchmark('Incident Response & Recovery', 'Safety', 90, 'Expert', 20),
+    benchmark('Cost & Fuel Efficiency', 'Operations', 88, 'Proficient', 20),
+  ],
+  'Dispatch Supervisor': [
+    benchmark('Route Planning & Optimization', 'Dispatch', 92, 'Expert', 25),
+    benchmark('Load Scheduling & Capacity Planning', 'Dispatch', 90, 'Expert', 20),
+    benchmark('TMS & GPS Proficiency', 'Technical', 95, 'Expert', 20),
+    benchmark('Exception Management', 'Operations', 90, 'Expert', 20),
+    benchmark('Dispatch Communication', 'Communication', 88, 'Proficient', 15),
+  ],
+  'Warehouse Supervisor': [
+    benchmark('Warehouse Safety', 'Safety', 95, 'Expert', 25),
+    benchmark('Inventory Accuracy', 'Inventory', 95, 'Expert', 20),
+    benchmark('Picking & Packing Accuracy', 'Operations', 95, 'Expert', 20),
+    benchmark('WMS Proficiency', 'Technical', 90, 'Proficient', 15),
+    benchmark('Shift Leadership & Coaching', 'Leadership', 88, 'Expert', 20),
+  ],
+  'Transportation Supervisor': [
+    benchmark('Driver Coaching', 'Leadership', 90, 'Expert', 20),
+    benchmark('Defensive Driving & Safety Oversight', 'Safety', 95, 'Expert', 25),
+    benchmark('Vehicle Inspection Compliance', 'Fleet Operations', 95, 'Expert', 20),
+    benchmark('Route & Hours-of-Service Compliance', 'Compliance', 95, 'Expert', 20),
+    benchmark('Incident Reporting', 'Safety', 90, 'Proficient', 15),
+  ],
+  'Safety & Compliance Manager': [
+    benchmark('Regulatory Compliance', 'Compliance', 95, 'Expert', 25),
+    benchmark('Risk Assessment', 'Safety', 92, 'Expert', 20),
+    benchmark('Incident Investigation', 'Safety', 90, 'Expert', 20),
+    benchmark('Corrective Action Management', 'Compliance', 92, 'Expert', 20),
+    benchmark('Safety Training & Communication', 'Leadership', 88, 'Proficient', 15),
+  ],
+  'Customer Service Representative': [
+    benchmark('Shipment Tracking & Visibility', 'Customer Service', 90, 'Proficient', 25),
+    benchmark('Customer Communication', 'Communication', 90, 'Proficient', 20),
+    benchmark('Issue & Claims Resolution', 'Customer Service', 88, 'Proficient', 20),
+    benchmark('Proof-of-Delivery Accuracy', 'Documentation', 95, 'Proficient', 20),
+    benchmark('TMS Data Accuracy', 'Technical', 95, 'Proficient', 15),
+  ],
+  Driver: [
+    benchmark('Defensive Driving', 'Safety', 95, 'Proficient', 25),
+    benchmark('Vehicle Inspection & Preventive Checks', 'Fleet Operations', 95, 'Proficient', 20),
+    benchmark('Route & Hours-of-Service Compliance', 'Compliance', 95, 'Proficient', 20),
+    benchmark('Cargo Securement', 'Fleet Operations', 95, 'Proficient', 20),
+    benchmark('Delivery Documentation & Communication', 'Operations', 88, 'Proficient', 15),
+  ],
+  'Heavy Vehicle Driver': [
+    benchmark('Defensive Driving', 'Safety', 95, 'Expert', 25),
+    benchmark('Vehicle Inspection & Preventive Checks', 'Fleet Operations', 95, 'Expert', 20),
+    benchmark('Route & Hours-of-Service Compliance', 'Compliance', 95, 'Expert', 20),
+    benchmark('Cargo Securement', 'Fleet Operations', 95, 'Expert', 20),
+    benchmark('Incident Response & Reporting', 'Safety', 90, 'Proficient', 15),
+  ],
+  'Dispatcher': [
+    benchmark('Dispatch Communication', 'Communication', 88, 'Proficient', 20),
+    benchmark('Route Planning & Optimization', 'Dispatch', 90, 'Proficient', 25),
+    benchmark('Load Scheduling', 'Dispatch', 90, 'Proficient', 20),
+    benchmark('TMS & GPS Proficiency', 'Technical', 95, 'Proficient', 20),
+    benchmark('Exception Management', 'Operations', 88, 'Proficient', 15),
+  ],
+  'Warehouse Associate': [
+    benchmark('Warehouse Safety', 'Safety', 95, 'Proficient', 25),
+    benchmark('Freight Scanning & Inventory Accuracy', 'Inventory', 92, 'Proficient', 20),
+    benchmark('Picking & Packing', 'Operations', 92, 'Proficient', 20),
+    benchmark('Shipment Staging & Load Readiness', 'Operations', 90, 'Proficient', 20),
+    benchmark('WMS Proficiency', 'Technical', 85, 'Developing', 15),
+  ],
+  'Inventory Control Clerk': [
+    benchmark('Inventory Accuracy', 'Inventory', 95, 'Proficient', 25),
+    benchmark('Cycle Counting & Variance Resolution', 'Inventory', 92, 'Proficient', 25),
+    benchmark('WMS Data Integrity', 'Technical', 95, 'Proficient', 20),
+    benchmark('Receiving & Shipping Documentation', 'Documentation', 90, 'Proficient', 15),
+    benchmark('Cross-Functional Communication', 'Communication', 85, 'Proficient', 15),
+  ],
+  'Forklift Operator': [
+    benchmark('Forklift Operation & Safety', 'Safety', 95, 'Proficient', 30),
+    benchmark('Load Stability & Handling', 'Operations', 95, 'Proficient', 25),
+    benchmark('Warehouse Traffic & Pedestrian Safety', 'Safety', 95, 'Proficient', 20),
+    benchmark('Freight Scanning & Staging', 'Operations', 90, 'Proficient', 15),
+    benchmark('Equipment Inspection & Reporting', 'Fleet Operations', 90, 'Proficient', 10),
+  ],
+  'Route Planner': [
+    benchmark('Route Planning & Optimization', 'Dispatch', 92, 'Proficient', 25),
+    benchmark('Delivery Window & Constraint Planning', 'Dispatch', 90, 'Proficient', 20),
+    benchmark('Capacity & Load Allocation', 'Operations', 90, 'Proficient', 20),
+    benchmark('TMS & GPS Proficiency', 'Technical', 95, 'Proficient', 20),
+    benchmark('Exception & Detour Planning', 'Operations', 88, 'Proficient', 15),
+  ],
+  'Fleet Coordinator': [
+    benchmark('Fleet Availability Coordination', 'Fleet Operations', 90, 'Proficient', 25),
+    benchmark('Preventive Maintenance Tracking', 'Fleet Operations', 92, 'Proficient', 25),
+    benchmark('Vehicle Inspection Record Accuracy', 'Compliance', 95, 'Proficient', 20),
+    benchmark('Dispatch & Driver Coordination', 'Communication', 88, 'Proficient', 15),
+    benchmark('Fleet Data & Cost Reporting', 'Administration', 85, 'Proficient', 15),
+  ],
+  'Safety Coordinator': [
+    benchmark('Workplace & Transport Risk Assessment', 'Safety', 92, 'Proficient', 25),
+    benchmark('Incident Reporting & Investigation', 'Safety', 90, 'Proficient', 25),
+    benchmark('Regulatory Documentation', 'Compliance', 95, 'Proficient', 20),
+    benchmark('Corrective Action Follow-Up', 'Compliance', 90, 'Proficient', 15),
+    benchmark('Safety Communication & Training', 'Communication', 88, 'Proficient', 15),
+  ],
+}
+
+export const GOAL_TEMPLATES = [
+  { title: 'Improve on-time delivery', category: 'Fleet & Transportation', description: 'Increase on-time delivery performance while maintaining safe operations.' },
+  { title: 'Improve inventory accuracy', category: 'Warehouse & Inventory', description: 'Reduce inventory variances through accurate scans, counts, and reconciliation.' },
+  { title: 'Reduce shipment exceptions', category: 'Dispatch & Routing', description: 'Improve route planning and exception response to prevent avoidable service failures.' },
+  { title: 'Strengthen customer shipment visibility', category: 'Customer Service', description: 'Provide timely, verified updates and resolve shipment inquiries within service targets.' },
+]
+
+export const QUICK_COMMENTS = {
+  performance: ['Consistently meets delivery and service commitments.', 'Follows safety procedures and reports risks promptly.', 'Improves shipment accuracy and operational handoffs.'],
+  competency: ['Demonstrates role-specific logistics proficiency.', 'Apply the recommended learning plan and review progress.', 'Continue supervised practice on identified skill gaps.'],
+  learning: ['Completed the assigned learning and applied it on shift.', 'Schedule a follow-up competency check.', 'Additional practice is recommended before sign-off.'],
+  training: ['Training objectives were met.', 'Knowledge transfer to daily operations is evident.', 'Schedule a refresher and verify practical application.'],
+  succession: ['Demonstrates readiness for broader logistics responsibility.', 'Build experience with cross-functional operations.', 'Strengthen coaching and decision-making evidence.'],
+  recognition: ['Recognized for safe, reliable freight operations.', 'Demonstrated strong teamwork across logistics teams.', 'Delivered an exceptional customer recovery.'],
+}
+
+const stepForm = (title, description, builder, fields = [], extra = {}) => ({
+  title,
+  description,
+  ...(builder ? { builder } : {}),
+  ...(fields.length ? { fields } : {}),
+  ...extra,
+})
+
+const employeeField = { name: 'employee', label: 'Employee', type: 'employee', required: true }
+const periodField = { name: 'period', label: 'Review period', type: 'text', required: true }
+
+const MODULE_CONFIGS = {
+  performance: {
+    dashboard: { heading: 'Performance overview', widgets: [
+      { key: 'employees', label: 'Employees', source: 'employeeCount' },
+      { key: 'performance', label: 'Average performance', source: 'averagePerformance', type: 'pct' },
+      { key: 'active', label: 'Active workflows', source: 'activeWorkflows' },
+    ] },
+    quickActions: [],
+    stepForms: {
+      create_review: stepForm('Create performance review', 'Set the employee and review period.', null, [
+        employeeField, periodField,
+        { name: 'reviewType', label: 'Review type', type: 'select', options: REVIEW_TYPES, required: true },
+      ]),
+      self_assessment: stepForm('Self-assessment', 'Rate performance criteria and record your reflections.', 'assessment'),
+      performance_evaluation: stepForm('Supervisor evaluation', 'Review performance against logistics KPIs.', 'assessment'),
+      calibration: stepForm('Performance calibration', 'Compare employee and supervisor ratings and record the calibrated outcome.', 'calibration'),
+      final_approval: stepForm('Final approval', 'Review the calibrated performance outcome.', null, [
+        { name: 'decision', label: 'Approval decision', type: 'select', options: ['Approve', 'Return for Revision'], required: true },
+        { name: 'approvalNotes', label: 'Approval notes', type: 'textarea' },
+      ], { approval: true }),
+      published: stepForm('Publish results', 'Confirm the final review is ready to publish.', null, [], { aiOnly: true }),
+    },
+  },
+  competency: {
+    dashboard: { heading: 'Skill development overview', widgets: [
+      { key: 'employees', label: 'Employees', source: 'employeeCount' },
+      { key: 'competency', label: 'Average competency', source: 'averageCompetency', type: 'pct' },
+      { key: 'active', label: 'Active plans', source: 'activeWorkflows' },
+    ] },
+    quickActions: [],
+    stepForms: {
+      define_requirements: stepForm('Define competency requirements', 'Choose a logistics role benchmark and review its competency targets.', 'competencyRequirement'),
+      assign_plan: stepForm('Assign development plan', 'Review competency gaps and assign role-relevant learning.', 'skillGapPlan'),
+      track_progress: stepForm('Track learning progress', 'Record progress on assigned learning activities.', 'progress'),
+      update_record: stepForm('Update competency record', 'Review updated competency evidence and scores.', 'competencyComparison'),
+    },
+  },
+  learning: {
+    dashboard: { heading: 'Learning overview', widgets: [
+      { key: 'employees', label: 'Employees', source: 'employeeCount' },
+      { key: 'learning', label: 'Learning completion', source: 'learningCompletion', type: 'pct' },
+      { key: 'active', label: 'Active workflows', source: 'activeWorkflows' },
+    ] },
+    quickActions: [],
+    stepForms: {
+      publish_resources: stepForm('Publish learning resources', 'Add freight and logistics learning resources to the library.', 'resources'),
+      enrollment: stepForm('Enroll employees', 'Assign learning resources to employees.', 'assignEmployees'),
+      complete_activities: stepForm('Complete learning activities', 'Record completion progress for assigned learning.', 'progress'),
+      assessment: stepForm('Post-learning assessment', 'Review learning outcomes and practical application.', 'assessment'),
+      update_competency: stepForm('Update competency record', 'Record competency changes supported by completed learning.', 'competencyComparison'),
+    },
+  },
+  training: {
+    dashboard: { heading: 'Training overview', widgets: [
+      { key: 'employees', label: 'Employees', source: 'employeeCount' },
+      { key: 'learning', label: 'Learning completion', source: 'learningCompletion', type: 'pct' },
+      { key: 'active', label: 'Active workflows', source: 'activeWorkflows' },
+    ] },
+    quickActions: [],
+    stepForms: {
+      invite: stepForm('Invite training participants', 'Select a scheduled logistics training session and participants.', 'trainingInvite'),
+      effectiveness: stepForm('Measure training effectiveness', 'Assess skill application and operational outcomes.', 'assessment'),
+      published: stepForm('Publish training analytics', 'Confirm training outcomes are ready for reporting.', null, [], { aiOnly: true }),
+    },
+  },
+  succession: {
+    dashboard: { heading: 'Succession overview', widgets: [
+      { key: 'employees', label: 'Employees', source: 'employeeCount' },
+      { key: 'competency', label: 'Average competency', source: 'averageCompetency', type: 'pct' },
+      { key: 'active', label: 'Active assessments', source: 'activeWorkflows' },
+    ] },
+    quickActions: [],
+    stepForms: {
+      initiate: stepForm('Initiate succession assessment', 'Select an employee and critical logistics position.', null, [
+        employeeField,
+        { name: 'targetPosition', label: 'Target position', type: 'text', required: true },
+      ]),
+      nominate: stepForm('Candidate nomination', 'Review the candidate and record succession evidence.', 'successionAssessment'),
+      review_readiness: stepForm('Review readiness', 'Assess role readiness and development actions.', 'successionReview'),
+      approved: stepForm('Succession approval', 'Confirm the target logistics position and final approval.', 'successionApproval', [], { approval: true }),
+    },
+  },
+  recognition: {
+    dashboard: { heading: 'Recognition overview', widgets: [
+      { key: 'employees', label: 'Employees', source: 'employeeCount' },
+      { key: 'active', label: 'Active nominations', source: 'activeWorkflows' },
+      { key: 'completed', label: 'Completed nominations', source: 'completedWorkflows' },
+    ] },
+    quickActions: [],
+    stepForms: {
+      submitted: stepForm('Submit recognition nomination', 'Recognize a specific logistics contribution with supporting context.', 'nominations'),
+      supervisor_validation: stepForm('Validate recognition nomination', 'Verify the nomination against the documented achievement.', null, [
+        { name: 'decision', label: 'Validation decision', type: 'select', options: ['Validate', 'Return for Revision', 'Reject'], required: true },
+        { name: 'comment', label: 'Validation notes', type: 'textarea', required: true },
+      ]),
+      hr_review: stepForm('HR recognition review', 'Review the validated nomination for final publication.', null, [
+        { name: 'decision', label: 'Review decision', type: 'select', options: ['Approve', 'Return for Revision', 'Reject'], required: true },
+        { name: 'comment', label: 'Review notes', type: 'textarea' },
+      ], { approval: true }),
+    },
+  },
+}
+
+export function configFor(moduleKey) {
+  return MODULE_CONFIGS[moduleKey] || MODULE_CONFIGS.performance
+}
+
+export function isApprovalStage(stageKey, formConfig) {
+  return Boolean(formConfig?.approval || ['final_approval', 'approved', 'hr_review'].includes(stageKey))
+}
+
+export const STAGE_GUIDES = {
+  performance: {
+    self_assessment: { time: '10 min', task: 'Complete your performance self-assessment', action: 'Rate each criterion using evidence from the review period.', checklist: ['Review assigned goals and KPIs', 'Add examples for key ratings', 'Identify strengths and development needs'] },
+    performance_evaluation: { time: '15 min', task: 'Evaluate performance against role expectations', action: 'Use observed results, safety, service, and operating data.', checklist: ['Review self-assessment', 'Rate logistics KPIs', 'Provide actionable feedback'] },
+    calibration: { time: '10 min', task: 'Calibrate performance scores', action: 'Resolve material rating differences and document the decision.', checklist: ['Compare criterion ratings', 'Select the final score approach', 'Record justification'] },
+  },
+  competency: {
+    define_requirements: { time: '10 min', task: 'Set role competency requirements', action: 'Select the correct role benchmark for the logistics position.', checklist: ['Confirm the target role', 'Review competency levels', 'Save required standards'] },
+    assign_plan: { time: '10 min', task: 'Address competency gaps', action: 'Assign learning aligned with the employee role and identified gaps.', checklist: ['Review skill gaps', 'Choose relevant learning', 'Set follow-up expectations'] },
+  },
+  succession: {
+    review_readiness: { time: '15 min', task: 'Review candidate readiness', action: 'Use evidence of performance, competencies, and operational experience.', checklist: ['Review role requirements', 'Assess readiness evidence', 'Document development actions'] },
+  },
+}
+
+export const COMMENT_SUGGESTIONS = QUICK_COMMENTS
+
+export const QUICK_DECISIONS = {
+  performance: { approve: 'Performance outcome approved.', return: 'Please revise the evaluation using the notes provided.' },
+  succession: { approve: 'Succession plan approved.', return: 'Please provide additional readiness evidence.' },
+  recognition: { approve: 'Recognition approved for publication.', return: 'Please update the nomination with the requested evidence.' },
+}
+
+export function computeModuleStats(moduleKey, data = {}, workflows = []) {
+  const employees = Array.isArray(data.employees) ? data.employees : []
+  const totals = data.totals || {}
+  const average = key => employees.length
+    ? Math.round(employees.reduce((sum, employee) => sum + Number(employee[key] || 0), 0) / employees.length)
+    : 0
+  const activeWorkflows = workflows.filter(workflow => workflow.status === 'active').length
+  const completedWorkflows = workflows.filter(workflow => workflow.status === 'completed').length
+  const stats = {
+    employeeCount: Number(data.employee_count ?? employees.length),
+    averagePerformance: Number(totals.average_performance ?? average('performance_score')),
+    averageCompetency: Number(totals.average_competency ?? average('competency_score')),
+    learningCompletion: Number(totals.learning_completion ?? average('learning_progress')),
+    activeWorkflows,
+    completedWorkflows,
+  }
+  return stats
+}
+
