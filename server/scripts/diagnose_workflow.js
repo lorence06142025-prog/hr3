@@ -3,7 +3,7 @@ import { stagesFor, nextStage } from '../src/workflow.js'
 
 // Verify HR user and employee records
 const hr = await pool.query(
-  "SELECT u.id, u.role, u.employee_id, e.full_name, e.department FROM users u LEFT JOIN employees e ON e.id = u.employee_id WHERE u.email = 'ava@pds.local'"
+  "SELECT u.id, u.role, u.employee_id, e.full_name, e.department FROM users u LEFT JOIN employees e ON e.id = u.employee_id WHERE u.email = 'avapriorityph@gmail.com'"
 )
 console.log('HR user:', hr.rows[0])
 

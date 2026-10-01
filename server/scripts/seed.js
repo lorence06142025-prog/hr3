@@ -18,24 +18,24 @@ for (const name of departments) {
 }
 
 const staffProfiles = [
-  { number: 'E005', name: 'Noah Santos', department: 'Executive Office', title: 'General Manager', role: 'management', email: 'noah@pds.local', performance: 94, competency: 92, learning: 89 },
-  { number: 'E004', name: 'Ava Reyes', department: 'Human Resources', title: 'HR Manager', role: 'hr', email: 'ava@pds.local', manager: 'E005', performance: 92, competency: 90, learning: 88 },
-  { number: 'E006', name: 'Samir Patel', department: 'Fleet & Transportation', title: 'Fleet Operations Manager', role: 'operations_manager', email: 'samir@pds.local', manager: 'E005', performance: 90, competency: 88, learning: 85 },
-  { number: 'E002', name: 'Jordan Williams', department: 'Dispatch & Routing', title: 'Dispatch Supervisor', role: 'supervisor', email: 'jordan@pds.local', manager: 'E006', performance: 88, competency: 88, learning: 82 },
-  { number: 'E010', name: 'Anna Kowalski', department: 'Warehouse & Inventory', title: 'Warehouse Supervisor', role: 'supervisor', email: 'anna@pds.local', manager: 'E006', performance: 86, competency: 85, learning: 80 },
-  { number: 'E013', name: 'Robert Johnson', department: 'Fleet & Transportation', title: 'Transportation Supervisor', role: 'supervisor', email: 'robert@pds.local', manager: 'E006', performance: 87, competency: 86, learning: 82 },
-  { number: 'E017', name: 'Marco Rossi', department: 'Safety & Compliance', title: 'Safety & Compliance Manager', role: 'supervisor', email: 'marco@pds.local', manager: 'E006', performance: 91, competency: 89, learning: 84 },
-  { number: 'E001', name: 'Emily Thompson', department: 'Customer Service', title: 'Customer Service Representative', role: 'employee', email: 'emily@pds.local', manager: 'E006', performance: 85, competency: 84, learning: 76 },
-  { number: 'E007', name: 'Maria Lopez', department: 'Fleet & Transportation', title: 'Driver', role: 'employee', email: 'maria@pds.local', manager: 'E013', performance: 86, competency: 84, learning: 80 },
-  { number: 'E008', name: 'David Kim', department: 'Fleet & Transportation', title: 'Heavy Vehicle Driver', role: 'employee', email: 'david@pds.local', manager: 'E013', performance: 82, competency: 81, learning: 75 },
-  { number: 'E009', name: 'Sofia Garcia', department: 'Dispatch & Routing', title: 'Dispatcher', role: 'employee', email: 'sofia@pds.local', manager: 'E002', performance: 85, competency: 87, learning: 79 },
-  { number: 'E011', name: 'Rosa Martinez', department: 'Warehouse & Inventory', title: 'Warehouse Associate', role: 'employee', email: 'rosa@pds.local', manager: 'E010', performance: 92, competency: 85, learning: 78 },
-  { number: 'E012', name: 'Linda Chen', department: 'Warehouse & Inventory', title: 'Inventory Control Clerk', role: 'employee', email: 'linda@pds.local', manager: 'E010', performance: 83, competency: 80, learning: 74 },
-  { number: 'E014', name: 'Chloe Brown', department: 'Fleet & Transportation', title: 'Delivery Driver', role: 'employee', email: 'chloe@pds.local', manager: 'E013', performance: 81, competency: 80, learning: 71 },
-  { number: 'E015', name: 'James Wilson', department: 'Warehouse & Inventory', title: 'Forklift Operator', role: 'employee', email: 'james@pds.local', manager: 'E010', performance: 86, competency: 85, learning: 75 },
-  { number: 'E016', name: 'Grace Lee', department: 'Dispatch & Routing', title: 'Route Planner', role: 'employee', email: 'grace@pds.local', manager: 'E002', performance: 84, competency: 82, learning: 73 },
-  { number: 'E018', name: 'Andre Tan', department: 'Fleet & Transportation', title: 'Fleet Coordinator', role: 'employee', email: 'andre@pds.local', manager: 'E006', performance: 88, competency: 86, learning: 80 },
-  { number: 'E019', name: 'Nina Petrova', department: 'Safety & Compliance', title: 'Safety Coordinator', role: 'employee', email: 'nina@pds.local', manager: 'E017', performance: 85, competency: 84, learning: 77 },
+  { number: 'E005', name: 'Noah Santos', department: 'Executive Office', title: 'General Manager', role: 'management', email: 'noahpriorityph@gmail.com', performance: 94, competency: 92, learning: 89 },
+  { number: 'E004', name: 'Ava Reyes', department: 'Human Resources', title: 'HR Administrator', role: 'hr', email: 'avapriorityph@gmail.com', manager: 'E005', performance: 92, competency: 90, learning: 88 },
+  { number: 'E006', name: 'Samir Patel', department: 'Fleet & Transportation', title: 'Fleet Operations Manager', role: 'operations_manager', email: 'samirpriorityph@gmail.com', manager: 'E005', performance: 90, competency: 88, learning: 85 },
+  { number: 'E002', name: 'Jordan Williams', department: 'Dispatch & Routing', title: 'Dispatch Supervisor', role: 'supervisor', email: 'jordanpriorityph@gmail.com', manager: 'E006', performance: 88, competency: 88, learning: 82 },
+  { number: 'E010', name: 'Anna Kowalski', department: 'Warehouse & Inventory', title: 'Warehouse Supervisor', role: 'supervisor', email: 'annapriorityph@gmail.com', manager: 'E006', performance: 86, competency: 85, learning: 80 },
+  { number: 'E013', name: 'Robert Johnson', department: 'Fleet & Transportation', title: 'Transportation Supervisor', role: 'supervisor', email: 'robertpriorityph@gmail.com', manager: 'E006', performance: 87, competency: 86, learning: 82 },
+  { number: 'E017', name: 'Marco Rossi', department: 'Safety & Compliance', title: 'Safety & Compliance Manager', role: 'supervisor', email: 'marcopriorityph@gmail.com', manager: 'E006', performance: 91, competency: 89, learning: 84 },
+  { number: 'E001', name: 'Emily Thompson', department: 'Customer Service', title: 'Customer Service Representative', role: 'employee', email: 'emilypriorityph@gmail.com', manager: 'E006', performance: 85, competency: 84, learning: 76 },
+  { number: 'E007', name: 'Maria Lopez', department: 'Fleet & Transportation', title: 'Driver', role: 'employee', email: 'mariapriorityph@gmail.com', manager: 'E013', performance: 86, competency: 84, learning: 80 },
+  { number: 'E008', name: 'David Kim', department: 'Fleet & Transportation', title: 'Heavy Vehicle Driver', role: 'employee', email: 'davidpriorityph@gmail.com', manager: 'E013', performance: 82, competency: 81, learning: 75 },
+  { number: 'E009', name: 'Sofia Garcia', department: 'Dispatch & Routing', title: 'Dispatcher', role: 'employee', email: 'sofiapriorityph@gmail.com', manager: 'E002', performance: 85, competency: 87, learning: 79 },
+  { number: 'E011', name: 'Rosa Martinez', department: 'Warehouse & Inventory', title: 'Warehouse Associate', role: 'employee', email: 'rosapriorityph@gmail.com', manager: 'E010', performance: 92, competency: 85, learning: 78 },
+  { number: 'E012', name: 'Linda Chen', department: 'Warehouse & Inventory', title: 'Inventory Control Clerk', role: 'employee', email: 'lindapriorityph@gmail.com', manager: 'E010', performance: 83, competency: 80, learning: 74 },
+  { number: 'E014', name: 'Chloe Brown', department: 'Fleet & Transportation', title: 'Delivery Driver', role: 'employee', email: 'chloepriorityph@gmail.com', manager: 'E013', performance: 81, competency: 80, learning: 71 },
+  { number: 'E015', name: 'James Wilson', department: 'Warehouse & Inventory', title: 'Forklift Operator', role: 'employee', email: 'jamespriorityph@gmail.com', manager: 'E010', performance: 86, competency: 85, learning: 75 },
+  { number: 'E016', name: 'Grace Lee', department: 'Dispatch & Routing', title: 'Route Planner', role: 'employee', email: 'gracepriorityph@gmail.com', manager: 'E002', performance: 84, competency: 82, learning: 73 },
+  { number: 'E018', name: 'Andre Tan', department: 'Fleet & Transportation', title: 'Fleet Coordinator', role: 'employee', email: 'andrepriorityph@gmail.com', manager: 'E006', performance: 88, competency: 86, learning: 80 },
+  { number: 'E019', name: 'Nina Petrova', department: 'Safety & Compliance', title: 'Safety Coordinator', role: 'employee', email: 'ninapriorityph@gmail.com', manager: 'E017', performance: 85, competency: 84, learning: 77 },
 ]
 
 const employeeDbMap = new Map()
@@ -67,7 +67,8 @@ for (const employee of staffProfiles) {
   await pool.query(
     `INSERT INTO users (employee_id, email, password_hash, full_name, role)
      VALUES ($1, $2, $3, $4, $5)
-     ON CONFLICT (email) DO UPDATE SET
+     ON CONFLICT (employee_id) DO UPDATE SET
+       email = EXCLUDED.email,
        employee_id = EXCLUDED.employee_id,
        password_hash = EXCLUDED.password_hash,
        full_name = EXCLUDED.full_name,
@@ -128,7 +129,7 @@ const trainingSessions = [
   { title: 'Driver Safety and Pre-Trip Inspection', description: 'Hands-on defensive driving, vehicle inspection, cargo securement, and incident reporting.', category: 'Fleet Safety', trainer: 'Marco Rossi, Safety & Compliance Manager', venue: 'Fleet Yard Training Bay', days: 2, start: '09:00:00', end: '12:00:00', capacity: 18, budget: 900, department: 'Fleet & Transportation', employees: ['E007', 'E008', 'E014'] },
   { title: 'Dispatch TMS, GPS Routing and Exception Management', description: 'Practical route planning, load scheduling, live tracking, and delivery exception exercises.', category: 'Dispatch & Routing', trainer: 'Jordan Williams, Dispatch Supervisor', venue: 'Dispatch Operations Room', days: 4, start: '13:00:00', end: '16:00:00', capacity: 12, budget: 650, department: 'Dispatch & Routing', employees: ['E009', 'E016'] },
   { title: 'Warehouse Forklift Safety and Cargo Securement', description: 'Safe powered-truck operation, freight staging, inventory scanning, and load stability.', category: 'Warehouse Operations', trainer: 'Anna Kowalski, Warehouse Supervisor', venue: 'Warehouse Training Area', days: 6, start: '09:00:00', end: '12:00:00', capacity: 16, budget: 750, department: 'Warehouse & Inventory', employees: ['E011', 'E012', 'E015'] },
-  { title: 'Shipment Visibility, Proof of Delivery and Claims', description: 'Shipment status communication, proof-of-delivery accuracy, returns, and claims evidence.', category: 'Customer Service', trainer: 'Ava Reyes, HR Manager', venue: 'Operations Training Room', days: 8, start: '10:00:00', end: '13:00:00', capacity: 14, budget: 500, department: 'Customer Service', employees: ['E001', 'E009'] },
+  { title: 'Shipment Visibility, Proof of Delivery and Claims', description: 'Shipment status communication, proof-of-delivery accuracy, returns, and claims evidence.', category: 'Customer Service', trainer: 'Ava Reyes, HR Administrator', venue: 'Operations Training Room', days: 8, start: '10:00:00', end: '13:00:00', capacity: 14, budget: 500, department: 'Customer Service', employees: ['E001', 'E009'] },
 ]
 
 for (const session of trainingSessions) {

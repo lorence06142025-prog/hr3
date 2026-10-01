@@ -161,14 +161,14 @@ test('resolveNextOwners scopes notifications to subject employee and department 
       if (sql.includes('FROM users WHERE employee_id = $1') && params[0] === 'emp-elena') {
         return {
           rows: [
-            { id: 'user-elena', email: 'elena@pds.local', full_name: 'Elena Rostova' },
+            { id: 'user-elena', email: 'elenapriorityph@gmail.com', full_name: 'Elena Rostova' },
           ],
         }
       }
       if (sql.includes("e.department = $1 AND u.is_active = true")) {
         return {
           rows: [
-            { id: 'user-elena', email: 'elena@pds.local', full_name: 'Elena Rostova' },
+            { id: 'user-elena', email: 'elenapriorityph@gmail.com', full_name: 'Elena Rostova' },
           ],
         }
       }
@@ -176,7 +176,7 @@ test('resolveNextOwners scopes notifications to subject employee and department 
         // Broad supervisor query should NOT be hit when department supervisor exists
         return {
           rows: [
-            { id: 'user-jordan', email: 'jordan@pds.local', full_name: 'Jordan Williams' },
+            { id: 'user-jordan', email: 'jordanpriorityph@gmail.com', full_name: 'Jordan Williams' },
           ],
         }
       }
@@ -202,10 +202,10 @@ test('resolveNextOwners scopes notifications to subject employee and department 
   const emails = recipients.map(r => r.email)
   assert.equal(recipients.length, 2)
   assert.ok(emails.includes('yuan.amby@gmail.com'), 'Subject employee must be notified')
-  assert.ok(emails.includes('elena@pds.local'), 'Department supervisor must be notified')
+  assert.ok(emails.includes('elenapriorityph@gmail.com'), 'Department supervisor must be notified')
   assert.ok(!emails.includes('hexaanonuevo31@gmail.com'), 'Other employees must NOT be notified')
   assert.ok(!emails.includes('jannahmaenueva01@gmail.com'), 'Other employees must NOT be notified')
   assert.ok(!emails.includes('eymardbuyser09@gmail.com'), 'Other employees must NOT be notified')
-  assert.ok(!emails.includes('jordan@pds.local'), 'Supervisors from other departments must NOT be notified')
+  assert.ok(!emails.includes('jordanpriorityph@gmail.com'), 'Supervisors from other departments must NOT be notified')
 })
 

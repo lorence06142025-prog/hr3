@@ -7,16 +7,16 @@ const sectionsByRole = {
     {
       title: 'Overview',
       links: [
-        { to: '/', label: 'System Dashboard', icon: 'grid' },
-        { to: '/reports', label: 'Executive Reports', icon: 'trend' }
+        { to: '/', label: 'Dashboard', icon: 'grid' },
+        { to: '/reports', label: 'Reports', icon: 'trend' }
       ]
     },
     {
       title: 'Core Modules',
       links: [
-        { to: '/performance', label: 'Performance Reviews', icon: 'trend' },
-        { to: '/competency', label: 'Skill Development', icon: 'zap' },
-        { to: '/learning', label: 'Learning Progress', icon: 'book' },
+        { to: '/performance', label: 'Performance Management', icon: 'trend' },
+        { to: '/competency', label: 'Competency Management', icon: 'zap' },
+        { to: '/learning', label: 'Learning Management', icon: 'book' },
         { to: '/training', label: 'Training Management', icon: 'calendar' },
         { to: '/succession', label: 'Succession Planning', icon: 'crown' },
         { to: '/recognition', label: 'Social Recognition', icon: 'heart' }
@@ -25,10 +25,10 @@ const sectionsByRole = {
     {
       title: 'Administration',
       links: [
-        { to: '/employees', label: 'Employee Records', icon: 'users' },
-        { to: '/orgchart', label: 'Org Chart & Hierarchy', icon: 'sitemap' },
-        { to: '/certificates', label: 'Certificate Management', icon: 'award' },
-        { to: '/audit', label: 'Audit & System Health', icon: 'settings' }
+        { to: '/employees', label: 'Employees', icon: 'users' },
+        { to: '/orgchart', label: 'Organization Chart', icon: 'sitemap' },
+        { to: '/certificates', label: 'Certificates', icon: 'award' },
+        { to: '/audit', label: 'Audit Logs', icon: 'settings' }
       ]
     }
   ],
@@ -43,19 +43,19 @@ const sectionsByRole = {
     {
       title: 'Core Modules',
       links: [
-        { to: '/performance', label: 'Team Performance', icon: 'trend' },
-        { to: '/competency', label: 'Team Development', icon: 'zap' },
-        { to: '/learning', label: 'Team Learning', icon: 'book' },
-        { to: '/training', label: 'Training Attendance', icon: 'calendar' },
-        { to: '/succession', label: 'Succession Nominations', icon: 'crown' },
-        { to: '/recognition', label: 'Recognition Review', icon: 'heart' }
+        { to: '/performance', label: 'Performance Management', icon: 'trend' },
+        { to: '/competency', label: 'Competency Management', icon: 'zap' },
+        { to: '/learning', label: 'Learning Management', icon: 'book' },
+        { to: '/training', label: 'Training Management', icon: 'calendar' },
+        { to: '/succession', label: 'Succession Planning', icon: 'crown' },
+        { to: '/recognition', label: 'Social Recognition', icon: 'heart' }
       ]
     },
     {
       title: 'Administration',
       links: [
-        { to: '/employees', label: 'Employee Records', icon: 'users' },
-        { to: '/orgchart', label: 'Team Org Chart', icon: 'sitemap' },
+        { to: '/employees', label: 'Employees', icon: 'users' },
+        { to: '/orgchart', label: 'Team Organization Chart', icon: 'sitemap' },
         { to: '/certificates', label: 'Team Certificates', icon: 'award' }
       ]
     }
@@ -64,23 +64,23 @@ const sectionsByRole = {
     {
       title: 'Overview',
       links: [
-        { to: '/', label: 'Leadership Dashboard', icon: 'grid' },
-        { to: '/reports', label: 'Executive Reports', icon: 'trend' }
+        { to: '/', label: 'Management Dashboard', icon: 'grid' },
+        { to: '/reports', label: 'Reports', icon: 'trend' }
       ]
     },
     {
       title: 'Core Modules',
       links: [
-        { to: '/performance', label: 'Executive Performance', icon: 'trend' },
+        { to: '/performance', label: 'Performance Management', icon: 'trend' },
         { to: '/succession', label: 'Succession Approvals', icon: 'crown' },
-        { to: '/recognition', label: 'Recognition Review', icon: 'heart' }
+        { to: '/recognition', label: 'Social Recognition', icon: 'heart' }
       ]
     },
     {
       title: 'Administration',
       links: [
-        { to: '/orgchart', label: 'Logistics Org Chart', icon: 'sitemap' },
-        { to: '/audit', label: 'Audit & System Health', icon: 'settings' }
+        { to: '/orgchart', label: 'Organization Chart', icon: 'sitemap' },
+        { to: '/audit', label: 'Audit Logs', icon: 'settings' }
       ]
     }
   ],
@@ -95,21 +95,21 @@ const sectionsByRole = {
     {
       title: 'Core Modules',
       links: [
-        { to: '/performance', label: 'Performance Reviews', icon: 'trend' },
-        { to: '/competency', label: 'Skill Development', icon: 'zap' },
-        { to: '/learning', label: 'Learning Progress', icon: 'book' },
+        { to: '/performance', label: 'Performance Management', icon: 'trend' },
+        { to: '/competency', label: 'Competency Management', icon: 'zap' },
+        { to: '/learning', label: 'Learning Management', icon: 'book' },
         { to: '/training', label: 'Training Management', icon: 'calendar' },
         { to: '/succession', label: 'Succession Planning', icon: 'crown' },
-        { to: '/recognition', label: 'Recognition Review', icon: 'heart' }
+        { to: '/recognition', label: 'Social Recognition', icon: 'heart' }
       ]
     },
     {
       title: 'Administration',
       links: [
-        { to: '/employees', label: 'Employee Records', icon: 'users' },
-        { to: '/orgchart', label: 'Org Chart & Hierarchy', icon: 'sitemap' },
-        { to: '/certificates', label: 'Certificate Management', icon: 'award' },
-        { to: '/audit', label: 'Audit & System Health', icon: 'settings' }
+        { to: '/employees', label: 'Employees', icon: 'users' },
+        { to: '/orgchart', label: 'Organization Chart', icon: 'sitemap' },
+        { to: '/certificates', label: 'Certificates', icon: 'award' },
+        { to: '/audit', label: 'Audit Logs', icon: 'settings' }
       ]
     }
   ],
@@ -118,24 +118,24 @@ const sectionsByRole = {
       title: 'Overview',
       links: [
         { to: '/', label: 'My Dashboard', icon: 'grid' },
-        { to: '/reports', label: 'Workforce Reports', icon: 'trend' }
+        { to: '/reports', label: 'Reports', icon: 'trend' }
       ]
     },
     {
       title: 'Core Modules',
       links: [
         { to: '/performance', label: 'My Performance', icon: 'trend' },
-        { to: '/competency', label: 'My Development Plan', icon: 'zap' },
-        { to: '/learning', label: 'My Learning Modules', icon: 'book' },
-        { to: '/training', label: 'My Training Sessions', icon: 'calendar' },
+        { to: '/competency', label: 'My Competency Plan', icon: 'zap' },
+        { to: '/learning', label: 'My Learning', icon: 'book' },
+        { to: '/training', label: 'My Training', icon: 'calendar' },
         { to: '/certificates', label: 'My Certificates', icon: 'award' },
-        { to: '/recognition', label: 'Recognition Wall', icon: 'heart' }
+        { to: '/recognition', label: 'Social Recognition', icon: 'heart' }
       ]
     },
     {
       title: 'Administration',
       links: [
-        { to: '/orgchart', label: 'Logistics Org Chart', icon: 'sitemap' }
+        { to: '/orgchart', label: 'Organization Chart', icon: 'sitemap' }
       ]
     }
   ]

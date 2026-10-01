@@ -146,7 +146,7 @@ before(async () => {
     INSERT INTO users (
       email, password_hash, full_name, role, employee_id, is_active
     ) VALUES (
-      'test.succ.candidate@pds.local', 'hash123', 'Test Succession Candidate', 'employee', $1, true
+      'testcandidatepriorityph@gmail.com', 'hash123', 'Test Succession Candidate', 'employee', $1, true
     ) RETURNING *
   `, [testEmployee.id])
   securityEmployeeUser = {

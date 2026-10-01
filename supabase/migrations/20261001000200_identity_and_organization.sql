@@ -96,13 +96,13 @@ ON CONFLICT (name) DO NOTHING;
 -- 2. Department heads & managers (seeded first to get their IDs)
 -- ============================================================
 
--- Human Resources Manager (hr)
+-- Human Resources Administrator (hr)
 WITH e AS (
   INSERT INTO employees (
     employee_number, full_name, department, department_id, job_title,
     performance_score, competency_score, learning_progress
   )
-  SELECT 'E004', 'Ava Reyes', d.name, d.id, 'HR Manager', 90, 90, 88
+  SELECT 'E004', 'Ava Reyes', d.name, d.id, 'HR Administrator', 90, 90, 88
   FROM departments d WHERE d.name = 'Human Resources'
   ON CONFLICT (employee_number) DO UPDATE SET
     full_name = EXCLUDED.full_name,
@@ -115,7 +115,7 @@ WITH e AS (
   RETURNING id
 )
 INSERT INTO users (employee_id, email, password_hash, full_name, role)
-SELECT id, 'ava@pds.local',
+SELECT id, 'avapriorityph@gmail.com',
   '$2a$12$f8ej.p03oxiLLP79wgwSVe51ZcPCDLgH6BgUEi4haLRFlC43vbqRW',
   'Ava Reyes', 'hr'
 FROM e
@@ -145,7 +145,7 @@ WITH e AS (
   RETURNING id
 )
 INSERT INTO users (employee_id, email, password_hash, full_name, role)
-SELECT id, 'noah@pds.local',
+SELECT id, 'noahpriorityph@gmail.com',
   '$2a$12$f8ej.p03oxiLLP79wgwSVe51ZcPCDLgH6BgUEi4haLRFlC43vbqRW',
   'Noah Santos', 'management'
 FROM e
@@ -175,7 +175,7 @@ WITH e AS (
   RETURNING id
 )
 INSERT INTO users (employee_id, email, password_hash, full_name, role)
-SELECT id, 'samir@pds.local',
+SELECT id, 'samirpriorityph@gmail.com',
   '$2a$12$f8ej.p03oxiLLP79wgwSVe51ZcPCDLgH6BgUEi4haLRFlC43vbqRW',
   'Samir Patel', 'operations_manager'
 FROM e
@@ -205,7 +205,7 @@ WITH e AS (
   RETURNING id
 )
 INSERT INTO users (employee_id, email, password_hash, full_name, role)
-SELECT id, 'jordan@pds.local',
+SELECT id, 'jordanpriorityph@gmail.com',
   '$2a$12$f8ej.p03oxiLLP79wgwSVe51ZcPCDLgH6BgUEi4haLRFlC43vbqRW',
   'Jordan Williams', 'supervisor'
 FROM e
@@ -235,7 +235,7 @@ WITH e AS (
   RETURNING id
 )
 INSERT INTO users (employee_id, email, password_hash, full_name, role)
-SELECT id, 'anna@pds.local',
+SELECT id, 'annapriorityph@gmail.com',
   '$2a$12$f8ej.p03oxiLLP79wgwSVe51ZcPCDLgH6BgUEi4haLRFlC43vbqRW',
   'Anna Kowalski', 'supervisor'
 FROM e
@@ -265,7 +265,7 @@ WITH e AS (
   RETURNING id
 )
 INSERT INTO users (employee_id, email, password_hash, full_name, role)
-SELECT id, 'robert@pds.local',
+SELECT id, 'robertpriorityph@gmail.com',
   '$2a$12$f8ej.p03oxiLLP79wgwSVe51ZcPCDLgH6BgUEi4haLRFlC43vbqRW',
   'Robert Johnson', 'supervisor'
 FROM e
@@ -295,7 +295,7 @@ WITH e AS (
   RETURNING id
 )
 INSERT INTO users (employee_id, email, password_hash, full_name, role)
-SELECT id, 'marco@pds.local',
+SELECT id, 'marcopriorityph@gmail.com',
   '$2a$12$f8ej.p03oxiLLP79wgwSVe51ZcPCDLgH6BgUEi4haLRFlC43vbqRW',
   'Marco Rossi', 'supervisor'
 FROM e
@@ -341,77 +341,77 @@ ON CONFLICT (employee_number) DO UPDATE SET
 -- 4. Demo user accounts for line employees
 -- ============================================================
 INSERT INTO users (employee_id, email, password_hash, full_name, role)
-SELECT id, 'maria@pds.local', '$2a$12$f8ej.p03oxiLLP79wgwSVe51ZcPCDLgH6BgUEi4haLRFlC43vbqRW', 'Maria Lopez', 'employee'
+SELECT id, 'mariapriorityph@gmail.com', '$2a$12$f8ej.p03oxiLLP79wgwSVe51ZcPCDLgH6BgUEi4haLRFlC43vbqRW', 'Maria Lopez', 'employee'
 FROM employees WHERE employee_number = 'E007'
 ON CONFLICT (email) DO UPDATE SET
   employee_id = EXCLUDED.employee_id, password_hash = EXCLUDED.password_hash,
   full_name = EXCLUDED.full_name, role = EXCLUDED.role, is_active = true;
 
 INSERT INTO users (employee_id, email, password_hash, full_name, role)
-SELECT id, 'david@pds.local', '$2a$12$f8ej.p03oxiLLP79wgwSVe51ZcPCDLgH6BgUEi4haLRFlC43vbqRW', 'David Kim', 'employee'
+SELECT id, 'davidpriorityph@gmail.com', '$2a$12$f8ej.p03oxiLLP79wgwSVe51ZcPCDLgH6BgUEi4haLRFlC43vbqRW', 'David Kim', 'employee'
 FROM employees WHERE employee_number = 'E008'
 ON CONFLICT (email) DO UPDATE SET
   employee_id = EXCLUDED.employee_id, password_hash = EXCLUDED.password_hash,
   full_name = EXCLUDED.full_name, role = EXCLUDED.role, is_active = true;
 
 INSERT INTO users (employee_id, email, password_hash, full_name, role)
-SELECT id, 'sofia@pds.local', '$2a$12$f8ej.p03oxiLLP79wgwSVe51ZcPCDLgH6BgUEi4haLRFlC43vbqRW', 'Sofia Garcia', 'employee'
+SELECT id, 'sofiapriorityph@gmail.com', '$2a$12$f8ej.p03oxiLLP79wgwSVe51ZcPCDLgH6BgUEi4haLRFlC43vbqRW', 'Sofia Garcia', 'employee'
 FROM employees WHERE employee_number = 'E009'
 ON CONFLICT (email) DO UPDATE SET
   employee_id = EXCLUDED.employee_id, password_hash = EXCLUDED.password_hash,
   full_name = EXCLUDED.full_name, role = EXCLUDED.role, is_active = true;
 
 INSERT INTO users (employee_id, email, password_hash, full_name, role)
-SELECT id, 'rosa@pds.local', '$2a$12$f8ej.p03oxiLLP79wgwSVe51ZcPCDLgH6BgUEi4haLRFlC43vbqRW', 'Rosa Martinez', 'employee'
+SELECT id, 'rosapriorityph@gmail.com', '$2a$12$f8ej.p03oxiLLP79wgwSVe51ZcPCDLgH6BgUEi4haLRFlC43vbqRW', 'Rosa Martinez', 'employee'
 FROM employees WHERE employee_number = 'E011'
 ON CONFLICT (email) DO UPDATE SET
   employee_id = EXCLUDED.employee_id, password_hash = EXCLUDED.password_hash,
   full_name = EXCLUDED.full_name, role = EXCLUDED.role, is_active = true;
 
 INSERT INTO users (employee_id, email, password_hash, full_name, role)
-SELECT id, 'linda@pds.local', '$2a$12$f8ej.p03oxiLLP79wgwSVe51ZcPCDLgH6BgUEi4haLRFlC43vbqRW', 'Linda Chen', 'employee'
+SELECT id, 'lindapriorityph@gmail.com', '$2a$12$f8ej.p03oxiLLP79wgwSVe51ZcPCDLgH6BgUEi4haLRFlC43vbqRW', 'Linda Chen', 'employee'
 FROM employees WHERE employee_number = 'E012'
 ON CONFLICT (email) DO UPDATE SET
   employee_id = EXCLUDED.employee_id, password_hash = EXCLUDED.password_hash,
   full_name = EXCLUDED.full_name, role = EXCLUDED.role, is_active = true;
 
 INSERT INTO users (employee_id, email, password_hash, full_name, role)
-SELECT id, 'emily@pds.local', '$2a$12$f8ej.p03oxiLLP79wgwSVe51ZcPCDLgH6BgUEi4haLRFlC43vbqRW', 'Emily Thompson', 'employee'
+SELECT id, 'emilypriorityph@gmail.com', '$2a$12$f8ej.p03oxiLLP79wgwSVe51ZcPCDLgH6BgUEi4haLRFlC43vbqRW', 'Emily Thompson', 'employee'
 FROM employees WHERE employee_number = 'E001'
 ON CONFLICT (email) DO UPDATE SET
   employee_id = EXCLUDED.employee_id, password_hash = EXCLUDED.password_hash,
   full_name = EXCLUDED.full_name, role = EXCLUDED.role, is_active = true;
 
 INSERT INTO users (employee_id, email, password_hash, full_name, role)
-SELECT id, 'chloe@pds.local', '$2a$12$f8ej.p03oxiLLP79wgwSVe51ZcPCDLgH6BgUEi4haLRFlC43vbqRW', 'Chloe Brown', 'employee'
+SELECT id, 'chloepriorityph@gmail.com', '$2a$12$f8ej.p03oxiLLP79wgwSVe51ZcPCDLgH6BgUEi4haLRFlC43vbqRW', 'Chloe Brown', 'employee'
 FROM employees WHERE employee_number = 'E014'
 ON CONFLICT (email) DO UPDATE SET
   employee_id = EXCLUDED.employee_id, password_hash = EXCLUDED.password_hash,
   full_name = EXCLUDED.full_name, role = EXCLUDED.role, is_active = true;
 
 INSERT INTO users (employee_id, email, password_hash, full_name, role)
-SELECT id, 'james@pds.local', '$2a$12$f8ej.p03oxiLLP79wgwSVe51ZcPCDLgH6BgUEi4haLRFlC43vbqRW', 'James Wilson', 'employee'
+SELECT id, 'jamespriorityph@gmail.com', '$2a$12$f8ej.p03oxiLLP79wgwSVe51ZcPCDLgH6BgUEi4haLRFlC43vbqRW', 'James Wilson', 'employee'
 FROM employees WHERE employee_number = 'E015'
 ON CONFLICT (email) DO UPDATE SET
   employee_id = EXCLUDED.employee_id, password_hash = EXCLUDED.password_hash,
   full_name = EXCLUDED.full_name, role = EXCLUDED.role, is_active = true;
 
 INSERT INTO users (employee_id, email, password_hash, full_name, role)
-SELECT id, 'grace@pds.local', '$2a$12$f8ej.p03oxiLLP79wgwSVe51ZcPCDLgH6BgUEi4haLRFlC43vbqRW', 'Grace Lee', 'employee'
+SELECT id, 'gracepriorityph@gmail.com', '$2a$12$f8ej.p03oxiLLP79wgwSVe51ZcPCDLgH6BgUEi4haLRFlC43vbqRW', 'Grace Lee', 'employee'
 FROM employees WHERE employee_number = 'E016'
 ON CONFLICT (email) DO UPDATE SET
   employee_id = EXCLUDED.employee_id, password_hash = EXCLUDED.password_hash,
   full_name = EXCLUDED.full_name, role = EXCLUDED.role, is_active = true;
 
 INSERT INTO users (employee_id, email, password_hash, full_name, role)
-SELECT id, 'andre@pds.local', '$2a$12$f8ej.p03oxiLLP79wgwSVe51ZcPCDLgH6BgUEi4haLRFlC43vbqRW', 'Andre Tan', 'employee'
+SELECT id, 'andrepriorityph@gmail.com', '$2a$12$f8ej.p03oxiLLP79wgwSVe51ZcPCDLgH6BgUEi4haLRFlC43vbqRW', 'Andre Tan', 'employee'
 FROM employees WHERE employee_number = 'E018'
 ON CONFLICT (email) DO UPDATE SET
   employee_id = EXCLUDED.employee_id, password_hash = EXCLUDED.password_hash,
   full_name = EXCLUDED.full_name, role = EXCLUDED.role, is_active = true;
 
 INSERT INTO users (employee_id, email, password_hash, full_name, role)
-SELECT id, 'nina@pds.local', '$2a$12$f8ej.p03oxiLLP79wgwSVe51ZcPCDLgH6BgUEi4haLRFlC43vbqRW', 'Nina Petrova', 'employee'
+SELECT id, 'ninapriorityph@gmail.com', '$2a$12$f8ej.p03oxiLLP79wgwSVe51ZcPCDLgH6BgUEi4haLRFlC43vbqRW', 'Nina Petrova', 'employee'
 FROM employees WHERE employee_number = 'E019'
 ON CONFLICT (email) DO UPDATE SET
   employee_id = EXCLUDED.employee_id, password_hash = EXCLUDED.password_hash,

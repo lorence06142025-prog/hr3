@@ -65,9 +65,9 @@ Demo accounts all use `ChangeMe123!`:
 
 | Role | Email |
 | --- | --- |
-| HR | ava@pds.local |
-| Supervisor | jordan@pds.local |
-| Employee | emily@pds.local |
+| HR Administrator | avapriorityph@gmail.com |
+| Supervisor | jordanpriorityph@gmail.com |
+| Employee | emilypriorityph@gmail.com |
 
 ## Key endpoints
 

@@ -170,7 +170,7 @@ export const COMPETENCY_LEARNING_MAP = {
   'Communication': ['Freight Customer Service and Shipment Visibility'],
 }
 
-export function getRecommendedCoursesForGap(competencyName, score = 0) {
+export function getRecommendedCoursesForGap(competencyName) {
   const competency = String(competencyName || '').trim()
   const matchedTitles = COMPETENCY_LEARNING_MAP[competency] || []
   const matches = LEARNING_TEMPLATES.filter(course => matchedTitles.includes(course.title))
@@ -308,7 +308,7 @@ export const COMPETENCY_TEMPLATES = {
     benchmark('Safety & Compliance Leadership', 'Compliance', 95, 'Expert', 20),
     benchmark('Customer Service', 'Customer Service', 88, 'Expert', 15),
   ],
-  'HR Manager': [
+  'HR Administrator': [
     benchmark('Employee Relations', 'People', 88, 'Expert', 25),
     benchmark('Labor Compliance', 'Compliance', 95, 'Expert', 25),
     benchmark('Recruitment & Selection', 'People', 88, 'Proficient', 20),
