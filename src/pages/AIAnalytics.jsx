@@ -814,23 +814,16 @@ export default function AIAnalytics() {
             <svg viewBox="0 0 500 190" className="area-chart-svg">
               <defs>
                 <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#111827" stopOpacity="0.45" />
-                  <stop offset="50%" stopColor="#4b5563" stopOpacity="0.18" />
-                  <stop offset="100%" stopColor="#4b5563" stopOpacity="0.0" />
+                  <stop offset="0%" stopColor="#2563eb" stopOpacity="0.16" />
+                  <stop offset="50%" stopColor="#2563eb" stopOpacity="0.07" />
+                  <stop offset="100%" stopColor="#2563eb" stopOpacity="0" />
                 </linearGradient>
-                <filter id="neonGlowPurple" x="-30%" y="-30%" width="160%" height="160%">
-                  <feGaussianBlur stdDeviation="3" result="coloredBlur" />
-                  <feMerge>
-                    <feMergeNode in="coloredBlur" />
-                    <feMergeNode in="SourceGraphic" />
-                  </feMerge>
-                </filter>
               </defs>
               {/* Horizontal Grid lines */}
-              <line x1="0" y1="35" x2="500" y2="35" stroke="rgba(255,255,255,0.06)" strokeDasharray="3 3" />
-              <line x1="0" y1="80" x2="500" y2="80" stroke="rgba(255,255,255,0.06)" strokeDasharray="3 3" />
-              <line x1="0" y1="125" x2="500" y2="125" stroke="rgba(255,255,255,0.06)" strokeDasharray="3 3" />
-              <line x1="0" y1="170" x2="500" y2="170" stroke="rgba(255,255,255,0.06)" />
+              <line x1="0" y1="35" x2="500" y2="35" stroke="#e7ecf2" strokeDasharray="3 5" />
+              <line x1="0" y1="80" x2="500" y2="80" stroke="#e7ecf2" strokeDasharray="3 5" />
+              <line x1="0" y1="125" x2="500" y2="125" stroke="#e7ecf2" strokeDasharray="3 5" />
+              <line x1="0" y1="170" x2="500" y2="170" stroke="#dbe2ea" />
 
               {/* Shaded Area */}
               <path
@@ -841,29 +834,27 @@ export default function AIAnalytics() {
               <path
                 d="M 0 140 Q 80 120, 150 85 T 300 95 T 420 50 L 500 45"
                 fill="none"
-                stroke="#c084fc"
-                strokeWidth="4"
+                stroke="#2563eb"
+                strokeWidth="3"
                 strokeLinecap="round"
-                filter="url(#neonGlowPurple)"
-                opacity="0.85"
               />
               {/* Sharp Front Curve Line */}
               <path
                 d="M 0 140 Q 80 120, 150 85 T 300 95 T 420 50 L 500 45"
                 fill="none"
-                stroke="#d8b4fe"
-                strokeWidth="2.5"
+                stroke="#1d4ed8"
+                strokeWidth="2"
                 strokeLinecap="round"
               />
               {/* Outer Glow Halo for Apex */}
-              <circle cx="420" cy="50" r="10" fill="#111827" opacity="0.35" />
+              <circle cx="420" cy="50" r="7" fill="#ffffff" stroke="#2563eb" strokeWidth="2" />
               {/* Inner Apex Dot */}
-              <circle cx="420" cy="50" r="5.5" fill="#111827" stroke="#ffffff" strokeWidth="2.2" />
+              <circle cx="420" cy="50" r="2.5" fill="#2563eb" />
               {/* Apex Badge Tooltip */}
               <g transform="translate(390, 16)">
-                <rect width="60" height="24" rx="6" fill="#1e153a" stroke="#111827" strokeWidth="1.2" />
-                <circle cx="10" cy="12" r="3" fill="#111827" />
-                <text x="18" y="16" fill="#f8fafc" fontSize="11" fontWeight="700" fontFamily="system-ui">{averagePerformance}%</text>
+                <rect width="60" height="24" rx="4" fill="#ffffff" stroke="#cbd5e1" />
+                <circle cx="10" cy="12" r="3" fill="#2563eb" />
+                <text x="18" y="16" fill="#172b4d" fontSize="11" fontWeight="700" fontFamily="Segoe UI, sans-serif">{averagePerformance}%</text>
               </g>
             </svg>
             <div className="chart-x-labels">

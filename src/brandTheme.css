@@ -1,18 +1,18 @@
 /* Priority Handling Services, Inc. brand theme. Loaded after legacy module styles. */
 :root {
-  --brand-primary: #0000fe;
-  --brand-primary-hover: #0000d4;
-  --brand-primary-active: #0000aa;
-  --brand-navy: #080b3d;
-  --brand-supporting: #3b82f6;
-  --brand-background: #f8fafc;
-  --brand-muted: #f1f5f9;
-  --brand-secondary: #eff6ff;
-  --brand-border: #e2e8f0;
-  --brand-muted-text: #475569;
-  --brand-success: #059669;
-  --brand-warning: #d97706;
-  --brand-danger: #dc2626;
+  --brand-primary: #2563eb;
+  --brand-primary-hover: #1d4ed8;
+  --brand-primary-active: #1e40af;
+  --brand-navy: #172b4d;
+  --brand-supporting: #0f766e;
+  --brand-background: #f5f7fa;
+  --brand-muted: #f1f4f8;
+  --brand-secondary: #edf4ff;
+  --brand-border: #dbe2ea;
+  --brand-muted-text: #526174;
+  --brand-success: #16835d;
+  --brand-warning: #a86208;
+  --brand-danger: #c43d43;
   --brand-info: #2563eb;
   --color-primary: var(--brand-primary);
   --color-bg: var(--brand-background);
@@ -33,7 +33,7 @@
   --text-muted: var(--brand-muted-text);
   --text-secondary: var(--brand-muted-text);
   --accent-purple: var(--brand-primary);
-  --accent-purple-glow: rgba(0, 0, 254, 0.1);
+  --accent-purple-glow: rgba(37, 99, 235, 0.1);
   --accent-cyan: var(--brand-supporting);
   --ring: var(--brand-primary);
   --chart-1: var(--brand-primary);
@@ -46,6 +46,7 @@
 body {
   background: var(--brand-background);
   color: var(--brand-navy);
+  font-family: "Segoe UI Variable", "Segoe UI", Aptos, sans-serif;
 }
 
 .dark {
@@ -336,4 +337,393 @@ button:disabled,
 .dark .certificate-seal-logo {
   border-color: #334155;
   background: #ffffff;
+}
+
+/* Shared enterprise UI treatment. Kept in the final-loaded theme so legacy
+   module styles retain their behavior while sharing one visual language. */
+body,
+button,
+input,
+select,
+textarea {
+  font-family: "Segoe UI Variable", "Segoe UI", Aptos, sans-serif;
+}
+
+body {
+  background: var(--brand-background);
+  color: #1b2b43;
+  line-height: 1.5;
+}
+
+.fixed-main {
+  background: var(--brand-background);
+}
+
+.topbar {
+  min-height: 68px;
+  height: auto;
+  padding: 0 30px;
+  background: #ffffff;
+  border-bottom-color: var(--brand-border);
+}
+
+.topbar .crumb,
+.topbar .crumb-brand {
+  color: #68778b;
+}
+
+.topbar .crumb-current {
+  color: #1b2b43;
+  font-weight: 600;
+}
+
+.topbar .search,
+.topbar-search,
+.header-icon-btn,
+.header-pill-btn,
+.topbar-clock-pill {
+  border-color: var(--brand-border);
+  border-radius: 6px;
+  box-shadow: none;
+}
+
+.topbar .search,
+.topbar-search {
+  background: #f7f9fc;
+}
+
+.sidebar {
+  background: #ffffff;
+  border-right: 1px solid var(--brand-border);
+}
+
+.sidebar-brand-wrapper {
+  border-bottom-color: var(--brand-border);
+}
+
+.brand-name {
+  color: #1b2b43;
+  font-weight: 650;
+}
+
+.section-title {
+  color: #7a8798;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.nav-item {
+  min-height: 38px;
+  border-radius: 6px;
+  color: #45566d;
+}
+
+.nav-item:hover,
+.nav-active {
+  background: #edf4ff !important;
+  color: #1d4ed8 !important;
+}
+
+.nav-active {
+  box-shadow: inset 2px 0 0 var(--brand-primary);
+}
+
+.sidebar-footer {
+  border-top-color: var(--brand-border);
+}
+
+.page-transition-wrapper {
+  color: #1b2b43;
+}
+
+.module-workspace,
+.workflow-page,
+.enterprise-review,
+.ai-dashboard,
+.role-home,
+.org-chart-page-container {
+  width: min(100%, 1500px);
+  margin-inline: auto;
+  padding: 28px 32px 44px;
+  color: #1b2b43;
+}
+
+.module-heading h1,
+.workflow-heading h1,
+.review-top h1,
+.ai-heading h1,
+.role-home h1,
+.page-title,
+.module-title {
+  color: #172b4d;
+  font-size: 22px;
+  font-weight: 650;
+  line-height: 1.25;
+}
+
+.module-heading p,
+.workflow-heading p,
+.review-top p,
+.ai-heading p {
+  color: #68778b;
+  font-size: 13px;
+}
+
+.module-flow,
+.module-process,
+.module-insights,
+.workflow-timeline,
+.active-workspace,
+.ai-assistant,
+.saas-card,
+.saas-kpi-card,
+.role-kpi-card,
+.module-metrics article,
+.review-metrics article,
+.ai-kpis article,
+.ai-chart-row article,
+.ai-records,
+.insight-panel,
+.er-chart-box,
+.er-table-wrap,
+.org-chart-kpis article {
+  background: #ffffff;
+  border: 1px solid var(--brand-border);
+  border-radius: 7px;
+  box-shadow: 0 1px 2px rgba(23, 43, 77, 0.035);
+}
+
+.saas-kpi-card,
+.role-kpi-card {
+  padding: 18px;
+}
+
+.saas-kpi-card:hover,
+.role-kpi-card:hover,
+.saas-card:hover {
+  box-shadow: 0 5px 16px rgba(23, 43, 77, 0.07);
+}
+
+.module-metrics article,
+.review-metrics article {
+  box-shadow: none;
+}
+
+.module-metrics b,
+.review-metrics b,
+.ai-kpis b {
+  color: #172b4d;
+  font-variant-numeric: tabular-nums;
+}
+
+.module-primary,
+.process-form button.primary,
+button.primary,
+.primary-action,
+.saas-btn-primary,
+.upm-btn-primary,
+.ref-action-btn,
+.verify-btn.primary,
+.sw-btn-stay,
+.login-card button[type="submit"] {
+  min-height: 38px;
+  border-radius: 6px;
+  background: var(--brand-primary) !important;
+  border-color: var(--brand-primary) !important;
+  box-shadow: none;
+  font-weight: 600;
+}
+
+.module-secondary,
+.saas-btn-secondary,
+button.secondary,
+.verify-btn.secondary {
+  min-height: 38px;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #34465e;
+}
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]):not([type="range"]):not([type="color"]),
+select,
+textarea {
+  border-color: #cbd5e1;
+  border-radius: 6px;
+  color: #1b2b43;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+[contenteditable="true"]:focus {
+  border-color: var(--brand-primary) !important;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.13) !important;
+}
+
+table thead th,
+.data-table thead th,
+.table-header {
+  background: #f5f7fa !important;
+  border-bottom: 1px solid var(--brand-border);
+  color: #526174 !important;
+  font-size: 11px;
+  font-weight: 650;
+  text-align: left;
+}
+
+table th,
+table td {
+  border-color: #e7ecf2;
+}
+
+table tbody tr:hover {
+  background: #f7f9fc;
+}
+
+.module-steps {
+  display: flex;
+  gap: 8px;
+  margin: 18px 0;
+  overflow-x: auto;
+  padding: 2px 2px 8px;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+
+.module-step {
+  flex: 1 0 145px;
+  min-height: 58px;
+  border: 1px solid var(--brand-border);
+  border-radius: 6px;
+  background: #ffffff;
+  box-shadow: none;
+}
+
+.module-step .step-marker {
+  width: 25px;
+  height: 25px;
+  background: #f1f4f8;
+  border-color: #dbe2ea;
+  color: #66758a;
+}
+
+.module-step .step-copy b {
+  color: #34465e;
+  font-size: 11px;
+}
+
+.module-step .step-copy small {
+  color: #768499;
+  font-size: 10px;
+}
+
+.module-step.complete {
+  background: #f4faf7;
+  border-color: #b8ddca;
+}
+
+.module-step.complete .step-marker {
+  background: #16835d;
+  border-color: #16835d;
+}
+
+.module-step.active {
+  background: #edf4ff;
+  border-color: var(--brand-primary);
+  box-shadow: inset 0 0 0 1px var(--brand-primary);
+}
+
+.module-step.active .step-marker {
+  background: var(--brand-primary);
+  border-color: var(--brand-primary);
+}
+
+.module-step.active .step-copy b {
+  color: #1d4ed8;
+}
+
+.module-step.pending,
+.module-step.locked {
+  opacity: 0.78;
+}
+
+.workflow-timeline,
+.active-workspace,
+.ai-assistant {
+  padding: 18px;
+}
+
+.cert-stepper {
+  gap: 0;
+}
+
+.cert-step-circle {
+  box-shadow: none !important;
+}
+
+.notif-panel-box,
+.settings-dialog,
+.global-search-modal,
+.upm-modal {
+  border: 1px solid var(--brand-border);
+  border-radius: 8px;
+  box-shadow: 0 16px 42px rgba(23, 43, 77, 0.16);
+}
+
+.notif-panel-tabs {
+  background: #f7f9fc;
+}
+
+.notif-tab,
+.notif-card-item,
+.notif-btn-text {
+  border-radius: 4px;
+}
+
+.notif-tab.active {
+  color: var(--brand-primary);
+  box-shadow: inset 0 -2px 0 var(--brand-primary);
+}
+
+.empty-state,
+.empty-hint,
+.no-results {
+  color: #68778b;
+}
+
+@media (max-width: 768px) {
+  .module-workspace,
+  .workflow-page,
+  .enterprise-review,
+  .ai-dashboard,
+  .role-home,
+  .org-chart-page-container {
+    padding: 20px 16px 32px;
+  }
+
+  .topbar {
+    min-height: 58px;
+    height: 58px;
+    padding: 0 12px;
+  }
+
+  .module-step {
+    flex-basis: 138px;
+  }
+
+  .topbar-avatar-wrapper img {
+    width: 30px !important;
+    height: 30px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

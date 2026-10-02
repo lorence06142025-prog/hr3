@@ -723,7 +723,7 @@ const complete = async () => {
         setEvents([])
         const updatedField = result.scoreWriteBack?.field ? ` ${result.scoreWriteBack.field.replaceAll('_', ' ')} updated to ${result.scoreWriteBack.newValue}%.` : ''
         const gapNotice = (result.gapAssignments && result.gapAssignments.length > 0)
-          ? ` 🎓 ${result.gapAssignments.length} learning course(s) auto-assigned for detected skill gaps.`
+          ? ` ${result.gapAssignments.length} learning course(s) auto-assigned for detected skill gaps.`
           : ''
         showNotice(`Workflow completed.${updatedField}${gapNotice} ${result.metricsReady ? 'Metrics are ready for AI report generation.' : 'Employee data was updated; metrics preview will refresh shortly.'}`)
       } else {

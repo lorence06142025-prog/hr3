@@ -869,7 +869,7 @@ function AssessmentBuilder({ value = {}, onChange, role, people = [], events = [
                           color: '#92400e',
                           border: '1px solid #fde68a'
                         }}>
-                          🔒 Locked: Verified by HR2 Biometrics ({hr2Attendance?.attendance_score ? `${hr2Attendance.attendance_score}%` : `${rowPercentage}%`})
+                          Locked: Verified by HR2 Biometrics ({hr2Attendance?.attendance_score ? `${hr2Attendance.attendance_score}%` : `${rowPercentage}%`})
                         </span>
                       </div>
                     )}
@@ -3327,7 +3327,7 @@ function CompetencyComparisonBuilder({ value = {}, onChange, workflow, subjectNa
         >
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <span style={{ fontSize: 10.5, fontWeight: 700, padding: '2px 8px', borderRadius: 12, background: 'rgba(99,102,241,0.15)', color: '#4338ca' }}>
-              🤖 Approach C: AI Recommendation
+              Approach C: AI Recommendation
             </span>
             <b style={{ fontSize: 22, fontWeight: 800, color: '#4338ca' }}>
               {data ? `${data.aiRecommended.score}%` : '88%'}
@@ -3384,7 +3384,7 @@ function CompetencyComparisonBuilder({ value = {}, onChange, workflow, subjectNa
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <span style={{ fontSize: 11, fontWeight: 700, padding: '2px 8px', borderRadius: 6, background: data.variance > 0 ? '#dbeafe' : '#f1f5f9', color: data.variance > 0 ? '#1e40af' : '#475569' }}>
-              📊 Variance Analysis: {data.variance > 0 ? `+${data.variance}% AI Boost` : data.variance < 0 ? `${data.variance}% AI Adjustment` : 'Exact Match (0% Variance)'}
+              Variance Analysis: {data.variance > 0 ? `+${data.variance}% AI Boost` : data.variance < 0 ? `${data.variance}% AI Adjustment` : 'Exact Match (0% Variance)'}
             </span>
           </div>
           <p style={{ margin: 0, fontSize: 11.5, color: '#475569', lineHeight: 1.5 }}>
