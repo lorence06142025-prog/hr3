@@ -1,0 +1,5 @@
+ALTER TABLE users
+  ADD COLUMN IF NOT EXISTS avatar_url TEXT;
+
+ALTER TABLE employees
+  ADD COLUMN IF NOT EXISTS avatar_url TEXT;

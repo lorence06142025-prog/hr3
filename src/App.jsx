@@ -1,5 +1,6 @@
 import React, { lazy, Suspense, useEffect, useState } from 'react'
 import { flushSync } from 'react-dom'
+import Sidebar from './components/Sidebar'
 import MobileNav from './components/MobileNav'
 import Header from './components/Header'
 import SessionWarning from './components/SessionWarning'
@@ -258,6 +259,20 @@ function App() {
   const [aiChatOpen, setAiChatOpen] = useState(false)
   const [sessionNotice, setSessionNotice] = useState('')
   const [sessionSecondsLeft, setSessionSecondsLeft] = useState(null) // null = hidden
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(() => {
+    try {
+      return localStorage.getItem('pds-sidebar-collapsed') === 'true'
+    } catch {
+      return false
+    }
+  })
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('pds-sidebar-collapsed', sidebarCollapsed ? 'true' : 'false')
+    } catch (err) { void err }
+  }, [sidebarCollapsed])
+
   useEffect(() => {
     const handleExpired = (e) => {
       handleLogout(e.detail?.message || 'Your session has expired. Please sign in again.')
@@ -460,7 +475,14 @@ useEffect(() => {
             ) : (
               <ErrorBoundary>
                 <div className="min-h-screen flex text-gray-800 dark:text-gray-100">
-                  <div className="flex-1 min-h-screen flex flex-col fixed-main">
+                  <Sidebar
+                    key={`sb-${user.id}`}
+                    user={user}
+                    onLogout={handleLogout}
+                    collapsed={sidebarCollapsed}
+                    onToggleCollapse={() => setSidebarCollapsed((collapsed) => !collapsed)}
+                  />
+                  <div className={`flex-1 min-h-screen flex flex-col fixed-main ${sidebarCollapsed ? 'sidebar-collapsed-main' : ''}`}>
                     <Header
                       key={`hdr-${user.id}`}
                       user={user}
