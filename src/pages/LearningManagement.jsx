@@ -517,7 +517,7 @@ export default function LearningManagement() {
                         </span>
                       ) : (
                         <span className="course-category" style={{ background: '#fee2e2', color: '#b91c1c', fontWeight: 600 }}>
-                          ⚠ Gap Match
+                          Gap Match
                         </span>
                       )}
                     </div>

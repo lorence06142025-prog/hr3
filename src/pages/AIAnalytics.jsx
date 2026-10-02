@@ -349,7 +349,6 @@ export default function AIAnalytics() {
       {error && (
         <div style={{ background: '#fee2e2', border: '1px solid #fca5a5', color: '#991b1b', padding: '12px 18px', borderRadius: 12, marginBottom: 16, display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: 13 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            <span>⚠️</span>
             <span>{error}</span>
           </div>
           <button

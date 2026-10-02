@@ -567,7 +567,7 @@ export default function EmployeeManagement() {
                     {perfGap >= 0 ? (
                       <span className="text-emerald-600 dark:text-emerald-400 font-medium">✓ Above standard benchmark (+{perfGap}%)</span>
                     ) : (
-                      <span className="text-amber-600 dark:text-amber-400 font-medium">⚠ Gap: {perfGap}% below 80% benchmark</span>
+                      <span className="text-amber-600 dark:text-amber-400 font-medium">Gap: {perfGap}% below 80% benchmark</span>
                     )}
                   </div>
                 </div>
@@ -585,7 +585,7 @@ export default function EmployeeManagement() {
                     {compGap >= 0 ? (
                       <span className="text-emerald-600 dark:text-emerald-400 font-medium">✓ Competency met (+{compGap}%)</span>
                     ) : (
-                      <span className="text-rose-600 dark:text-rose-400 font-medium">⚠ Skill Gap: {compGap}% required focus</span>
+                      <span className="text-rose-600 dark:text-rose-400 font-medium">Skill Gap: {compGap}% required focus</span>
                     )}
                   </div>
                 </div>

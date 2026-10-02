@@ -1911,7 +1911,7 @@ function CompetencyTemplateBuilder({ value = [], onChange }) {
                 + Add Custom Skill Dimension
               </button>
               <small style={{ color: totalWeight === 100 ? '#10b981' : '#f59e0b', fontWeight: 600 }}>
-                {totalWeight === 100 ? '✓ Total weight perfectly balanced at 100%' : `⚠ Total weight is ${totalWeight}% (must equal 100%)`}
+                {totalWeight === 100 ? '✓ Total weight perfectly balanced at 100%' : `Warning: Total weight is ${totalWeight}% (must equal 100%)`}
               </small>
             </div>
           </div>
@@ -2478,7 +2478,7 @@ function ProgressBuilder({ value = [], onChange, role, people = [], subject, eve
                     )}
                     {(a.competencies || []).map(c => (
                       <span key={c} style={{ fontSize: 9.5, fontWeight: 700, padding: '1px 6px', borderRadius: 12, background: 'rgba(16,185,129,0.1)', color: '#059669', border: '1px solid rgba(16,185,129,0.2)' }}>
-                        ✦ Closes gap in {c}
+                        Closes gap in {c}
                       </span>
                     ))}
                   </div>
@@ -2967,7 +2967,7 @@ function SuccessionReviewBuilder({ value = {}, onChange, people = [], subject, w
           </button>
           {fetchError && (
             <div style={{ marginTop: 10, color: '#dc2626', fontSize: 11.5 }}>
-              ⚠ {fetchError}
+              Error: {fetchError}
             </div>
           )}
         </div>
@@ -2988,7 +2988,7 @@ function SuccessionReviewBuilder({ value = {}, onChange, people = [], subject, w
 
           {isSelf && (
             <div className="srb-self-warning">
-              ⚠ You are viewing your own assessment. System policy prohibits employees from submitting or approving their own succession nominations.
+              Policy notice: You are viewing your own assessment. System policy prohibits employees from submitting or approving their own succession nominations.
             </div>
           )}
 
@@ -3076,7 +3076,7 @@ function SuccessionReviewBuilder({ value = {}, onChange, people = [], subject, w
 
             {isSelf && (
               <div className="srb-self-warning">
-                ⚠ You are viewing your own succession assessment. System policy prohibits employees from approving their own succession or modifying succession recommendations.
+                Policy notice: You are viewing your own succession assessment. System policy prohibits employees from approving their own succession or modifying succession recommendations.
               </div>
             )}
 
@@ -3269,7 +3269,7 @@ function CompetencyComparisonBuilder({ value = {}, onChange, workflow, subjectNa
         >
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <span style={{ fontSize: 10.5, fontWeight: 700, padding: '2px 8px', borderRadius: 12, background: 'rgba(16,185,129,0.15)', color: '#047857' }}>
-              ⚡ Approach A: Actual Auto-Lift
+              Approach A: Actual Auto-Lift
             </span>
             <b style={{ fontSize: 22, fontWeight: 800, color: '#047857' }}>
               {data ? `${data.autoLift.score}%` : '85%'}
@@ -3340,7 +3340,7 @@ function CompetencyComparisonBuilder({ value = {}, onChange, workflow, subjectNa
               <li>Performance KPI score: <strong>{data ? `${data.aiRecommended.kpiScore}%` : '88%'}</strong></li>
               <li>Learning progress: <strong>{data ? `${data.aiRecommended.learningProgress}%` : '100%'}</strong></li>
               {data?.aiRecommended?.confidenceBoost > 0 && (
-                <li style={{ color: '#4338ca', fontWeight: 600 }}>✦ +{data.aiRecommended.confidenceBoost}% AI confidence boost</li>
+                <li style={{ color: '#4338ca', fontWeight: 600 }}>+{data.aiRecommended.confidenceBoost}% AI confidence boost</li>
               )}
             </ul>
           </div>

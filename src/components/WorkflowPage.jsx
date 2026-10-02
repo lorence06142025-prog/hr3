@@ -40,7 +40,7 @@ class StepFormErrorBoundary extends Component {
           display: 'flex', flexDirection: 'column', gap: 8,
         }}>
           <strong style={{ fontSize: 13, color: '#dc2626' }}>
-            ⚠ This step encountered an error while rendering.
+            Error: This step encountered an issue while rendering.
           </strong>
           <p style={{ margin: 0, fontSize: 12, color: '#64748b' }}>
             {this.state.errorMsg}

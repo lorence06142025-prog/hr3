@@ -260,7 +260,7 @@ export default function SocialRecognition() {
 
     if (targetEmployee.has_completed_performance_eval === false) {
       setNoticeType('error')
-      setStatusNotice(`⚠️ Cannot Nominate: ${targetEmployee.full_name} has not completed a performance evaluation yet and cannot be nominated.`)
+      setStatusNotice(`Cannot Nominate: ${targetEmployee.full_name} has not completed a performance evaluation yet and cannot be nominated.`)
       setTimeout(() => setStatusNotice(''), 6000)
       return
     }
@@ -466,10 +466,10 @@ export default function SocialRecognition() {
                     <div className="pending-step-flow">
                       <span className="step-pill completed">1. Submitted ({nom.senderName})</span>
                       <span className={`step-pill ${isAwaitingSupervisor ? 'current' : 'completed'}`}>
-                        2. Supervisor {isAwaitingSupervisor ? '⏳ Pending' : '✓ Validated'}
+                        2. Supervisor {isAwaitingSupervisor ? 'Pending' : '✓ Validated'}
                       </span>
                       <span className={`step-pill ${isAwaitingHr ? 'current' : ''}`}>
-                        3. HR Approval {isAwaitingHr ? '⏳ Reviewing' : ''}
+                        3. HR Approval {isAwaitingHr ? 'Reviewing' : ''}
                       </span>
                     </div>
 
@@ -629,7 +629,7 @@ export default function SocialRecognition() {
                       const isEligible = s.has_completed_performance_eval !== false
                       return (
                         <option key={s.id} value={s.id}>
-                          {s.full_name} — {s.job_title} ({s.department}){isEligible ? '' : ' ⚠️ (Evaluation Pending)'}
+                          {s.full_name} — {s.job_title} ({s.department}){isEligible ? '' : ' (Evaluation Pending)'}
                         </option>
                       )
                     })}
@@ -753,7 +753,7 @@ export default function SocialRecognition() {
                   {!userEligibility.canNominate
                     ? 'Complete your performance evaluation in the Performance module to unlock nominations.'
                     : selectedEmployee && selectedEmployee.has_completed_performance_eval === false
-                    ? '⚠️ This colleague must complete a performance evaluation before receiving nominations.'
+                    ? 'This colleague must complete a performance evaluation before receiving nominations.'
                     : isHr
                     ? 'HR awards publish directly to the live Merit Wall.'
                     : 'Nominations are validated by the supervisor, approved by HR, then posted.'}
