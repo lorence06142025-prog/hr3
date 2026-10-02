@@ -42,6 +42,7 @@ export default function PerformanceManagement() {
   const isHr = currentUser.role === 'hr'
   const isSupervisor = currentUser.role === 'supervisor'
   const isOpsManager = currentUser.role === 'operations_manager'
+  const canViewAttendance = ['hr', 'supervisor', 'management', 'operations_manager'].includes(currentUser.role)
   const canSync = isHr || isSupervisor || isOpsManager
 
   // Load attendance data
@@ -116,17 +117,19 @@ export default function PerformanceManagement() {
             <span className="pm-tab-badge">Core Workflow</span>
           </button>
 
-          <button
-            type="button"
-            className={`pm-tab-button ${activeTab === 'attendance' ? 'active' : ''}`}
-            onClick={() => setActiveTab('attendance')}
-          >
-            <Clock size={16} />
-            <span>HR2 Attendance Records</span>
-            <span className="pm-tab-badge" style={{ background: '#e0e7ff', color: '#3730a3' }}>
-              HR2 Integrated
-            </span>
-          </button>
+          {canViewAttendance && (
+            <button
+              type="button"
+              className={`pm-tab-button ${activeTab === 'attendance' ? 'active' : ''}`}
+              onClick={() => setActiveTab('attendance')}
+            >
+              <Clock size={16} />
+              <span>HR2 Attendance Records</span>
+              <span className="pm-tab-badge" style={{ background: '#e0e7ff', color: '#3730a3' }}>
+                HR2 Integrated
+              </span>
+            </button>
+          )}
         </div>
 
         {activeTab === 'attendance' && (
